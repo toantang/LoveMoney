@@ -37,7 +37,8 @@ const transactionSchema = mongoose.Schema(
 
                 }
             }
-        ]
+        ], 
+        note: String, 
     }
 )
 
