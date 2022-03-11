@@ -1,8 +1,17 @@
+import 'package:json_annotation/json_annotation.dart';
+
+part 'status.g.dart';
+
+@JsonSerializable()
 class Status {
   final String code;
   final String? name;
 
   Status({required this.code, this.name});
+
+  factory Status.fromJson(Map<String, dynamic> json) => _$StatusFromJson(json);
+
+  Map<String, dynamic> toJson() => _$StatusToJson(this);
 
   Status copyWith({String? code, String? name}) {
     return Status(

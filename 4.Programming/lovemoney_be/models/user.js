@@ -3,14 +3,19 @@ const mongoose = require('mongoose');
 const Status = require('./status');
 const { ObjectId } = mongoose.Types;
 
+const { ROLE_USER } = require('../utils/constants');
+
 const roleUserSchema = mongoose.Schema(
     {
         type: {
             type: String, 
             enum: [
-                STUDENT,
-                SINGLE,
-                NORMAL_PERSON,
+                'student',
+                'single',
+                'normal_person',
+                /*ROLE_USER.STUDENT,
+                ROLE_USER.SINGLE,
+                ROLE_USER.NORMAL_PERSON,*/
             ]
         }, 
         name: String, 

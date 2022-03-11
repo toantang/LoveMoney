@@ -39,4 +39,8 @@ class ApiResponse<T> {
       .._status = 0
       .._error = ApiError(error: error);
   }
+
+  ApiResult<T>? get result => _result;
+
+  ApiError? get error => _error;
 }
