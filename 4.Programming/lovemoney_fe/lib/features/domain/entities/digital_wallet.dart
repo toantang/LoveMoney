@@ -1,33 +1,22 @@
-class DigitalType {
-  String name;
+import 'package:json_annotation/json_annotation.dart';
+import 'digital_type.dart';
 
-  DigitalType({required this.name});
+part 'digital_wallet.g.dart';
 
-  DigitalType copyWith({String? name}) {
-    return DigitalType(
-      name: name ?? this.name,
-    );
-  }
-}
-
+@JsonSerializable()
 class DigitalWallet {
-  final String? _id;
-  final String? _owner;
-  final String? _codeWallet;
-  final double? _accountBalance;
-  final DigitalType? _digitalType;
+  final String? id;
+  final String? owner;
+  final String? codeWallet;
+  final double? accountBalance;
+  final DigitalType? digitalType;
 
-  DigitalWallet(
-      {String? id,
-      String? owner,
-      String? codeWallet,
-      double? accountBalance,
-      DigitalType? digitalType})
-      : _id = id,
-        _owner = owner,
-        _codeWallet = codeWallet,
-        _accountBalance = accountBalance,
-        _digitalType = digitalType;
+  DigitalWallet({this.id, this.owner, this.codeWallet, this.accountBalance, this.digitalType});
+
+  factory DigitalWallet.fromJson(Map<String, dynamic> json) =>
+      _$DigitalWalletFromJson(json);
+
+  Map<String, dynamic> toJson() => _$DigitalWalletToJson(this);
 
   DigitalWallet copyWith(
       {String? id,
@@ -36,10 +25,10 @@ class DigitalWallet {
       double? accountBalance,
       DigitalType? digitalType}) {
     return DigitalWallet(
-      id: id ?? _id,
-      owner: owner ?? _owner,
-      codeWallet: codeWallet ?? _codeWallet,
-      accountBalance: accountBalance ?? _accountBalance,
+      id: id ?? id,
+      owner: owner ?? owner,
+      codeWallet: codeWallet ?? codeWallet,
+      accountBalance: accountBalance ?? accountBalance,
       digitalType: digitalType ?? digitalType,
     );
   }

@@ -1,21 +1,21 @@
+import 'package:json_annotation/json_annotation.dart';
+
+part 'user_language.g.dart';
+@JsonSerializable()
 class UserLanguage {
-  final String? _id;
-  final String _code;
-  final String? _name;
-  final String? _description;
+  final String? id;
+  final String code;
+  final String? name;
+  final String? description;
 
-  UserLanguage({String? id, required String code, String? name, String? description})
-      : _id = id,
-        _code = code,
-        _name = name,
-        _description = description;
+  UserLanguage({this.id, required this.code, this.name, this.description});
 
-  UserLanguage copyWith({String? id, String? code, String? name, String? description}) {
+  UserLanguage copyWith({String? id, required String code, String? name, String? description}) {
     return UserLanguage(
-      id: id ?? _id,
-      code: code ?? _code,
-      name: name ?? _name,
-      description: description ?? _description,
+      id: id ?? id,
+      code: code,
+      name: name ?? name,
+      description: description ?? description,
     );
   }
 }

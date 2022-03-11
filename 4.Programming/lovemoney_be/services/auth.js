@@ -24,7 +24,6 @@ const register = async ({
         bio,
         phone,
     })
-
     return user;
 }
 

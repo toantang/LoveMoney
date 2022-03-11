@@ -1,52 +1,45 @@
+import 'package:json_annotation/json_annotation.dart';
 import 'package:lovemoney_fe/features/domain/entities/digital_wallet.dart';
 import 'package:lovemoney_fe/features/domain/entities/role_user.dart';
 import 'package:lovemoney_fe/features/domain/entities/status.dart';
 
+part 'user.g.dart'; //flutter packages pub run build_runner build to auto create json serialization
+@JsonSerializable(fieldRename: FieldRename.snake)
 class User {
-  final String? _id;
-  final DigitalWallet? _digitalWallet;
-  final String? _email;
-  final String? _password;
-  final String? _name;
-  final RoleUser? _roleUser;
-  final int? _age;
-  final String? _salt;
-  final DateTime? _birthday;
-  final String? _bio;
-  final String? _phone;
-  final String? _gender;
-  final String? _avatarUrl;
-  final Status? _status;
+  final String? id;
+  final DigitalWallet? digitalWallet;
+  final String? email;
+  final String? password;
+  final String? name;
+  final RoleUser? roleUser;
+  final int? age;
+  final String? salt;
+  final DateTime? birthday;
+  final String? bio;
+  final String? phone;
+  final String? gender;
+  final String? avatarUrl;
+  final Status? status;
 
   User(
-      {String? id,
-      DigitalWallet? digitalWallet,
-      String? email,
-      String? password,
-      String? name,
-      RoleUser? roleUser,
-      int? age,
-      String? salt,
-      DateTime? birthday,
-      String? bio,
-      String? phone,
-      String? gender,
-      String? avatarUrl,
-      Status? status})
-      : _id = id,
-        _digitalWallet = digitalWallet,
-        _email = email,
-        _password = password,
-        _name = name,
-        _roleUser = roleUser,
-        _age = age,
-        _salt = salt,
-        _birthday = birthday,
-        _bio = bio,
-        _phone = phone,
-        _gender = gender,
-        _avatarUrl = avatarUrl,
-        _status = status;
+      {this.id,
+      this.digitalWallet,
+      this.email,
+      this.password,
+      this.name,
+      this.roleUser,
+      this.age,
+      this.salt,
+      this.birthday,
+      this.bio,
+      this.phone,
+      this.gender,
+      this.avatarUrl,
+      this.status});
+
+  factory User.fromJson(Map<String, dynamic> json) => _$UserFromJson(json);
+
+  Map<String, dynamic> toJson() => _$UserToJson(this);
 
   User copyWith(
       {String? id,
@@ -64,20 +57,20 @@ class User {
       String? avatarUrl,
       Status? status}) {
     return User(
-      id: id ?? _id,
-      digitalWallet: digitalWallet ?? _digitalWallet,
-      email: email ?? _email,
-      password: password ?? _password,
-      name: name ?? _name,
-      roleUser: roleUser ?? _roleUser,
-      age: age ?? _age,
-      salt: salt ?? _salt,
-      birthday: birthday ?? _birthday,
-      bio: bio ?? _bio,
-      phone: phone ?? _phone,
-      gender: gender ?? _gender,
-      avatarUrl: avatarUrl ?? _avatarUrl,
-      status: status ?? _status,
+      id: id ?? id,
+      digitalWallet: digitalWallet ?? digitalWallet,
+      email: email ?? email,
+      password: password ?? password,
+      name: name ?? name,
+      roleUser: roleUser ?? roleUser,
+      age: age ?? age,
+      salt: salt ?? salt,
+      birthday: birthday ?? birthday,
+      bio: bio ?? bio,
+      phone: phone ?? phone,
+      gender: gender ?? gender,
+      avatarUrl: avatarUrl ?? avatarUrl,
+      status: status ?? status,
     );
   }
 }

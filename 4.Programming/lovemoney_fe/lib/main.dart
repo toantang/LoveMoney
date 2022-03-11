@@ -1,6 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:lovemoney_fe/core/util/env_config.dart';
+import 'package:lovemoney_fe/features/data/rest_api/datasources/models/api_response.dart';
+import 'package:lovemoney_fe/features/data/rest_api/repositories_impl/auth_repository_impl.dart';
+
+import 'core/constant/api_const.dart';
+import 'features/domain/entities/user.dart';
 
 void main() {
+  APIConst.setBaseUrl(Enviroment.LOCAL);
   runApp(const MyApp());
 }
 
@@ -31,11 +38,15 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
   int _counter = 0;
-
-  void _incrementCounter() {
-    setState(() {
-      _counter++;
-    });
+  AuthRepositoryImpl authRepositoryImpl = new AuthRepositoryImpl();
+  
+  void _incrementCounter() async {
+    ApiResponse<User>? user = await authRepositoryImpl.signUp(email: "toantang8", password: "1234", name: "toantang",);
+    if (user != null) {
+      User? u = user.result?.data;
+      print("name: ");
+      print(u?.email?.toString());
+    }
   }
 
   @override

@@ -1,26 +1,16 @@
+import 'package:json_annotation/json_annotation.dart';
 import 'package:lovemoney_fe/features/domain/entities/status.dart';
-
+part 'plan.g.dart';
+@JsonSerializable()
 class Plan {
-  final String? _name;
-  final double? _sumCost;
-  final double? _sumCurrentMoney;
-  final DateTime? _expectedFinishDate;
-  final DateTime? _lastUpdatedDate;
-  final Status? _status;
+  final String? name;
+  final double? sumCost;
+  final double? sumCurrentMoney;
+  final DateTime? expectedFinishDate;
+  final DateTime? lastUpdatedDate;
+  final Status? status;
 
-  Plan(
-      {String? name,
-      double? sumCost,
-      double? sumCurrentMoney,
-      DateTime? expectedFinishDate,
-      DateTime? lastUpdatedDate,
-      Status? status})
-      : _name = name,
-        _sumCost = sumCost,
-        _sumCurrentMoney = sumCurrentMoney,
-        _expectedFinishDate = expectedFinishDate,
-        _lastUpdatedDate = lastUpdatedDate,
-        _status = status;
+  Plan({this.name, this.sumCost, this.sumCurrentMoney, this.expectedFinishDate, this.lastUpdatedDate, this.status});
 
   Plan copyWith(
       {String? name,
@@ -30,12 +20,12 @@ class Plan {
       DateTime? lastUpdatedDate,
       Status? status}) {
     return Plan(
-      name: name ?? _name,
-      sumCost: sumCost ?? _sumCost,
-      sumCurrentMoney: sumCurrentMoney ?? _sumCurrentMoney,
-      expectedFinishDate: expectedFinishDate ?? _expectedFinishDate,
-      lastUpdatedDate: lastUpdatedDate ?? _lastUpdatedDate,
-      status: status ?? _status,
+      name: name ?? name,
+      sumCost: sumCost ?? sumCost,
+      sumCurrentMoney: sumCurrentMoney ?? sumCurrentMoney,
+      expectedFinishDate: expectedFinishDate ?? expectedFinishDate,
+      lastUpdatedDate: lastUpdatedDate ?? lastUpdatedDate,
+      status: status ?? status,
     );
   }
 }
