@@ -1,7 +1,6 @@
-import 'package:lovemoney_fe/features/domain/entities/language/init_language/english.dart';
-import 'package:lovemoney_fe/features/domain/entities/language/init_language/vietnamese.dart';
-
 import '../../../../core/helper/remote_event.dart';
+import '../../../../core/util/language/init_language/english.dart';
+import '../../../../core/util/language/init_language/vietnamese.dart';
 
 class ChangeVietnamese extends RemoteEvent {
   final Vietnamese vietnamese;

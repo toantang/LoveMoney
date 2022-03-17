@@ -6,17 +6,21 @@ import 'package:lovemoney_fe/features/presentation/global_controllers/user_langu
 
 import '../../../core/enum/enum_const.dart';
 import '../../../core/helper/bloc_provider.dart';
-import '../../domain/entities/language/used_language.dart';
+import '../../../core/util/language/used_language.dart';
 
 class TextFieldLv extends StatelessWidget {
   final TextEditingController textEditingController;
   final KeyUsedWord keyUsedWord;
+  final bool? obscureText;
+  final TextInputType? textInputType;
 
-  const TextFieldLv(
-      {Key? key,
-      required this.textEditingController,
-      required this.keyUsedWord})
-      : super(key: key);
+  const TextFieldLv({
+    Key? key,
+    required this.textEditingController,
+    required this.keyUsedWord,
+    this.obscureText,
+    this.textInputType,
+  }) : super(key: key);
 
   String _getText(UsedLanguage usedLanguage) {
     return usedLanguage.getTextByLanguage(keyUsedWord);
@@ -33,9 +37,11 @@ class TextFieldLv extends StatelessWidget {
           if (snapshot.hasData) {
             return TextField(
               controller: textEditingController,
+              obscureText: obscureText?? false,
+              keyboardType: textInputType?? TextInputType.text,
               decoration: InputDecoration(
                   filled: true,
-                  labelText: _getText(snapshot.data!.usedLanguage),
+                  hintText: _getText(snapshot.data!.usedLanguage),
                   fillColor: ColorConst.medialColorConst.white,
                   border: const OutlineInputBorder(
                     borderRadius: BorderRadius.all(Radius.circular(20)),

@@ -6,8 +6,10 @@ import 'package:lovemoney_fe/features/presentation/common_widget/text_lv.dart';
 class ButtonLv extends StatelessWidget {
   final KeyUsedWord keyUsedWord;
   final VoidCallback? onPressed;
+  final IconData? icon;
 
-  const ButtonLv({Key? key, required this.onPressed, required this.keyUsedWord})
+  const ButtonLv(
+      {Key? key, required this.onPressed, required this.keyUsedWord, this.icon})
       : super(key: key);
 
   @override
@@ -22,9 +24,19 @@ class ButtonLv extends StatelessWidget {
           return ColorConst.primaryColorConst.greenShade400;
         }
       })),
-      child: TextButtonLv(
-        keyUsedWord: keyUsedWord,
-      ),
+      child: icon == null
+          ? TextButtonLv(
+              keyUsedWord: keyUsedWord,
+            )
+          : Row(
+              children: [
+                TextButtonLv(keyUsedWord: keyUsedWord),
+                Align(
+                  child: Icon(icon),
+                  alignment: Alignment.centerRight,
+                ),
+              ],
+            ),
     );
   }
 }
