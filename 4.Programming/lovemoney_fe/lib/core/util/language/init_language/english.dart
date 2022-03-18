@@ -25,5 +25,14 @@ class English extends UsedLanguage {
     KeyUsedWord.LANGUAGE: "Language",
     KeyUsedWord.VIETNAMESE: "Tiếng việt",
     KeyUsedWord.ENGLISH: "English",
+    KeyUsedWord.BIO: "Bio",
+    KeyUsedWord.GENDER: 'Gender',
+    KeyUsedWord.CURRENT_LANGUAGE: 'English',
+    KeyUsedWord.DATE: 'Date',
+    KeyUsedWord.BACK: 'Back',
+    KeyUsedWord.OK: 'OK',
+    KeyUsedWord.YES: 'YES',
+    KeyUsedWord.NO: 'NO',
+    KeyUsedWord.CANCEL: 'Cancel',
   };
 }

@@ -17,7 +17,7 @@ class Vietnamese extends UsedLanguage {
     KeyUsedWord.FINISHED_PLAN: "Kế hoạch đã hoàn thành",
     KeyUsedWord.UNFINISHED_PLAN: "Kế hoạch chưa hoàn thành",
     KeyUsedWord.SUM_COST: "Tổng tiền dự định",
-    KeyUsedWord.COST: "Số tiền giao dịch",
+    KeyUsedWord.COST: "Số tiền",
     KeyUsedWord.TRANSACTION: "Giao dịch",
     KeyUsedWord.PERIOD_TIME: "Chu kỳ",
     KeyUsedWord.NOTE: "Ghi chú",
@@ -25,5 +25,14 @@ class Vietnamese extends UsedLanguage {
     KeyUsedWord.LANGUAGE: "Ngôn ngữ",
     KeyUsedWord.VIETNAMESE: "Tiếng việt",
     KeyUsedWord.ENGLISH: "English",
+    KeyUsedWord.BIO: 'Giới thiệu',
+    KeyUsedWord.GENDER: "Giới tính",
+    KeyUsedWord.CURRENT_LANGUAGE: 'Tiếng Việt',
+    KeyUsedWord.DATE: "Ngày tháng",
+    KeyUsedWord.BACK: 'Quay lại',
+    KeyUsedWord.OK: 'OK',
+    KeyUsedWord.YES: 'Xác nhận',
+    KeyUsedWord.NO: 'No',
+    KeyUsedWord.CANCEL: 'Huỷ',
   };
 }

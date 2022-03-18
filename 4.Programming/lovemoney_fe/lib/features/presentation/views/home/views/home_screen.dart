@@ -1,15 +1,25 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-
+import 'package:lovemoney_fe/features/presentation/common_widget/dialog_lv.dart';
 import '../../../../../core/enum/enum_const.dart';
-import '../../../../../core/helper/navigation_screen.dart';
-import '../../../../../core/util/screen_path.dart';
 import '../../../common_widget/list_tile_lv.dart';
 import '../../../common_widget/text_lv.dart';
+import '../../transaction/information_transaction.dart';
 
 class HomeScreen extends StatelessWidget {
   final List<String> listTransaction = [
     'transaction1',
+    'transaction2',
+    'transaction3',
+    'transaction4fadsgfghfhg'
+        'transaction1',
+    'transaction2',
+    'transaction3',
+    'transaction4fadsgfghfhg'
+        'transaction1',
+    'transaction2',
+    'transaction3',
+    'transaction4fadsgfghfhg'
+        'transaction1',
     'transaction2',
     'transaction3',
     'transaction4fadsgfghfhg'
@@ -42,7 +52,8 @@ class HomeScreen extends StatelessWidget {
                 return Card(
                   child: ListTileLv(
                     onTap: () {
-                      Nav.to(context, ScreenPath.INFO_TRANSACTION);
+                      //Nav.to(context, ScreenPath.INFO_TRANSACTION);
+                      NavDialog.show(context, InformationTransaction());
                     },
                     title: Center(
                       child: Text(listTransaction[index]),

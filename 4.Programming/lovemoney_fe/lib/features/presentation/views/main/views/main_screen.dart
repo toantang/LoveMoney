@@ -16,11 +16,13 @@ import '../main_bloc/main_state.dart';
 class MainScreen extends StatelessWidget {
   MainScreen({Key? key}) : super(key: key);
 
+  final MainBloc homeBloc = MainBloc();
+
   final List<Widget> listChild = [
     HomeScreen(),
     AddTransaction(),
     PlanView(),
-    SettingScreen()
+    SettingScreen(),
   ];
 
   final PageController _pageController = PageController(
@@ -28,15 +30,12 @@ class MainScreen extends StatelessWidget {
     keepPage: true,
   );
 
-  final MainBloc homeBloc = MainBloc();
-
   AppBar _appBar(BuildContext context) {
     return AppBar(
-      backgroundColor: ColorConst.medialColorConst.white,
+      backgroundColor: ColorConst.primaryColorConst.blueShade200,
       actions: [
         Padding(
-          padding:
-          const EdgeInsets.only(top: 5, bottom: 5, right: 10),
+          padding: const EdgeInsets.only(top: 5, bottom: 5, right: 10),
           child: Container(
             width: AppBar().preferredSize.height,
             height: AppBar().preferredSize.height,
@@ -55,15 +54,15 @@ class MainScreen extends StatelessWidget {
         ),
       ],
       bottomOpacity: 0.5,
-      elevation: 10,
+      elevation: 0,
     );
   }
 
-  Widget _bottomNavigationBar(BuildContext context, AsyncSnapshot<ChangeIndexViewState> snapshot) {
+  Widget _bottomNavigationBar(
+      BuildContext context, AsyncSnapshot<ChangeIndexViewState> snapshot) {
     return ClipRRect(
       borderRadius: const BorderRadius.only(
-          topRight: Radius.circular(40),
-          topLeft: Radius.circular(40)),
+          topRight: Radius.circular(40), topLeft: Radius.circular(40)),
       child: BottomNavigationBar(
         currentIndex: snapshot.data!.newIndex,
         items: const [
@@ -98,11 +97,9 @@ class MainScreen extends StatelessWidget {
         backgroundColor: ColorConst.secondaryColorConst.redShade400,
         type: BottomNavigationBarType.fixed,
         onTap: (index) {
-          homeBloc.remoteHomeEvent.sink
-              .add(ChangeIndexViewEvent(index));
+          homeBloc.remoteHomeEvent.sink.add(ChangeIndexViewEvent(index));
           _pageController.animateToPage(index,
-              duration: const Duration(milliseconds: 100),
-              curve: Curves.ease);
+              duration: const Duration(milliseconds: 100), curve: Curves.ease);
         },
       ),
     );
@@ -118,6 +115,7 @@ class MainScreen extends StatelessWidget {
         builder: (context, AsyncSnapshot<ChangeIndexViewState> snapshot) {
           if (snapshot.hasData) {
             return Scaffold(
+              resizeToAvoidBottomInset: false,
               appBar: _appBar(context),
               body: SafeArea(
                 child: PageView(

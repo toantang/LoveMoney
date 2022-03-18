@@ -19,5 +19,14 @@ enum KeyUsedWord {
   ACCOUNT_BALANCE,
   LANGUAGE,
   VIETNAMESE,
-  ENGLISH
+  ENGLISH,
+  BIO,
+  GENDER,
+  CURRENT_LANGUAGE,
+  DATE,
+  BACK,
+  OK,
+  YES,
+  NO,
+  CANCEL,
 }
