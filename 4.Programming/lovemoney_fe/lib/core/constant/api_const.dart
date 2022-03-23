@@ -13,7 +13,10 @@ class APIConst {
       case Enviroment.PRODUCTION:
         _baseUrl = EnvConfig.baseUrlProduction;
         break;
+      case Enviroment.REAL_DEVICE:
+        _baseUrl = EnvConfig.baseUrlRealDevice;
+        break;
     }
   }
 }
-enum Enviroment {LOCAL, PRODUCTION}
+enum Enviroment {LOCAL, PRODUCTION, REAL_DEVICE}

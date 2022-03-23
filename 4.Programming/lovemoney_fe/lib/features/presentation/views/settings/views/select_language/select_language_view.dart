@@ -96,10 +96,11 @@ class SelectedLanguage extends StatelessWidget {
         content: _content(context, selectLanguageBloc, userLanguageBloc),
         actions: [
           ButtonLv(
-              onPressed: () {
-                Nav.back(context);
-              },
-              keyUsedWord: KeyUsedWord.BACK),
+            onPressed: () {
+              Nav.back(context);
+            },
+            keyUsedWord: KeyUsedWord.BACK,
+          ),
         ],
       ),
       bloc: selectLanguageBloc,

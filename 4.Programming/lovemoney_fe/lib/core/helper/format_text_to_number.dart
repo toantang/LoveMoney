@@ -48,4 +48,9 @@ class FormatTextToNumber {
     decimal = decimal + x;
     return _formatText(realPart) +  decimal;
   }
+
+  static double formatTextToDouble(String formattedNumber) {
+    String num = formattedNumber.replaceAll(' ', '');
+    return double.parse(num);
+  }
 }

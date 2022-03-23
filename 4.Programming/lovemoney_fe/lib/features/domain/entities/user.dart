@@ -3,7 +3,7 @@ import 'package:lovemoney_fe/features/domain/entities/digital_wallet.dart';
 import 'package:lovemoney_fe/features/domain/entities/role_user.dart';
 import 'package:lovemoney_fe/features/domain/entities/status.dart';
 
-part 'user.g.dart'; //flutter packages pub run build_runner build to auto create json serialization
+part 'user.g.dart';
 @JsonSerializable(fieldRename: FieldRename.snake)
 class User {
   final String? id;

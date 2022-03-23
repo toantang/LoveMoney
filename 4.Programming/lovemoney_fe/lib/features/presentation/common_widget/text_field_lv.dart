@@ -18,6 +18,7 @@ class TextFieldLv extends StatelessWidget {
   final int? maxLines;
   final int? maxLength;
   final String? countText;
+  final bool? enabled;
 
   TextFieldLv({
     Key? key,
@@ -28,6 +29,7 @@ class TextFieldLv extends StatelessWidget {
     this.maxLines,
     this.maxLength,
     this.countText,
+    this.enabled,
   }) : super(key: key);
 
   final FormatTextToNumber formatTextToNumber = FormatTextToNumber();
@@ -63,12 +65,15 @@ class TextFieldLv extends StatelessWidget {
             keyboardType: textInputType ?? TextInputType.text,
             maxLines: maxLines,
             maxLength: maxLength,
+            enabled: enabled ?? true,
             onChanged: (value) {
               if (_checkInputNumber()) {
                 textEditingController.text =
                     formatTextToNumber.changeText(value);
                 textEditingController.selection = TextSelection.fromPosition(
-                  TextPosition(offset: textEditingController.text.length),
+                  TextPosition(
+                    offset: textEditingController.text.length,
+                  ),
                 );
               }
             },

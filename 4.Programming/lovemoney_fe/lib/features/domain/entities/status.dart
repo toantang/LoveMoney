@@ -20,3 +20,14 @@ class Status {
     );
   }
 }
+
+class CodeStatus {
+  static const String UNFI = 'unfi';
+  static const String FI = "fi";
+}
+
+class NameStatus {
+  static const String UNFINISHED = 'unfinished';
+  static const String FINISHED = 'finished';
+}
+

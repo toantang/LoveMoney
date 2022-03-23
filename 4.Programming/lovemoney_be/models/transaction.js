@@ -1,28 +1,29 @@
 const mongoose = require('mongoose');
-
+const {TYPE_TRANSACTION, TYPE} = require('../utils/constants');
 const { ObjectId } = mongoose.Types;
 
 const transactionSchema = mongoose.Schema(
     {
         userId: {
-            type: ObjectId, 
+            type: ObjectId,
+            type: String, 
             ref: "User",
         },
         name: String, 
         cost: Number, 
-        date: Date,
+        date: String,
         typeTransaction: {
             type: String, 
             enum: [
-                EXPENSE_TRANSACTION,
-                TURNOVER_TRANSACTION,
-            ]
+                TYPE_TRANSACTION.EXPENSE_TRANSACTION, 
+                TYPE_TRANSACTION.TURNOVER_TRANSACTION,
+            ],
         },
-        type: {
+        typePartTransaction: {
             type: String, 
             enum: [
-                FIXED_TRANSACTION, 
-                VARIABLE_TRANSACTION, 
+                TYPE.FIXED_TRANSACTION, 
+                TYPE.VARIABLE_TRANSACTION, 
             ]
         },
         transactionPart: [

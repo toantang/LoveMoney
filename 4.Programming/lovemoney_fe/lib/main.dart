@@ -7,7 +7,8 @@ import 'features/presentation/global_controllers/user_language_bloc/user_languag
 import 'features/presentation/views/main/views/main_screen.dart';
 
 void main() {
-  APIConst.setBaseUrl(Enviroment.LOCAL);
+  //APIConst.setBaseUrl(Enviroment.LOCAL);
+  APIConst.setBaseUrl(Enviroment.REAL_DEVICE);
   runApp(const MyApp());
 }
 

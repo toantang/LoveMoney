@@ -6,13 +6,14 @@ const { ObectId } = mongoose.Types;
 const planSchema = mongoose.Schema(
     {
         userId: {
-            type: ObectId,
+            //type: ObectId,
+            type: String,
             ref: "User",
         },
         name: String,
         sumCost: Number,
         sumCurrentMoney: Number,
-        expectedFinishDate: Date,
+        expectedFinishedDate: Date,
         lastUpdatedDate: Date,
         status: Status,
     }

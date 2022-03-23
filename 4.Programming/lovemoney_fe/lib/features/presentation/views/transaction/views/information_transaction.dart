@@ -2,10 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:lovemoney_fe/features/presentation/common_widget/button_lv.dart';
 import 'package:lovemoney_fe/features/presentation/common_widget/dialog_lv.dart';
 
-import '../../../../core/enum/enum_const.dart';
-import '../../../../core/helper/navigation_screen.dart';
-import '../../common_widget/list_tile_lv.dart';
-import '../../common_widget/text_lv.dart';
+import '../../../../../core/enum/enum_const.dart';
+import '../../../../../core/helper/navigation_screen.dart';
+import '../../../common_widget/list_tile_lv.dart';
+import '../../../common_widget/text_lv.dart';
 
 class InformationTransaction extends StatelessWidget {
   final String title = "COFFEE";

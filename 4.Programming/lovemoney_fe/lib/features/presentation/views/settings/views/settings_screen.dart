@@ -6,8 +6,8 @@ import 'package:lovemoney_fe/features/presentation/views/settings/views/select_l
 import '../../../common_widget/list_tile_lv.dart';
 import '../../../common_widget/text_lv.dart';
 
-class SettingScreen extends StatelessWidget {
-  const SettingScreen({Key? key}) : super(key: key);
+class SettingsScreen extends StatelessWidget {
+  const SettingsScreen({Key? key}) : super(key: key);
 
 
   @override

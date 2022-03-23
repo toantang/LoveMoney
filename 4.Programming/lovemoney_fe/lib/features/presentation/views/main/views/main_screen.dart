@@ -4,11 +4,12 @@ import 'package:lovemoney_fe/core/util/screen_path.dart';
 import 'package:lovemoney_fe/features/presentation/views/home/views/home_screen.dart';
 import 'package:lovemoney_fe/features/presentation/views/plan/plan_view.dart';
 import 'package:lovemoney_fe/features/presentation/views/settings/views/settings_screen.dart';
-import 'package:lovemoney_fe/features/presentation/views/transaction/add_transaction.dart';
+import 'package:lovemoney_fe/features/presentation/views/transaction/add_transaction_bloc/add_transaction_bloc.dart';
 
 import '../../../../../core/constant/error_const.dart';
 import '../../../../../core/helper/bloc_provider.dart';
 import '../../../../../core/helper/navigation_screen.dart';
+import '../../transaction/views/add_transaction.dart';
 import '../main_bloc/main_bloc.dart';
 import '../main_bloc/main_event.dart';
 import '../main_bloc/main_state.dart';
@@ -17,12 +18,11 @@ class MainScreen extends StatelessWidget {
   MainScreen({Key? key}) : super(key: key);
 
   final MainBloc homeBloc = MainBloc();
-
   final List<Widget> listChild = [
     HomeScreen(),
     AddTransaction(),
     PlanView(),
-    SettingScreen(),
+    const SettingsScreen(),
   ];
 
   final PageController _pageController = PageController(

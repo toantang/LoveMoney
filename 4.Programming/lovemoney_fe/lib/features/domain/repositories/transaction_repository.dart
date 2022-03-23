@@ -1,0 +1,6 @@
+import 'package:lovemoney_fe/features/data/rest_api/datasources/models/api_response.dart';
+import 'package:lovemoney_fe/features/domain/entities/transaction/transaction.dart';
+
+abstract class TransactionRepository {
+  Future<ApiResponse<Transaction>>? createTransaction({required Transaction transaction});
+}
