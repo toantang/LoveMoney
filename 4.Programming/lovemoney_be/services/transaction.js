@@ -6,7 +6,7 @@ const createTransaction = async ({
     cost, 
     date,
     typeTransaction,
-    typePartTransaction,
+    transactionPart, 
     note,
 }) => {
     
@@ -16,9 +16,10 @@ const createTransaction = async ({
         cost,
         date,
         typeTransaction,
-        typePartTransaction,
+        transactionPart, 
         note,
     });
+    console.log('create transaction: ');
     console.log('transaction: ' + transaction);
     return transaction;
 }
@@ -31,7 +32,6 @@ const updateTransactionById = async (
     cost,
     date,
     typeTransaction, 
-    typePartTransaction,
     note,
 }) => {
     const transaction = Transaction.findByIdAndUpdate(
@@ -44,7 +44,6 @@ const updateTransactionById = async (
             cost,
             date,
             typeTransaction,
-            typePartTransaction, 
             note,
         },
         {new: true, runValidators: true},

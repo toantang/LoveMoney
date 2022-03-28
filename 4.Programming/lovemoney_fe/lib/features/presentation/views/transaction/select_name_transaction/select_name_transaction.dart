@@ -15,7 +15,7 @@ class SelectNameTransaction extends StatelessWidget {
         child: Column(
           children: [
             DynamicTreeView(
-              listData: ConfigData.configData(),
+              listData: ConfigData.configData.getData(),
               width: MediaQuery.of(context).size.width,
               onTap: (map) {
                 Nav.back(context, BaseData.toBaseData(map));

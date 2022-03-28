@@ -1,11 +1,11 @@
 
-class EmailNotification {
+class EmailNotificationState {
   final String notification;
-  EmailNotification(this.notification);
+  EmailNotificationState(this.notification);
 }
 
-class PasswordNotification {
+class PasswordNotificationState {
   final String notification;
-  PasswordNotification(this.notification);
+  PasswordNotificationState(this.notification);
 }
 

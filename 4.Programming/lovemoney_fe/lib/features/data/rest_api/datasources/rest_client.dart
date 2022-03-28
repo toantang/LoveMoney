@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:dio/dio.dart';
 import 'package:lovemoney_fe/core/constant/api_const.dart';
 
@@ -31,20 +33,24 @@ class RestClient {
 
   Future<Response<T>> getMethod<T>(String uri, {required Map<String, dynamic> params}) async {
     _configRequestHeaders();
+    log('rest_client.dart', error: 'REQUEST: ' + params.toString());
     return await _dio.get<T>(uri, queryParameters: params);
   }
 
   Future<Response<T>> postMethod<T>(String uri, {dynamic data}) async {
     _configRequestHeaders();
+    log('rest_client.dart', error: 'REQUEST: ' + data.toString());
     return await _dio.post(uri, data: data);
   }
 
   Future<Response<T>> putMethod<T>(String uri, {dynamic data}) async {
     _configRequestHeaders();
+    log('rest_client.dart', error: 'REQUEST: ' + data.toString());
     return await _dio.put(uri, data: data);
   }
   Future<Response<T>> deleteMethod<T>(String uri, {required Map<String, dynamic> params}) async {
     _configRequestHeaders();
+    log('rest_client.dart', error: 'REQUEST: ' + params.toString());
     return await _dio.delete(uri, queryParameters: params);
   }
 

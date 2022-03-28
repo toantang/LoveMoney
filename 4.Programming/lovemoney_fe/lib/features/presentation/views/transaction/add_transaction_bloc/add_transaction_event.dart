@@ -24,3 +24,8 @@ class TakeNoteEvent extends RemoteEvent {
   final String? note;
   TakeNoteEvent({this.note});
 }
+
+class TextFieldPeriodTimeEvent extends RemoteEvent {
+  final String idTypeTransaction;
+  TextFieldPeriodTimeEvent(this.idTypeTransaction);
+}

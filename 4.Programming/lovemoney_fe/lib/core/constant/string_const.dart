@@ -7,9 +7,16 @@ class TypeTransactionConst extends StringConst {
   static const String TURNOVER = 'Turnover';
 }
 
-class TypePartTransactionConst extends StringConst {
+class TypeTransactionPartConst extends StringConst {
   static const String FIXED_TRANSACTION = 'Fixed';
   static const String VARIABLE_TRANSACTION = 'Variable';
+}
+
+class TransactionConst extends StringConst {
+  static const String VARIABLE_EXPENSE = TypeTransactionPartConst.VARIABLE_TRANSACTION + ' ' + TypeTransactionConst.EXPENSE;
+  static const String FIXED_EXPENSE = TypeTransactionPartConst.FIXED_TRANSACTION + ' ' + TypeTransactionConst.EXPENSE;
+  static const String VARIABLE_TURNOVER = TypeTransactionPartConst.VARIABLE_TRANSACTION + ' ' + TypeTransactionConst.TURNOVER;
+  static const String FIXED_TURNOVER = TypeTransactionPartConst.FIXED_TRANSACTION + ' ' + TypeTransactionConst.TURNOVER;
 }
 
 class NameTransactionConst extends StringConst {
@@ -21,4 +28,11 @@ class NameTransactionConst extends StringConst {
   static const String RELAX = 'Relax', FILMS = 'Films', GAMES = 'Games';
   static const String SHOPPING = 'Shopping', CLOTHES = 'Clothes', ELECTRONICS = 'Electronics', SHOES = 'Shoes';
   static const String VEHICLE = 'Vehicle', PETROL = 'petrol', TAXI = 'Grab/Uber/Gojek', MAINTAIN = 'Maintain';
+}
+
+class IdTypeTransaction extends StringConst {
+  static const ID_VARIABLE_EXPENSE = '1';
+  static const ID_FIXED_EXPENSE = '2';
+  static const ID_VARIABLE_TURNOVER = '3';
+  static const ID_FIXED_TURNOVER = '4';
 }

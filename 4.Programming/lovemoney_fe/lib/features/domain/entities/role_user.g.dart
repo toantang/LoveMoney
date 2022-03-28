@@ -6,12 +6,12 @@ part of 'role_user.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-RoleUser _$RoleUserFromJson(Map<String, dynamic> json) => RoleUser(
+UserRole _$RoleUserFromJson(Map<String, dynamic> json) => UserRole(
       type: json['type'] as String?,
       name: json['name'] as String?,
     );
 
-Map<String, dynamic> _$RoleUserToJson(RoleUser instance) => <String, dynamic>{
+Map<String, dynamic> _$UserRoleToJson(UserRole instance) => <String, dynamic>{
       'type': instance.type,
       'name': instance.name,
     };

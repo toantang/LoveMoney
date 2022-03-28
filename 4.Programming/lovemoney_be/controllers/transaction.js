@@ -7,10 +7,11 @@ const createTransaction = async (req, res) => {
         cost,
         date,
         typeTransaction,
-        typePartTransaction,
         note,
+        transactionPart, 
     } = req.body;
 
+    console.log('body: ');
     console.log(req.body);
     const transaction = await transactionService.createTransaction({
         userId, 
@@ -18,7 +19,7 @@ const createTransaction = async (req, res) => {
         cost,
         date,
         typeTransaction,
-        typePartTransaction,
+        transactionPart, 
         note,
     });
     return res.send({status: 1, result: {transaction}});
@@ -31,7 +32,6 @@ const updateTransactionById = async (req, res) => {
         cost,
         date, 
         typeTransaction, 
-        typePartTransaction, 
         note, 
     } = req.body;
 
@@ -41,7 +41,6 @@ const updateTransactionById = async (req, res) => {
         cost,
         date,
         typeTransaction,
-        typePartTransaction,
         note,
     });
 

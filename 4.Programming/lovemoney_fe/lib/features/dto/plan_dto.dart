@@ -1,11 +1,10 @@
 import 'package:json_annotation/json_annotation.dart';
 import 'package:lovemoney_fe/features/domain/entities/status.dart';
-import 'package:lovemoney_fe/features/domain/entities/user.dart';
 
-part 'plan.g.dart';
+part 'plan_dto.g.dart';
 
 @JsonSerializable()
-class Plan {
+class PlanDto {
   final String? id;
   final String? name;
   final double? sumCost;
@@ -13,13 +12,12 @@ class Plan {
   final String? expectedFinishDate;
   final String? lastUpdatedDate;
   final Status? status;
-  final User? user;
+  final String? userId;
 
-  factory Plan.fromJson(Map<String, dynamic> json) => _$PlanFromJson(json);
+  //factory Dto.fromJson(Map<String, dynamic> json) => _$PlanFromJson(json);
+  //Map<String, dynamic> toJson() => _$PlanToJson(this);
 
-  Map<String, dynamic> toJson() => _$PlanToJson(this);
-
-  Plan({
+  PlanDto({
     this.id,
     this.name,
     this.sumCost,
@@ -27,10 +25,10 @@ class Plan {
     this.expectedFinishDate,
     this.lastUpdatedDate,
     this.status,
-    this.user,
+    this.userId,
   });
 
-  Plan copyWith({
+  PlanDto copyWith({
     String? id,
     String? name,
     double? sumCost,
@@ -38,9 +36,9 @@ class Plan {
     String? expectedFinishDate,
     String? lastUpdatedDate,
     Status? status,
-    User? user,
+    String? userId,
   }) {
-    return Plan(
+    return PlanDto(
       id: id ?? id,
       name: name ?? name,
       sumCost: sumCost ?? sumCost,
@@ -48,7 +46,7 @@ class Plan {
       expectedFinishDate: expectedFinishDate ?? expectedFinishDate,
       lastUpdatedDate: lastUpdatedDate ?? lastUpdatedDate,
       status: status ?? status,
-      user: user ?? user,
+      userId: userId ?? userId,
     );
   }
 }

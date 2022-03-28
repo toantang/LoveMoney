@@ -1,13 +1,13 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'plan.dart';
+part of 'plan_dto.dart';
 
 // **************************************************************************
 // JsonSerializableGenerator
 // **************************************************************************
 
-Plan _$PlanFromJson(Map<String, dynamic> json) => Plan(
-      id: json['_id'] as String?,
+PlanDto _$PlanDtoFromJson(Map<String, dynamic> json) => PlanDto(
+      id: json['id'] as String?,
       name: json['name'] as String?,
       sumCost: (json['sumCost'] as num?)?.toDouble(),
       sumCurrentMoney: (json['sumCurrentMoney'] as num?)?.toDouble(),
@@ -16,18 +16,16 @@ Plan _$PlanFromJson(Map<String, dynamic> json) => Plan(
       status: json['status'] == null
           ? null
           : Status.fromJson(json['status'] as Map<String, dynamic>),
-      user: json['user'] == null
-          ? null
-          : User.fromJson(json['user'] as Map<String, dynamic>),
+      userId: json['userId'] as String?,
     );
 
-Map<String, dynamic> _$PlanToJson(Plan instance) => <String, dynamic>{
-      '_id': instance.id,
+Map<String, dynamic> _$PlanDtoToJson(PlanDto instance) => <String, dynamic>{
+      'id': instance.id,
       'name': instance.name,
       'sumCost': instance.sumCost,
       'sumCurrentMoney': instance.sumCurrentMoney,
       'expectedFinishDate': instance.expectedFinishDate,
       'lastUpdatedDate': instance.lastUpdatedDate,
       'status': instance.status,
-      'user': instance.user,
+      'userId': instance.userId,
     };

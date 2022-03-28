@@ -23,3 +23,7 @@ class TakeNoteState {
   final String? note;
   TakeNoteState({this.note});
 }
+class TextFieldPeriodTimeState {
+  final bool enabled;
+  TextFieldPeriodTimeState(this.enabled);
+}

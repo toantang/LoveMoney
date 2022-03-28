@@ -1,19 +1,18 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'transaction.dart';
+part of 'transaction_dto.dart';
 
 // **************************************************************************
 // JsonSerializableGenerator
 // **************************************************************************
 
-Transaction _$TransactionFromJson(Map<String, dynamic> json) => Transaction(
+TransactionDto _$TransactionDtoFromJson(Map<String, dynamic> json) =>
+    TransactionDto(
       id: json['id'] as String?,
       name: json['name'] as String?,
       cost: (json['cost'] as num?)?.toDouble(),
       typeTransaction: json['typeTransaction'] as String,
-      user: json['user'] == null
-          ? null
-          : User.fromJson(json['user'] as Map<String, dynamic>),
+      userId: json['userId'] as String?,
       note: json['note'] as String?,
       date: json['date'] as String?,
       transactionPart: json['transactionPart'] == null
@@ -22,7 +21,7 @@ Transaction _$TransactionFromJson(Map<String, dynamic> json) => Transaction(
               json['transactionPart'] as Map<String, dynamic>),
     );
 
-Map<String, dynamic> _$TransactionToJson(Transaction instance) =>
+Map<String, dynamic> _$TransactionDtoToJson(TransactionDto instance) =>
     <String, dynamic>{
       'id': instance.id,
       'name': instance.name,
@@ -30,6 +29,7 @@ Map<String, dynamic> _$TransactionToJson(Transaction instance) =>
       'typeTransaction': instance.typeTransaction,
       'note': instance.note,
       'date': instance.date,
-      'user': instance.user,
+      'userId': instance.userId,
       'transactionPart': instance.transactionPart,
+      'endDate': instance.endDate,
     };

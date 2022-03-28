@@ -49,26 +49,36 @@ class AddTransaction extends StatelessWidget {
           bloc: addTransactionBloc.selectNameBloc,
           child: StreamBuilder<SelectNameState>(
               initialData: addTransactionBloc.selectNameBloc.selectNameState,
-              stream: addTransactionBloc.selectNameBloc.remoteSelectNameState.stream,
+              stream: addTransactionBloc
+                  .selectNameBloc.remoteSelectNameState.stream,
               builder: (context, AsyncSnapshot<SelectNameState> snapshot) {
                 return ListTileLv(
                   onTap: () async {
-                    final baseData = await Nav.pushTo(context, const SelectNameTransaction());
+                    final baseData = await Nav.pushTo(
+                        context, const SelectNameTransaction());
                     if (baseData is BaseData) {
-                      print(baseData.name);
-                      addTransactionBloc.selectNameBloc.remoteSelectNameEvent.sink.add(SelectNameEvent(baseData.name));
+                      addTransactionBloc
+                          .selectNameBloc.remoteSelectNameEvent.sink
+                          .add(SelectNameEvent(baseData.name));
+                      addTransactionBloc
+                          .typePeriodTimeBloc.remoteTypePeriodTimeEvent.sink
+                          .add(TextFieldPeriodTimeEvent(baseData.id));
+                      addTransactionBloc.baseDataId = baseData.id;
                     }
                   },
                   title: Center(
-                    child: Text(snapshot.data!.name, style: const TextStyle(fontSize: SizeConst.sizeTextButton),),
+                    child: Text(
+                      snapshot.data!.name,
+                      style:
+                          const TextStyle(fontSize: SizeConst.sizeTextButton),
+                    ),
                   ),
                   trailing: const Icon(
                     Icons.arrow_forward,
                     size: SizeConst.sizeIconButton,
                   ),
                 );
-              }
-          ),
+              }),
         ),
       ),
     );
@@ -116,16 +126,27 @@ class AddTransaction extends StatelessWidget {
         Expanded(
           child: Align(
             alignment: Alignment.centerRight,
-            child: TextFieldLv(
-              keyUsedWord: KeyUsedWord.PERIOD_TIME,
-              textEditingController: ecControllerPeriodTime,
-              maxLength: 2,
-              enabled: false,
-              textInputType: const TextInputType.numberWithOptions(
-                signed: true,
-                decimal: false,
+            child: BlocProvider(
+              bloc: addTransactionBloc.typePeriodTimeBloc,
+              child: StreamBuilder<TextFieldPeriodTimeState>(
+                initialData: addTransactionBloc
+                    .typePeriodTimeBloc.textFieldPeriodTimeState,
+                stream: addTransactionBloc
+                    .typePeriodTimeBloc.remoteTextFieldPeriodTimeState.stream,
+                builder: (context, snapshot) {
+                  return TextFieldLv(
+                    keyUsedWord: KeyUsedWord.PERIOD_TIME,
+                    textEditingController: ecControllerPeriodTime,
+                    maxLength: 2,
+                    enabled: snapshot.data?.enabled,
+                    textInputType: const TextInputType.numberWithOptions(
+                      signed: true,
+                      decimal: false,
+                    ),
+                    countText: '',
+                  );
+                },
               ),
-              countText: '',
             ),
           ),
         ),
@@ -134,13 +155,11 @@ class AddTransaction extends StatelessWidget {
   }
 
   Widget _inputNote() {
-    return SizedBox(
-      child: TextFieldLv(
-        textEditingController: ecControllerNote,
-        keyUsedWord: KeyUsedWord.NOTE,
-        maxLines: 4,
-        maxLength: 100,
-      ),
+    return TextFieldLv(
+      textEditingController: ecControllerNote,
+      keyUsedWord: KeyUsedWord.NOTE,
+      maxLines: 4,
+      maxLength: 100,
     );
   }
 
@@ -174,14 +193,13 @@ class AddTransaction extends StatelessWidget {
                 child: ButtonLv(
                   onPressed: () {
                     addTransactionBloc.typeCostBloc.typeCostState =
-                        TypeCostState(
-                            FormatTextToNumber.formatTextToDouble(
-                                ecControllerCost.text));
+                        TypeCostState(FormatTextToNumber.formatTextToDouble(
+                            ecControllerCost.text));
                     addTransactionBloc.takeNoteBloc.takeNoteState =
                         TakeNoteState(note: ecControllerNote.text);
-                    addTransactionBloc.typePeriodTimeBloc
-                        .typePeriodTimeState = TypePeriodTimeState(
-                      periodTime: ecControllerPeriodTime.text == ''
+                    addTransactionBloc.typePeriodTimeBloc.typePeriodTimeState =
+                        TypePeriodTimeState(
+                      periodTime: ecControllerPeriodTime.text.isEmpty
                           ? 999999
                           : double.parse(ecControllerPeriodTime.text),
                     );
