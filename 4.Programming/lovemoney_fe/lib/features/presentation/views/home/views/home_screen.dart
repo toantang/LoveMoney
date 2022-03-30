@@ -1,7 +1,16 @@
 import 'package:flutter/material.dart';
+import 'package:lovemoney_fe/core/constant/error_const.dart';
+import 'package:lovemoney_fe/core/constant/string_const.dart';
+import 'package:lovemoney_fe/core/helper/bloc_provider.dart';
 import 'package:lovemoney_fe/core/helper/formatDate.dart';
+import 'package:lovemoney_fe/features/domain/entities/transaction/transaction.dart';
+import 'package:lovemoney_fe/features/presentation/common_widget/button_lv.dart';
 import 'package:lovemoney_fe/features/presentation/common_widget/date_time_picker_lv.dart';
 import 'package:lovemoney_fe/features/presentation/common_widget/dialog_lv.dart';
+import 'package:lovemoney_fe/features/presentation/views/home/home_bloc/home_bloc.dart';
+import 'package:lovemoney_fe/features/presentation/views/home/home_bloc/home_event.dart';
+import 'package:lovemoney_fe/features/presentation/views/home/home_bloc/home_state.dart';
+import 'package:lovemoney_fe/features/presentation/views/transaction/update_transaction_bloc/update_transaction_bloc.dart';
 import '../../../../../core/enum/enum_const.dart';
 import '../../../../../core/helper/navigation_screen.dart';
 import '../../../common_widget/list_tile_lv.dart';
@@ -9,26 +18,24 @@ import '../../../common_widget/text_lv.dart';
 import '../../transaction/views/information_transaction.dart';
 
 class HomeScreen extends StatelessWidget {
-  final List<String> listTransaction = [
-    'transaction1',
-    'transaction2',
-    'transaction3',
-    'transaction4fadsgfghfhg'
-        'transaction1',
-    'transaction2',
-    'transaction3',
-    'transaction4fadsgfghfhg'
-        'transaction1',
-    'transaction2',
-    'transaction3',
-    'transaction4fadsgfghfhg'
-        'transaction1',
-    'transaction2',
-    'transaction3',
-    'transaction4fadsgfghfhg'
-  ];
+  final HomeBloc homeBloc = HomeBloc();
 
   HomeScreen({Key? key}) : super(key: key);
+
+  Widget _buildButton() {
+    return ButtonLv(
+      keyUsedWord: KeyUsedWord.OK,
+      onPressed: () {
+        print(homeBloc.getTransaction().toString());
+        homeBloc.buildListTransactionBloc.remoteBuildTransactionEvent.sink.add(
+          BuildListTransactionEvent(
+            homeBloc.getTransaction(),
+            homeBloc.selectEndDateBloc.selectEndDateState.date,
+          ),
+        );
+      },
+    );
+  }
 
   Widget _buildAccountBalance() {
     return const TextLv(
@@ -37,15 +44,47 @@ class HomeScreen extends StatelessWidget {
     );
   }
 
-  Widget _buildSelectTypeTransaction(BuildContext context) {
-    return DropdownButton<String>(
-      items: <String>['A', 'B', 'C', 'D'].map((String value) {
-        return DropdownMenuItem<String>(
-          value: value,
-          child: Text(value),
-        );
-      }).toList(),
-      onChanged: (_) {},
+  Widget _buildSelectTransactionType(BuildContext context) {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        Align(
+          alignment: Alignment.centerLeft,
+          child: BlocProvider(
+            child: StreamBuilder<SelectTransactionTypeState>(
+              initialData: homeBloc
+                  .selectTransactionTypeBloc.selectedTransactionTypeState,
+              stream: homeBloc.selectTransactionTypeBloc
+                  .remoteSelectTransactionTypeState.stream,
+              builder: (context,
+                  AsyncSnapshot<SelectTransactionTypeState> snapshot) {
+                List<String> items = TransactionConst.LIST_TRANSACTION_TYPE;
+                return DropdownButton<String>(
+                  value: snapshot.data!.selectedTransactionType,
+                  items: items.map((String item) {
+                    return DropdownMenuItem<String>(
+                      value: item,
+                      child: Text(item),
+                    );
+                  }).toList(),
+                  onChanged: (String? val) {
+                    if (val != null) {
+                      homeBloc.selectTransactionTypeBloc
+                          .remoteSelectTransactionTypeEvent.sink
+                          .add(SelectTransactionTypeEvent(val));
+                    }
+                  },
+                );
+              },
+            ),
+            bloc: homeBloc.selectTransactionTypeBloc,
+          ),
+        ),
+        Align(
+          alignment: Alignment.centerRight,
+          child: _buildButton(),
+        ),
+      ],
     );
   }
 
@@ -53,20 +92,59 @@ class HomeScreen extends StatelessWidget {
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
-        TextButton(
-          child: Text(FormatDate.formatCurrentDate),
-          onPressed: () {
-            Nav.pushTo(context, const NavDateTimePicker());
-          },
+        BlocProvider(
+          child: TextButton(
+            child: StreamBuilder<SelectStartDateState>(
+              initialData: homeBloc.selectStartDateBloc.selectStartDateState,
+              stream: homeBloc
+                  .selectStartDateBloc.remoteSelectStartDateState.stream,
+              builder: (context, snapshot) {
+                return Text(snapshot.data!.date);
+              },
+            ),
+            onPressed: () async {
+              final date = await Nav.pushTo(
+                context,
+                NavDateTimePicker(
+                  limitedDateTime: FormatDate.stringToDate(
+                      homeBloc.selectEndDateBloc.selectEndDateState.date),
+                ),
+              );
+              String value = FormatDate.dateToString(date as DateTime);
+              homeBloc.selectStartDateBloc.remoteSelectStartDateEvent.sink
+                  .add(SelectStartDateEvent(FormatDate.stringToDate(value)));
+            },
+          ),
+          bloc: homeBloc.selectStartDateBloc,
         ),
         const Center(
           child: Text(' - '),
         ),
-        TextButton(
-          child: Text(FormatDate.formatCurrentDate),
-          onPressed: () {
-            Nav.pushTo(context, const NavDateTimePicker());
-          },
+        BlocProvider(
+          child: TextButton(
+            child: StreamBuilder<SelectEndDateState>(
+              initialData: homeBloc.selectEndDateBloc.selectEndDateState,
+              stream:
+                  homeBloc.selectEndDateBloc.remoteSelectEndDateState.stream,
+              builder: (context, snapshot) {
+                return Text(snapshot.data!.date);
+              },
+            ),
+            onPressed: () async {
+              print(homeBloc.selectStartDateBloc.selectStartDateState.date);
+              final date = await Nav.pushTo(
+                context,
+                NavDateTimePicker(
+                  lowerDateTime: FormatDate.stringToDate(
+                      homeBloc.selectStartDateBloc.selectStartDateState.date),
+                ),
+              );
+              String value = FormatDate.dateToString(date as DateTime);
+              homeBloc.selectEndDateBloc.remoteSelectEndDateEvent.sink
+                  .add(SelectEndDateEvent(FormatDate.stringToDate(value)));
+            },
+          ),
+          bloc: homeBloc.selectEndDateBloc,
         ),
       ],
     );
@@ -74,28 +152,48 @@ class HomeScreen extends StatelessWidget {
 
   Widget _buildListTransaction() {
     return Expanded(
-        child: ListView.builder(
-          itemCount: listTransaction.length,
-          itemBuilder: (context, index) {
-            return Card(
-              child: ListTileLv(
-                onTap: () {
-                  //Nav.to(context, ScreenPath.INFO_TRANSACTION);
-                  NavDialog.show(context, InformationTransaction());
+      child: BlocProvider(
+        child: StreamBuilder<BuildListTransactionState>(
+          initialData:
+              homeBloc.buildListTransactionBloc.buildListTransactionState,
+          stream: homeBloc
+              .buildListTransactionBloc.remoteBuildTransactionState.stream,
+          builder: (context, snapshot) {
+            if (snapshot.hasData) {
+              List<Transaction> transactions = snapshot.data!.transactions;
+              return ListView.builder(
+                itemCount: transactions.length,
+                itemBuilder: (context, index) {
+                  return Card(
+                    child: ListTileLv(
+                      onTap: () {
+                        NavDialog.show(
+                          context,
+                          InformationTransaction(
+                            updateTransactionBloc: UpdateTransactionBloc(
+                                transaction: transactions[index]),
+                          ),
+                        );
+                      },
+                      title: Center(
+                        child: Text(transactions[index].name!),
+                      ),
+                      trailing: IconButton(
+                        icon: const Icon(Icons.delete),
+                        onPressed: () {},
+                      ),
+                    ),
+                  );
                 },
-                title: Center(
-                  child: Text(listTransaction[index]),
-                ),
-                trailing: IconButton(
-                  icon: const Icon(Icons.delete),
-                  onPressed: () {
-
-                  },
-                ),
-              ),
-            );
+              );
+            } else {
+              return const Text(ErrorConst.NULL_STREAM);
+            }
           },
-        ));
+        ),
+        bloc: homeBloc.buildListTransactionBloc,
+      ),
+    );
   }
 
   @override
@@ -105,7 +203,8 @@ class HomeScreen extends StatelessWidget {
         child: Column(
           children: [
             _buildAccountBalance(),
-            _buildSelectTypeTransaction(context),
+            //_buildButton(),
+            _buildSelectTransactionType(context),
             _buildSelectDate(context),
             _buildListTransaction(),
           ],

@@ -2,7 +2,9 @@ import 'package:json_annotation/json_annotation.dart';
 
 part 'variable_transaction.g.dart';
 
-@JsonSerializable()
+@JsonSerializable(
+  explicitToJson: true,
+)
 class VariableTransaction {
   final String? id;
 

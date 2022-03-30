@@ -91,7 +91,7 @@ class SelectedLanguage extends StatelessWidget {
         userLanguageBloc?.state.usedLanguage ?? Vietnamese());
 
     return BlocProvider(
-      child: DialogLv(
+      child: AlertDialogLv(
         title: const TextLv(keyUsedWord: KeyUsedWord.LANGUAGE),
         content: _content(context, selectLanguageBloc, userLanguageBloc),
         actions: [

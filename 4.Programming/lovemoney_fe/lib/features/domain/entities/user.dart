@@ -5,7 +5,7 @@ import 'package:lovemoney_fe/features/domain/entities/status.dart';
 
 part 'user.g.dart';
 
-@JsonSerializable(fieldRename: FieldRename.snake)
+@JsonSerializable(explicitToJson: true,)
 class User {
   final String? id;
   final DigitalWallet? digitalWallet;

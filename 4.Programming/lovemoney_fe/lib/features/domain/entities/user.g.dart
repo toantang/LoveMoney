@@ -7,17 +7,17 @@ part of 'user.dart';
 // **************************************************************************
 
 User _$UserFromJson(Map<String, dynamic> json) => User(
-      id: json['id'] as String?,
-      digitalWallet: json['digital_wallet'] == null
+      id: json['_id'] as String?,
+      digitalWallet: json['digitalWallet'] == null
           ? null
           : DigitalWallet.fromJson(
-              json['digital_wallet'] as Map<String, dynamic>),
+              json['digitalWallet'] as Map<String, dynamic>),
       email: json['email'] as String?,
       password: json['password'] as String?,
       name: json['name'] as String?,
-      userRole: json['user_role'] == null
+      userRole: json['userRole'] == null
           ? null
-          : UserRole.fromJson(json['user_role'] as Map<String, dynamic>),
+          : UserRole.fromJson(json['userRole'] as Map<String, dynamic>),
       age: json['age'] as int?,
       salt: json['salt'] as String?,
       birthday: json['birthday'] == null
@@ -26,25 +26,25 @@ User _$UserFromJson(Map<String, dynamic> json) => User(
       bio: json['bio'] as String?,
       phone: json['phone'] as String?,
       gender: json['gender'] as String?,
-      avatarUrl: json['avatar_url'] as String?,
+      avatarUrl: json['avatarUrl'] as String?,
       status: json['status'] == null
           ? null
           : Status.fromJson(json['status'] as Map<String, dynamic>),
     );
 
 Map<String, dynamic> _$UserToJson(User instance) => <String, dynamic>{
-      'id': instance.id,
-      'digital_wallet': instance.digitalWallet,
+      '_id': instance.id,
+      'digitalWallet': instance.digitalWallet?.toJson(),
       'email': instance.email,
       'password': instance.password,
       'name': instance.name,
-      'user_role': instance.userRole,
+      'userRole': instance.userRole?.toJson(),
       'age': instance.age,
       'salt': instance.salt,
       'birthday': instance.birthday?.toIso8601String(),
       'bio': instance.bio,
       'phone': instance.phone,
       'gender': instance.gender,
-      'avatar_url': instance.avatarUrl,
-      'status': instance.status,
+      'avatarUrl': instance.avatarUrl,
+      'status': instance.status?.toJson(),
     };

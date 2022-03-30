@@ -17,6 +17,16 @@ class TransactionConst extends StringConst {
   static const String FIXED_EXPENSE = TypeTransactionPartConst.FIXED_TRANSACTION + ' ' + TypeTransactionConst.EXPENSE;
   static const String VARIABLE_TURNOVER = TypeTransactionPartConst.VARIABLE_TRANSACTION + ' ' + TypeTransactionConst.TURNOVER;
   static const String FIXED_TURNOVER = TypeTransactionPartConst.FIXED_TRANSACTION + ' ' + TypeTransactionConst.TURNOVER;
+  static const List<String> LIST_TRANSACTION_TYPE = [VARIABLE_EXPENSE, FIXED_EXPENSE, VARIABLE_TURNOVER, FIXED_TURNOVER, ];
+
+  static String getTransactionType(String type) {
+    List<String> list = type.split(' ');
+    return list[1];
+  }
+  static String getTypeTransactionPart(String type) {
+    List<String> list = type.split(' ');
+    return list[0];
+  }
 }
 
 class NameTransactionConst extends StringConst {

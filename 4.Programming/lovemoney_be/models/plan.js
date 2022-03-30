@@ -7,7 +7,7 @@ const planSchema = mongoose.Schema(
     {
         userId: {
             //type: ObectId,
-            type: String,
+            type: String, 
             ref: "User",
         },
         name: String,

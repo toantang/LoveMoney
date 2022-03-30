@@ -3,7 +3,7 @@ import 'package:lovemoney_fe/features/domain/entities/transaction/transaction_pa
 
 part 'transaction_dto.g.dart';
 
-@JsonSerializable()
+@JsonSerializable(explicitToJson: true,)
 class TransactionDto {
   final String? id;
   final String? name;
@@ -50,13 +50,12 @@ class TransactionDto {
       date: date ?? date,
       userId: userId ?? userId,
       transactionPart: transactionPart ?? this.transactionPart,
-      //endDate: endDate ?? this.endDate,
+      endDate: endDate ?? this.endDate,
     );
   }
 
   @override
   String toString() {
-    return 'TransactionDto{id: $id, name: $name, cost: $cost, '
-        'typeTransaction: $typeTransaction, note: $note, date: $date, userId: $userId}';
+    return 'TransactionDto{id: $id, name: $name, cost: $cost, typeTransaction: $typeTransaction, note: $note, date: $date, userId: $userId, transactionPart: $transactionPart, endDate: $endDate}';
   }
 }

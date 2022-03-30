@@ -14,5 +14,5 @@ VariableTransaction _$VariableTransactionFromJson(Map<String, dynamic> json) =>
 Map<String, dynamic> _$VariableTransactionToJson(
         VariableTransaction instance) =>
     <String, dynamic>{
-      'id': instance.id,
+      '_id': instance.id,
     };

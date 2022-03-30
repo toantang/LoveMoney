@@ -3,7 +3,7 @@ import 'package:lovemoney_fe/features/domain/entities/status.dart';
 
 part 'plan_dto.g.dart';
 
-@JsonSerializable()
+@JsonSerializable(explicitToJson: true,)
 class PlanDto {
   final String? id;
   final String? name;
@@ -14,8 +14,8 @@ class PlanDto {
   final Status? status;
   final String? userId;
 
-  //factory Dto.fromJson(Map<String, dynamic> json) => _$PlanFromJson(json);
-  //Map<String, dynamic> toJson() => _$PlanToJson(this);
+  factory PlanDto.fromJson(Map<String, dynamic> json) => _$PlanDtoFromJson(json);
+  Map<String, dynamic> toJson() => _$PlanDtoToJson(this);
 
   PlanDto({
     this.id,

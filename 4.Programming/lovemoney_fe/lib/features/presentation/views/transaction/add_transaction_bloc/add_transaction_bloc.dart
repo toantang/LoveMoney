@@ -9,11 +9,11 @@ import 'package:lovemoney_fe/features/domain/entities/transaction/fixed_transact
 import 'package:lovemoney_fe/features/domain/entities/transaction/transaction.dart';
 import 'package:lovemoney_fe/features/domain/entities/transaction/transaction_part.dart';
 import 'package:lovemoney_fe/features/domain/entities/transaction/variable_transaction.dart';
-import 'package:lovemoney_fe/features/domain/entities/user.dart';
 import 'package:lovemoney_fe/features/presentation/views/auth/auth_bloc/auth_bloc.dart';
 import 'package:lovemoney_fe/features/presentation/views/transaction/add_transaction_bloc/add_transaction_event.dart';
 import 'package:lovemoney_fe/features/presentation/views/transaction/add_transaction_bloc/add_transaction_state.dart';
 
+import '../../../../../core/constant/error_const.dart';
 import '../../../../../core/constant/string_const.dart';
 
 class AddTransactionBloc extends ManagerBloc {
@@ -28,24 +28,36 @@ class AddTransactionBloc extends ManagerBloc {
   final TransactionRepositoryImpl _transactionRepositoryImpl =
       TransactionRepositoryImpl();
 
+  String _getTypeTransaction() {
+    if (baseDataId == null) {
+      return ErrorConst.NULL_BASEDATA_ID;
+    }
+    switch (baseDataId![0]) {
+      case IdTypeTransaction.ID_FIXED_EXPENSE:
+      case IdTypeTransaction.ID_VARIABLE_EXPENSE:
+        return TypeTransactionConst.EXPENSE;
+      default:
+        return TypeTransactionConst.TURNOVER;
+    }
+  }
+
   void createTransaction() async {
     TransactionPart? _transactionPart = TransactionPart();
-    String typePartTransaction =
-        _transactionPart.getTransactionPartByBaseId(baseDataId);
+    String typeTransactionPart =
+        _transactionPart.getTypeTransactionPartByBaseId(baseDataId);
 
     Transaction _transaction = Transaction(
-        cost: typeCostBloc.typeCostState.cost,
-        name: selectNameBloc.selectNameState.name,
-        note: takeNoteBloc.takeNoteState.note,
-        date: selectDateBloc.selectDateState.date,
-        typeTransaction: TypeTransactionConst.TURNOVER,
-        user: AuthBloc.getInstance().user,
-        transactionPart: TransactionPart(
-          typeTransactionPart: typePartTransaction,
-          fixedTransaction: FixedTransaction(
-              periodTime: typePeriodTimeBloc.typePeriodTimeState.periodTime),
-          variableTransaction: VariableTransaction(),
-        ));
+      cost: typeCostBloc.typeCostState.cost,
+      name: selectNameBloc.selectNameState.name,
+      note: takeNoteBloc.takeNoteState.note,
+      date: selectDateBloc.selectDateState.date,
+      typeTransaction: _getTypeTransaction(),
+      user: AuthBloc.getInstance().user,
+      transactionPart: TransactionPart.getTransactionPart(
+        typeTransactionPart,
+        typePeriodTimeBloc.typePeriodTimeState.periodTime,
+      ),
+    );
 
     print(_transaction.toString());
     ApiResponse<Transaction>? apiResponse = await _transactionRepositoryImpl

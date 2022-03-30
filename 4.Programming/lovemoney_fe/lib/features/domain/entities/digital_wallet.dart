@@ -3,7 +3,7 @@ import 'digital_type.dart';
 
 part 'digital_wallet.g.dart';
 
-@JsonSerializable()
+@JsonSerializable(explicitToJson: true,)
 class DigitalWallet {
   final String? id;
   final String? owner;

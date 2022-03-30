@@ -1,7 +1,50 @@
+const plan = require('../models/plan');
 const planService = require('../services/plan');
 
 const createPlan = async (req, res) => {
-    const {
+  const {
+    userId,
+    name,
+    sumCost,
+    sumCurrentMoney,
+    expectedFinishedDate,
+    lastUpdateDate,
+    status,
+  } = req.body;
+
+  const plan = await planService.createPlan({
+    userId,
+    name,
+    sumCost,
+    sumCurrentMoney,
+    expectedFinishedDate,
+    lastUpdateDate,
+    status,
+  });
+
+  return res.send({status: 1, result: {plan}});
+};
+
+const updatePlan = async (req, res) => {
+  const {
+    userId,
+    name,
+    sumCost,
+    sumCurrentMoney,
+    expectedFinishedDate,
+    lastUpdateDate,
+    status,
+  } = req.body;
+
+  const {
+    id,
+  } = req.params;
+
+  const plan = planService.updatePlan(
+      {
+        id,
+      },
+      {
         userId,
         name,
         sumCost,
@@ -9,21 +52,18 @@ const createPlan = async (req, res) => {
         expectedFinishedDate,
         lastUpdateDate,
         status,
-    } = req.body;
-
-    const plan = await planService.createPlan({
-        userId, 
-        name,
-        sumCost,
-        sumCurrentMoney,
-        expectedFinishedDate,
-        lastUpdateDate,
-        status,
-    });
-
-    return res.send({status: 1, result: { plan }});
-}
-
+      });
+      res.send({status: 1, result: { plan }});
+};
+const getListPlan = async (req, res) => {
+  const {
+    userId,
+  } = req.query;
+  const plans = await planService.getListPlan({userId});
+  return res.send({status: 1, result: {plans}});
+};
 module.exports = {
-    createPlan,
+  createPlan,
+  updatePlan,
+  getListPlan,
 }

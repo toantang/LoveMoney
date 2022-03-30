@@ -18,7 +18,7 @@ class TransactionRepositoryImpl implements TransactionRepository {
     try {
       print('request: ' + transactionDto.toJson().toString());
       var response = await _restClient.postMethod('/transaction',
-          data: transactionDto.toJson());
+          data: transactionDto.toJson(),);
       //print('response: ' + response.data);
       return ApiResponse.withResult(
           response: response.data,
@@ -39,7 +39,7 @@ class TransactionRepositoryImpl implements TransactionRepository {
     final TransactionDto transactionDto = _transactionMapper.toDTO(transaction);
     try {
       var response = await _restClient.putMethod(
-          '/transaction/${transaction.id}',
+          '/transaction/update/${transaction.id}',
           data: transactionDto.toJson());
       return ApiResponse.withResult(
           response: response.data,
@@ -61,16 +61,24 @@ class TransactionRepositoryImpl implements TransactionRepository {
   }) async {
     final TransactionDto transactionDto =
         _transactionMapper.dtoForGetTransaction(transaction, endDate);
+    print("transactionDto.toString()" + transactionDto.toString());
     try {
+      print('transactionDto.toJson: ' + transactionDto.toJson().toString());
       var response = await _restClient.getMethod(
         '/transaction/getListTransaction',
         params: transactionDto.toJson(),
+        /*params: {
+          "userId": "1",
+          "typeTransaction": "Turnover",
+          "date": "03-27-2022",
+          "endDate": "03-28-2022"
+        }*/
       );
       return ApiResponse.withResult(
           response: response.data,
           resultConverter: (json) => ApiResultList<Transaction>(
                 json: json,
-                rootName: '/transaction',
+                rootName: 'transactions',
                 jsonConverter: (json) =>
                     _transactionMapper.toEntity(TransactionDto.fromJson(json)),
               ));

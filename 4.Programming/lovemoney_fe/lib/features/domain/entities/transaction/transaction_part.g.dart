@@ -22,6 +22,6 @@ TransactionPart _$TransactionPartFromJson(Map<String, dynamic> json) =>
 Map<String, dynamic> _$TransactionPartToJson(TransactionPart instance) =>
     <String, dynamic>{
       'typeTransactionPart': instance.typeTransactionPart,
-      'fixedTransaction': instance.fixedTransaction,
-      'variableTransaction': instance.variableTransaction,
+      'fixedTransaction': instance.fixedTransaction?.toJson(),
+      'variableTransaction': instance.variableTransaction?.toJson(),
     };

@@ -28,6 +28,6 @@ Map<String, dynamic> _$PlanToJson(Plan instance) => <String, dynamic>{
       'sumCurrentMoney': instance.sumCurrentMoney,
       'expectedFinishDate': instance.expectedFinishDate,
       'lastUpdatedDate': instance.lastUpdatedDate,
-      'status': instance.status,
-      'user': instance.user,
+      'status': instance.status?.toJson(),
+      'user': instance.user?.toJson(),
     };

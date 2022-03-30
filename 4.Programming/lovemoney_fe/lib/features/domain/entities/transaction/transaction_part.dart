@@ -7,10 +7,10 @@ import 'fixed_transaction.dart';
 part 'transaction_part.g.dart';
 
 abstract class GetTypeTransactionPart {
-  String getTransactionPartByBaseId(String baseDataId);
+  String getTypeTransactionPartByBaseId(String baseDataId);
 }
 
-@JsonSerializable()
+@JsonSerializable(explicitToJson: true,)
 class TransactionPart implements GetTypeTransactionPart {
   final String? typeTransactionPart; //fixed or variable
   final FixedTransaction? fixedTransaction;
@@ -34,7 +34,7 @@ class TransactionPart implements GetTypeTransactionPart {
   }
 
   @override
-  String getTransactionPartByBaseId(String? baseDataId) {
+  String getTypeTransactionPartByBaseId(String? baseDataId) {
     if (baseDataId == null) {
       return ErrorConst.NULL_BASEDATA_ID;
     }
@@ -47,28 +47,40 @@ class TransactionPart implements GetTypeTransactionPart {
     }
   }
 
-  static TransactionPart? getTransactionPart(
-      String typeTransactionPart, double? periodTime) {
+  static TransactionPart getTransactionPart(String typeTransactionPart, double? periodTime) {
+    TransactionPart transactionPart = TransactionPart(typeTransactionPart: typeTransactionPart, );
+
     if (periodTime == null) {
-      return null;
+      return transactionPart.copyWith(
+        variableTransaction: VariableTransaction(),
+        fixedTransaction: null,
+      );
     }
     switch (typeTransactionPart) {
       case TypeTransactionPartConst.FIXED_TRANSACTION:
-        return TransactionPart(
+        return transactionPart.copyWith(
           fixedTransaction: FixedTransaction(periodTime: periodTime),
           variableTransaction: null,
         );
       case TypeTransactionPartConst.VARIABLE_TRANSACTION:
-        return TransactionPart(
+        return transactionPart.copyWith(
           variableTransaction: VariableTransaction(),
           fixedTransaction: null,
         );
       default:
-        return TransactionPart(
+        return transactionPart.copyWith(
           variableTransaction: VariableTransaction(),
           fixedTransaction: null,
         );
     }
+  }
+
+  static getDefaultTransactionPart(String typeTransactionPart) {
+    return TransactionPart(
+      typeTransactionPart: typeTransactionPart,
+      fixedTransaction: null,
+      variableTransaction: null,
+    );
   }
 
   TransactionPart copyWith({

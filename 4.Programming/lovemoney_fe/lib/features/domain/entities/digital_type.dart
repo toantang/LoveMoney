@@ -2,7 +2,7 @@ import 'package:json_annotation/json_annotation.dart';
 
 part 'digital_type.g.dart';
 
-@JsonSerializable()
+@JsonSerializable(explicitToJson: true,)
 class DigitalType {
   String name;
 

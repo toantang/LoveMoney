@@ -197,12 +197,13 @@ class AddTransaction extends StatelessWidget {
                             ecControllerCost.text));
                     addTransactionBloc.takeNoteBloc.takeNoteState =
                         TakeNoteState(note: ecControllerNote.text);
+
+                    String textPeriodTime = ecControllerPeriodTime.text;
                     addTransactionBloc.typePeriodTimeBloc.typePeriodTimeState =
                         TypePeriodTimeState(
-                      periodTime: ecControllerPeriodTime.text.isEmpty
-                          ? 999999
-                          : double.parse(ecControllerPeriodTime.text),
-                    );
+                            periodTime: textPeriodTime.isEmpty
+                                ? null
+                                : double.parse(textPeriodTime));
                     addTransactionBloc.createTransaction();
                   },
                   keyUsedWord: KeyUsedWord.ADD,

@@ -4,7 +4,7 @@ import 'package:lovemoney_fe/features/domain/entities/user.dart';
 
 part 'plan.g.dart';
 
-@JsonSerializable()
+@JsonSerializable(explicitToJson: true,)
 class Plan {
   final String? id;
   final String? name;

@@ -2,7 +2,7 @@ import 'package:json_annotation/json_annotation.dart';
 
 part 'fixed_transaction.g.dart';
 
-@JsonSerializable()
+@JsonSerializable(explicitToJson: true,)
 class FixedTransaction {
   final String? id;
   final double? periodTime;

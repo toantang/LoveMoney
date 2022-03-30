@@ -15,8 +15,5 @@ class RouterLV {
     '/profile': (context) {
       return ProfileScreen();
     },
-    '/infoTransaction': (context) {
-      return InformationTransaction();
-    },
   };
 }

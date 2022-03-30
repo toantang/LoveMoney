@@ -10,7 +10,7 @@ class UserRole {
   UserRole({this.type, this.name});
 
   factory UserRole.fromJson(Map<String, dynamic> json) =>
-      _$RoleUserFromJson(json);
+      _$UserRoleFromJson(json);
 
   Map<String, dynamic> toJson() => _$UserRoleToJson(this);
 

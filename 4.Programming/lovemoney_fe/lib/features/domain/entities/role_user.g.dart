@@ -6,7 +6,7 @@ part of 'role_user.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-UserRole _$RoleUserFromJson(Map<String, dynamic> json) => UserRole(
+UserRole _$UserRoleFromJson(Map<String, dynamic> json) => UserRole(
       type: json['type'] as String?,
       name: json['name'] as String?,
     );

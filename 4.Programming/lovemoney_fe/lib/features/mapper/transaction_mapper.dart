@@ -47,6 +47,9 @@ class TransactionMapper implements Mapper<Transaction, TransactionDto> {
       date: _transaction.date,
       userId: _transaction.user?.id,
       endDate: endDate,
+      transactionPart: _transaction.transactionPart,
     );
   }
 }
+
+

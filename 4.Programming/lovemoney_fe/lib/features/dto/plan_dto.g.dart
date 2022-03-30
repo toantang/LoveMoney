@@ -7,7 +7,7 @@ part of 'plan_dto.dart';
 // **************************************************************************
 
 PlanDto _$PlanDtoFromJson(Map<String, dynamic> json) => PlanDto(
-      id: json['id'] as String?,
+      id: json['_id'] as String?,
       name: json['name'] as String?,
       sumCost: (json['sumCost'] as num?)?.toDouble(),
       sumCurrentMoney: (json['sumCurrentMoney'] as num?)?.toDouble(),
@@ -20,12 +20,12 @@ PlanDto _$PlanDtoFromJson(Map<String, dynamic> json) => PlanDto(
     );
 
 Map<String, dynamic> _$PlanDtoToJson(PlanDto instance) => <String, dynamic>{
-      'id': instance.id,
+      '_id': instance.id,
       'name': instance.name,
       'sumCost': instance.sumCost,
       'sumCurrentMoney': instance.sumCurrentMoney,
       'expectedFinishDate': instance.expectedFinishDate,
       'lastUpdatedDate': instance.lastUpdatedDate,
-      'status': instance.status,
+      'status': instance.status?.toJson(),
       'userId': instance.userId,
     };
