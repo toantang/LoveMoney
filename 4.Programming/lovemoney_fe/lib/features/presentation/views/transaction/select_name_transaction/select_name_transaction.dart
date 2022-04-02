@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:lovemoney_fe/core/util/extensions/tree_view.dart';
+import 'package:lovemoney_fe/features/presentation/common_widget/base_screen.dart';
 import 'package:lovemoney_fe/features/presentation/views/transaction/views/config_data.dart';
 import '../../../../../core/helper/navigation_screen.dart';
 import '../../../../../core/util/extensions/tree_view.dart';
@@ -9,8 +10,7 @@ class SelectNameTransaction extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(),
+    return BaseScreenWithBack(
       body: SingleChildScrollView(
         child: Column(
           children: [

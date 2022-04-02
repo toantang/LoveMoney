@@ -17,6 +17,7 @@ class MainScreen extends StatelessWidget {
   MainScreen({Key? key}) : super(key: key);
 
   final MainBloc homeBloc = MainBloc();
+
   final List<Widget> listChild = [
     HomeScreen(),
     AddTransaction(),
@@ -106,6 +107,7 @@ class MainScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+
     return BlocProvider(
       bloc: homeBloc,
       child: StreamBuilder<ChangeIndexViewState>(
@@ -118,7 +120,8 @@ class MainScreen extends StatelessWidget {
               appBar: _appBar(context),
               body: SafeArea(
                 child: PageView(
-                  children: listChild,
+                  //children: snapshot.data!.listChild!, // if you want to rebuild in PageView, use this line
+                  children: listChild, // if you don't want to rebuild child in PageView, use this line
                   controller: _pageController,
                   onPageChanged: (index) {
                     homeBloc.remoteHomeEvent.sink

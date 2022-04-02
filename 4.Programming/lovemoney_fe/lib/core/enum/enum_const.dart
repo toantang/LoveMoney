@@ -30,5 +30,6 @@ enum KeyUsedWord {
   NO,
   CANCEL,
   CONFIRM,
+  EXPECTED_FINISH_DATE,
 }
 

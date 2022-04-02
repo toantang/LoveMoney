@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:lovemoney_fe/core/constant/color_const.dart';
 import 'package:lovemoney_fe/core/helper/bloc_provider.dart';
+import 'package:lovemoney_fe/features/presentation/common_widget/base_screen.dart';
 import 'package:lovemoney_fe/router.dart';
 import 'core/constant/api_const.dart';
 import 'features/presentation/global_controllers/user_language_bloc/user_language_bloc.dart';
@@ -24,7 +25,6 @@ class MyApp extends StatelessWidget {
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
         theme: ThemeData(
-          //primarySwatch: Colors.blue,
           scaffoldBackgroundColor: ColorConst.primaryColorConst.blueShade200,
         ),
         routes: RouterLV.pages,
@@ -40,17 +40,8 @@ class MyHomePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: ColorConst.primaryColorConst.blueShade200,
+    return BaseScreen(
       body: MainScreen(),
-      /*body: Center(
-        child: ElevatedButton(
-          child: const Text("login view"),
-          onPressed: () {
-            Nav.to(context, ScreenPath.LOGIN_PATH,);
-          },
-        ),
-      ),*/
     );
   }
 }

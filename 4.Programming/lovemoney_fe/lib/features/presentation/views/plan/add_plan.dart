@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:lovemoney_fe/core/enum/enum_const.dart';
 import 'package:lovemoney_fe/core/helper/format_text_to_number.dart';
+import 'package:lovemoney_fe/features/presentation/common_widget/base_screen.dart';
 import 'package:lovemoney_fe/features/presentation/common_widget/button_lv.dart';
 import 'package:lovemoney_fe/features/presentation/common_widget/list_tile_lv.dart';
 import 'package:lovemoney_fe/features/presentation/common_widget/text_field_lv.dart';
@@ -77,18 +78,8 @@ class AddPlan extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return BaseScreenWithBack(
       resizeToAvoidBottomInset: false,
-      appBar: AppBar(
-        leading: IconButton(
-          onPressed: () {
-            Nav.back(context);
-          },
-          icon: const Icon(
-            Icons.arrow_back_rounded,
-          ),
-        ),
-      ),
       body: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [

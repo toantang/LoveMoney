@@ -12,6 +12,7 @@ import 'package:lovemoney_fe/features/presentation/views/transaction/add_transac
 import 'package:lovemoney_fe/features/presentation/views/transaction/add_transaction_bloc/add_transaction_state.dart';
 import 'package:lovemoney_fe/core/helper/navigation_screen.dart';
 import '../../../../../core/util/extensions/tree_view.dart';
+import '../../../common_widget/base_screen.dart';
 import '../select_name_transaction/select_name_transaction.dart';
 
 import '../../../../../core/helper/format_text_to_number.dart';
@@ -31,7 +32,7 @@ class AddTransaction extends StatelessWidget {
       textEditingController: ecControllerCost,
       keyUsedWord: KeyUsedWord.COST,
       textInputType: const TextInputType.numberWithOptions(
-        signed: true,
+      signed: true,
       ),
       maxLength: 15,
     );
@@ -165,7 +166,7 @@ class AddTransaction extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return BaseScreen(
       resizeToAvoidBottomInset: false,
       body: SingleChildScrollView(
         child: Padding(

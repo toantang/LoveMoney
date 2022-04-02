@@ -20,7 +20,7 @@ class MainBloc extends BlocBase {
 
   void _changeIndexCurrentView(RemoteEvent remoteEvent) {
     if (remoteEvent is ChangeIndexViewEvent) {
-      changeIndexViewState = ChangeIndexViewState(remoteEvent.index);
+      changeIndexViewState = ChangeIndexViewState(remoteEvent.index,);
     }
     remoteHomeState.sink.add(changeIndexViewState);
   }

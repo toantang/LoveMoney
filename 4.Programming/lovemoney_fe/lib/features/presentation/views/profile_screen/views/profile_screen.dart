@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:lovemoney_fe/core/constant/color_const.dart';
 import 'package:lovemoney_fe/core/enum/enum_const.dart';
+import 'package:lovemoney_fe/features/presentation/common_widget/base_screen.dart';
 import 'package:lovemoney_fe/features/presentation/common_widget/list_tile_lv.dart';
 import 'package:lovemoney_fe/features/presentation/common_widget/text_lv.dart';
-
-import '../../../../../core/helper/navigation_screen.dart';
 
 class ProfileScreen extends StatelessWidget {
   const ProfileScreen({Key? key}) : super(key: key);
@@ -55,20 +54,7 @@ class ProfileScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        leading: IconButton(
-          icon: const Icon(
-            Icons.arrow_back,
-            size: 40,
-          ),
-          onPressed: () {
-            Nav.back(context);
-          },
-        ),
-        backgroundColor: ColorConst.primaryColorConst.blueShade200,
-        elevation: 0.0,
-      ),
+    return BaseScreenWithBack(
       body: Column(
         mainAxisAlignment: MainAxisAlignment.start,
         children: [

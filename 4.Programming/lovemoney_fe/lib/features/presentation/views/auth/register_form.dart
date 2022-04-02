@@ -1,12 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:lovemoney_fe/core/enum/enum_const.dart';
+import 'package:lovemoney_fe/features/presentation/common_widget/base_screen.dart';
 import 'package:lovemoney_fe/features/presentation/common_widget/button_lv.dart';
 import 'package:lovemoney_fe/features/presentation/common_widget/text_field_lv.dart';
-import 'package:lovemoney_fe/features/presentation/global_controllers/user_language_bloc/user_language_bloc.dart';
-import 'package:lovemoney_fe/features/presentation/global_controllers/user_language_bloc/user_language_event.dart';
-
-import '../../../../core/helper/bloc_provider.dart';
-import '../../../../core/util/language/init_language/english.dart';
 
 class RegisterForm extends StatelessWidget {
   RegisterForm({Key? key}) : super(key: key);
@@ -19,8 +15,7 @@ class RegisterForm extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
 
-    final UserLanguageBloc? userLanguageBloc = BlocProvider.of(context);
-    return Scaffold(
+    return BaseScreen(
       body: Padding(
         padding: const EdgeInsets.only(left: 30, right: 30),
         child: Column(

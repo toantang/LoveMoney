@@ -7,7 +7,7 @@ const createPlan = async (req, res) => {
     name,
     sumCost,
     sumCurrentMoney,
-    expectedFinishedDate,
+    expectedFinishDate,
     lastUpdateDate,
     status,
   } = req.body;
@@ -17,7 +17,7 @@ const createPlan = async (req, res) => {
     name,
     sumCost,
     sumCurrentMoney,
-    expectedFinishedDate,
+    expectedFinishDate,
     lastUpdateDate,
     status,
   });
@@ -31,7 +31,7 @@ const updatePlan = async (req, res) => {
     name,
     sumCost,
     sumCurrentMoney,
-    expectedFinishedDate,
+    expectedFinishDate,
     lastUpdateDate,
     status,
   } = req.body;
@@ -49,7 +49,7 @@ const updatePlan = async (req, res) => {
         name,
         sumCost,
         sumCurrentMoney,
-        expectedFinishedDate,
+        expectedFinishDate,
         lastUpdateDate,
         status,
       });

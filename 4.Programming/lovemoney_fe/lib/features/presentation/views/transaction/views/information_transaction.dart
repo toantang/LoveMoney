@@ -9,7 +9,6 @@ import 'package:lovemoney_fe/features/presentation/views/transaction/update_tran
 
 import '../../../../../core/enum/enum_const.dart';
 import '../../../../../core/helper/navigation_screen.dart';
-import '../../../../domain/entities/transaction/transaction.dart';
 import '../../../common_widget/list_tile_lv.dart';
 import '../../../common_widget/text_lv.dart';
 
@@ -79,7 +78,7 @@ class InformationTransaction extends StatelessWidget {
         builder: (context, snapshot) {
           return _buildLine(
             context,
-            KeyUsedWord.DATE,
+            KeyUsedWord.EXPECTED_FINISH_DATE,
             snapshot.data!.newDate.toString(),
             onPressed: () async {
               final newDate =
@@ -158,15 +157,15 @@ class InformationTransaction extends StatelessWidget {
           _infoDate(context),
           _infoNote(context),
           checkPeriodTime() ? _infoPeriodTime(context) : Container(),
-          ButtonLv(
-            onPressed: () {
-              updateTransactionBloc.updateTransaction();
-            },
-            keyUsedWord: KeyUsedWord.CONFIRM,
-          ),
         ],
       ),
       actions: [
+        ButtonLv(
+        onPressed: () {
+          updateTransactionBloc.updateTransaction();
+        },
+        keyUsedWord: KeyUsedWord.CONFIRM,
+      ),
         ButtonLv(
           onPressed: () {
             Nav.back(context);

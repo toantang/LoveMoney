@@ -16,7 +16,8 @@ class Vietnamese extends UsedLanguage {
     KeyUsedWord.ADD_NEW_PLAN: "Tạo một kế hoạch",
     KeyUsedWord.FINISHED_PLAN: "Kế hoạch đã hoàn thành",
     KeyUsedWord.UNFINISHED_PLAN: "Kế hoạch chưa hoàn thành",
-    KeyUsedWord.SUM_COST: "Tổng tiền dự định",
+    KeyUsedWord.SUM_COST: '''Tổng tiền
+    dự định''',
     KeyUsedWord.COST: "Số tiền",
     KeyUsedWord.TRANSACTION: "Giao dịch",
     KeyUsedWord.PERIOD_TIME: "Chu kỳ",
@@ -35,5 +36,8 @@ class Vietnamese extends UsedLanguage {
     KeyUsedWord.NO: 'No',
     KeyUsedWord.CANCEL: 'Huỷ',
     KeyUsedWord.CONFIRM: "Xác nhận",
+    KeyUsedWord.EXPECTED_FINISH_DATE: '''Ngày dự kiến
+    hoàn thành
+    ''',
   };
 }

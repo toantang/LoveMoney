@@ -35,5 +35,7 @@ class English extends UsedLanguage {
     KeyUsedWord.NO: 'NO',
     KeyUsedWord.CANCEL: 'Cancel',
     KeyUsedWord.CONFIRM: "Confirm",
+    KeyUsedWord.EXPECTED_FINISH_DATE: '''Expected 
+    finished date''',
   };
 }

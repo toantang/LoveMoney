@@ -5,7 +5,7 @@ const createPlan = async ({
   name,
   sumCost,
   sumCurrentMoney,
-  expectedFinishedDate,
+  expectedFinishDate,
   lastUpdateDate,
   status,
 }) => {
@@ -14,7 +14,7 @@ const createPlan = async ({
     name,
     sumCost,
     sumCurrentMoney,
-    expectedFinishedDate,
+    expectedFinishDate,
     lastUpdateDate,
     status,
   });
@@ -31,6 +31,8 @@ const getListPlan = async ({
     'status.code': status.code,
     'status.name': status.name,
   });
+  console.log('list plans: ');
+  console.log(data);
   return data;
 };
 
@@ -39,7 +41,7 @@ const updatePlan = async (id, {
   name,
   sumCost,
   sumCurrentMoney,
-  expectedFinishedDate,
+  expectedFinishDate,
   lastUpdateDate,
   status,
 }) => {
@@ -52,7 +54,7 @@ const updatePlan = async (id, {
         name: name,
         sumCost: sumCost,
         sumCurrentMoney: sumCurrentMoney,
-        expectedFinishedDate: expectedFinishedDate,
+        expectedFinishDate: expectedFinishDate,
         lastUpdateDate: lastUpdateDate,
         status: status,
       });

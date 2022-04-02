@@ -4,6 +4,7 @@ import 'package:lovemoney_fe/core/helper/bloc_provider.dart';
 import 'package:lovemoney_fe/features/presentation/common_widget/button_lv.dart';
 import 'package:lovemoney_fe/features/presentation/views/auth/register_form.dart';
 import '../../../../core/util/screen_path.dart';
+import '../../common_widget/base_screen.dart';
 import '../../common_widget/text_field_lv.dart';
 import '../../common_widget/text_lv.dart';
 import 'package:lovemoney_fe/core/helper/navigation_screen.dart';
@@ -16,7 +17,7 @@ class LoginView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return BaseScreen(
       body: Padding(
         padding: const EdgeInsets.only(left: 30, right: 30),
         child: Column(

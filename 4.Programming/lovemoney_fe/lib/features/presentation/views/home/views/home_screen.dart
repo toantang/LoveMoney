@@ -13,6 +13,7 @@ import 'package:lovemoney_fe/features/presentation/views/home/home_bloc/home_sta
 import 'package:lovemoney_fe/features/presentation/views/transaction/update_transaction_bloc/update_transaction_bloc.dart';
 import '../../../../../core/enum/enum_const.dart';
 import '../../../../../core/helper/navigation_screen.dart';
+import '../../../common_widget/base_screen.dart';
 import '../../../common_widget/list_tile_lv.dart';
 import '../../../common_widget/text_lv.dart';
 import '../../transaction/views/information_transaction.dart';
@@ -150,6 +151,31 @@ class HomeScreen extends StatelessWidget {
     );
   }
 
+  Widget _buildOneItemTransaction(
+      BuildContext context, Transaction transaction) {
+    return Card(
+      child: ListTileLv(
+        onTap: () {
+          NavDialog.show(
+            context,
+            InformationTransaction(
+              updateTransactionBloc: UpdateTransactionBloc(
+                transaction: transaction,
+              ),
+            ),
+          );
+        },
+        title: Center(
+          child: Text(transaction.name!),
+        ),
+        trailing: IconButton(
+          icon: const Icon(Icons.delete),
+          onPressed: () {},
+        ),
+      ),
+    );
+  }
+
   Widget _buildListTransaction() {
     return Expanded(
       child: BlocProvider(
@@ -164,26 +190,7 @@ class HomeScreen extends StatelessWidget {
               return ListView.builder(
                 itemCount: transactions.length,
                 itemBuilder: (context, index) {
-                  return Card(
-                    child: ListTileLv(
-                      onTap: () {
-                        NavDialog.show(
-                          context,
-                          InformationTransaction(
-                            updateTransactionBloc: UpdateTransactionBloc(
-                                transaction: transactions[index]),
-                          ),
-                        );
-                      },
-                      title: Center(
-                        child: Text(transactions[index].name!),
-                      ),
-                      trailing: IconButton(
-                        icon: const Icon(Icons.delete),
-                        onPressed: () {},
-                      ),
-                    ),
-                  );
+                  return _buildOneItemTransaction(context, transactions[index]);
                 },
               );
             } else {
@@ -198,12 +205,11 @@ class HomeScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return BaseScreen(
       body: SafeArea(
         child: Column(
           children: [
             _buildAccountBalance(),
-            //_buildButton(),
             _buildSelectTransactionType(context),
             _buildSelectDate(context),
             _buildListTransaction(),

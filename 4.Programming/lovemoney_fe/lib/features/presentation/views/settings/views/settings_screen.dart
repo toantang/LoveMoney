@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:lovemoney_fe/core/enum/enum_const.dart';
+import 'package:lovemoney_fe/features/presentation/common_widget/base_screen.dart';
 import 'package:lovemoney_fe/features/presentation/common_widget/dialog_lv.dart';
 import 'package:lovemoney_fe/features/presentation/views/settings/views/select_language/select_language_view.dart';
 
@@ -12,7 +13,7 @@ class SettingsScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return BaseScreen(
       body: Column(
         children: [
           Card(
