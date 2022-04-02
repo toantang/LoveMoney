@@ -55,7 +55,7 @@ class TransactionRepositoryImpl implements TransactionRepository {
   }
 
   @override
-  Future<ApiResponse<List<Transaction>>>? getTransaction({
+  Future<ApiResponse<List<Transaction>>>? getListTransaction({
     required Transaction transaction,
     required String endDate,
   }) async {

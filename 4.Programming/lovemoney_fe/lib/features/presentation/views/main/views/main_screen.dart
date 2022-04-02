@@ -4,7 +4,6 @@ import 'package:lovemoney_fe/core/util/screen_path.dart';
 import 'package:lovemoney_fe/features/presentation/views/home/views/home_screen.dart';
 import 'package:lovemoney_fe/features/presentation/views/plan/plan_view.dart';
 import 'package:lovemoney_fe/features/presentation/views/settings/views/settings_screen.dart';
-import 'package:lovemoney_fe/features/presentation/views/transaction/add_transaction_bloc/add_transaction_bloc.dart';
 
 import '../../../../../core/constant/error_const.dart';
 import '../../../../../core/helper/bloc_provider.dart';

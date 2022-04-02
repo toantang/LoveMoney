@@ -29,5 +29,6 @@ enum KeyUsedWord {
   YES,
   NO,
   CANCEL,
+  CONFIRM,
 }
 

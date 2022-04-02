@@ -8,7 +8,6 @@ part 'user.g.dart';
 @JsonSerializable(explicitToJson: true,)
 class User {
   final String? id;
-  final DigitalWallet? digitalWallet;
   final String? email;
   final String? password;
   final String? name;
@@ -24,7 +23,6 @@ class User {
 
   User({
     this.id,
-    this.digitalWallet,
     this.email,
     this.password,
     this.name,
@@ -54,9 +52,16 @@ class User {
     name: 'toantnag',
   );
 
+
+  @override
+  String toString() {
+    return 'User{id: $id, email: $email, password: $password, '
+        'name: $name, userRole: $userRole, age: $age, salt: $salt, birthday: $birthday, '
+        'bio: $bio, phone: $phone, gender: $gender, avatarUrl: $avatarUrl, status: $status}';
+  }
+
   User copyWith({
     String? id,
-    DigitalWallet? digitalWallet,
     String? email,
     String? password,
     String? name,
@@ -72,7 +77,6 @@ class User {
   }) {
     return User(
       id: id ?? id,
-      digitalWallet: digitalWallet ?? this.digitalWallet,
       email: email ?? this.email,
       password: password ?? this.password,
       name: name ?? this.name,

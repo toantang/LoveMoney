@@ -10,7 +10,7 @@ abstract class TransactionRepository {
     required Transaction transaction,
   });
 
-  Future<ApiResponse<List<Transaction>>>? getTransaction({
+  Future<ApiResponse<List<Transaction>>>? getListTransaction({
     required Transaction transaction,
     required String endDate,
   });

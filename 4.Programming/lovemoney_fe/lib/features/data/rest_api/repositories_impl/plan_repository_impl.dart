@@ -19,9 +19,10 @@ class PlanRepositoryImpl implements PlanRepository {
       return ApiResponse.withResult(
         response: response.data,
         resultConverter: (json) => ApiResultSingle(
-            json: json,
-            rootName: 'plan',
-            jsonConverter: (json) => Plan.fromJson(json)),
+          json: json,
+          rootName: 'plan',
+          jsonConverter: (json) => _planMapper.toEntity(PlanDto.fromJson(json)),
+        ),
       );
     } catch (error) {
       return ApiResponse.withError(error);

@@ -40,7 +40,9 @@ class TextFieldLv extends StatelessWidget {
 
   bool _checkInputNumber() {
     if (textInputType.hashCode ==
-        const TextInputType.numberWithOptions(signed: true).hashCode) {
+            const TextInputType.numberWithOptions(signed: true).hashCode ||
+        textInputType.hashCode ==
+            const TextInputType.numberWithOptions().hashCode) {
       return true;
     }
     return false;

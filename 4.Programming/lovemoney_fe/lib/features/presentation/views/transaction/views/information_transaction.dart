@@ -46,7 +46,8 @@ class InformationTransaction extends StatelessWidget {
       bloc: updateTransactionBloc.updateCostBloc,
       child: StreamBuilder<UpdateCostState>(
         initialData: updateTransactionBloc.updateCostBloc.updateCostState,
-        stream: updateTransactionBloc.updateCostBloc.remoteUpdateCostState.stream,
+        stream:
+            updateTransactionBloc.updateCostBloc.remoteUpdateCostState.stream,
         builder: (context, snapshot) {
           return _buildLine(
             context,
@@ -71,53 +72,56 @@ class InformationTransaction extends StatelessWidget {
 
   Widget _infoDate(BuildContext context) {
     return BlocProvider(
-        child: StreamBuilder<UpdateDateState>(
-          initialData: updateTransactionBloc.updateDateBloc.updateDateState,
-          stream:
-              updateTransactionBloc.updateDateBloc.remoteUpdateDateState.stream,
-          builder: (context, snapshot) {
-            return _buildLine(
-              context,
-              KeyUsedWord.DATE,
-              snapshot.data!.newDate.toString(),
-              onPressed: () async {
-                final newDate = await Nav.pushTo(
-                    context, const NavDateTimePicker());
-                updateTransactionBloc.updateDateBloc.remoteUpdateDateEvent.sink
-                    .add(UpdateDateEvent(newDate as DateTime));
-              },
-            );
-          },
-        ),
-        bloc: updateTransactionBloc.updateDateBloc,);
+      child: StreamBuilder<UpdateDateState>(
+        initialData: updateTransactionBloc.updateDateBloc.updateDateState,
+        stream:
+            updateTransactionBloc.updateDateBloc.remoteUpdateDateState.stream,
+        builder: (context, snapshot) {
+          return _buildLine(
+            context,
+            KeyUsedWord.DATE,
+            snapshot.data!.newDate.toString(),
+            onPressed: () async {
+              final newDate =
+                  await Nav.pushTo(context, const NavDateTimePicker());
+              updateTransactionBloc.updateDateBloc.remoteUpdateDateEvent.sink
+                  .add(UpdateDateEvent(newDate as DateTime));
+            },
+          );
+        },
+      ),
+      bloc: updateTransactionBloc.updateDateBloc,
+    );
   }
 
   Widget _infoNote(BuildContext context) {
     return BlocProvider(
-        child: StreamBuilder<UpdateNoteState>(
-          initialData: updateTransactionBloc.updateNoteBloc.updateNoteState,
-          stream: updateTransactionBloc.updateNoteBloc.remoteUpdateNoteState.stream,
-          builder: (context, AsyncSnapshot<UpdateNoteState> snapshot) {
-            return _buildLine(
-              context,
-              KeyUsedWord.NOTE,
-              snapshot.data!.newNote,
-              onPressed: () async {
-                final newNote = await Nav.pushTo(
-                  context,
-                  AlertDialogLvUpdate(
-                    keyUsedWord: KeyUsedWord.COST,
-                    contentTextField: snapshot.data!.newNote.toString(),
-                  ),
-                );
+      child: StreamBuilder<UpdateNoteState>(
+        initialData: updateTransactionBloc.updateNoteBloc.updateNoteState,
+        stream:
+            updateTransactionBloc.updateNoteBloc.remoteUpdateNoteState.stream,
+        builder: (context, AsyncSnapshot<UpdateNoteState> snapshot) {
+          return _buildLine(
+            context,
+            KeyUsedWord.NOTE,
+            snapshot.data!.newNote,
+            onPressed: () async {
+              final newNote = await Nav.pushTo(
+                context,
+                AlertDialogLvUpdate(
+                  keyUsedWord: KeyUsedWord.COST,
+                  contentTextField: snapshot.data!.newNote.toString(),
+                ),
+              );
 
-                updateTransactionBloc.updateNoteBloc.remoteUpdateNoteEvent.sink
-                    .add(UpdateNoteEvent(newNote.toString()));
-              },
-            );
-          },
-        ),
-        bloc: updateTransactionBloc.updateNoteBloc,);
+              updateTransactionBloc.updateNoteBloc.remoteUpdateNoteEvent.sink
+                  .add(UpdateNoteEvent(newNote.toString()));
+            },
+          );
+        },
+      ),
+      bloc: updateTransactionBloc.updateNoteBloc,
+    );
   }
 
   bool checkPeriodTime() {
@@ -154,6 +158,12 @@ class InformationTransaction extends StatelessWidget {
           _infoDate(context),
           _infoNote(context),
           checkPeriodTime() ? _infoPeriodTime(context) : Container(),
+          ButtonLv(
+            onPressed: () {
+              updateTransactionBloc.updateTransaction();
+            },
+            keyUsedWord: KeyUsedWord.CONFIRM,
+          ),
         ],
       ),
       actions: [

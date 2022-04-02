@@ -1,58 +1,56 @@
 import 'package:json_annotation/json_annotation.dart';
-import 'package:lovemoney_fe/features/domain/entities/user.dart';
 import 'package:lovemoney_fe/features/presentation/views/auth/auth_bloc/auth_bloc.dart';
-import 'digital_type.dart';
+import '../domain/entities/digital_type.dart';
 
-part 'digital_wallet.g.dart';
+part 'digital_wallet_dto.g.dart';
 
 @JsonSerializable(
   explicitToJson: true,
 )
-class DigitalWallet {
+class DigitalWalletDto {
   final String? id;
   final String? owner;
   final String? codeWallet;
   final double? accountBalance;
   final DigitalType? digitalType;
-  final User? user;
+  final String? userId;
 
-  DigitalWallet({
+  DigitalWalletDto({
     this.id,
     this.owner,
     this.codeWallet,
     this.accountBalance,
     this.digitalType,
-    this.user,
+    this.userId,
   });
 
-  factory DigitalWallet.fromJson(Map<String, dynamic> json) =>
-      _$DigitalWalletFromJson(json);
-
-  Map<String, dynamic> toJson() => _$DigitalWalletToJson(this);
-
-  static final fakeDigitalWallet = DigitalWallet(
+  static final fakeDigitalWallet = DigitalWalletDto(
     owner: AuthBloc.getInstance().user.name,
     codeWallet: "abcxyz",
     accountBalance: 0.0,
     digitalType: DigitalType(name: 'electronic'),
-    user: AuthBloc.getInstance().user,
+    userId: AuthBloc.getInstance().user.id,
   );
 
-  DigitalWallet copyWith({
+  factory DigitalWalletDto.fromJson(Map<String, dynamic> json) => _$DigitalWalletDtoFromJson(json);
+
+  Map<String, dynamic> toJson() => _$DigitalWalletDtoToJson(this);
+
+  DigitalWalletDto copyWith({
     String? id,
     String? owner,
     String? codeWallet,
     double? accountBalance,
     DigitalType? digitalType,
-    User? user,
+    String? userId,
   }) {
-    return DigitalWallet(
+    return DigitalWalletDto(
       id: id ?? this.id,
       owner: owner ?? this.owner,
       codeWallet: codeWallet ?? this.codeWallet,
       accountBalance: accountBalance ?? this.accountBalance,
       digitalType: digitalType ?? this.digitalType,
-      user: user ?? this.user,
+      userId: userId ?? this.userId,
     );
   }
 }

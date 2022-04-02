@@ -13,8 +13,6 @@ const createTransaction =
     transactionPart,
   } = req.body;
 
-  console.log('body: ');
-  console.log(req.body);
   const transaction = await transactionService.createTransaction({
     userId,
     name,
@@ -29,21 +27,25 @@ const createTransaction =
 
 const updateTransactionById =
     async (req, res) => {
+  const {id} = req.body;
+
   const {
     userId,
     name,
     cost,
     date,
     typeTransaction,
+    transactionPart, 
     note,
   } = req.body;
 
-  const transaction = await transactionService.createTransaction({
+  const transaction = await transactionService.updateTransactionById(id, {
     userId,
     name,
     cost,
     date,
     typeTransaction,
+    transactionPart, 
     note,
   });
 

@@ -134,7 +134,7 @@ class BuildListTransactionBloc extends BlocBase {
     if (remoteEvent is BuildListTransactionEvent) {
       Transaction transaction = remoteEvent.transaction;
       ApiResponse<List<Transaction>>? listTransactionApi =
-          await _transactionRepositoryImpl.getTransaction(
+          await _transactionRepositoryImpl.getListTransaction(
         transaction: transaction,
         endDate: remoteEvent.endDate,
       );

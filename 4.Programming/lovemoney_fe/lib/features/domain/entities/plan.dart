@@ -4,7 +4,9 @@ import 'package:lovemoney_fe/features/domain/entities/user.dart';
 
 part 'plan.g.dart';
 
-@JsonSerializable(explicitToJson: true,)
+@JsonSerializable(
+  explicitToJson: true,
+)
 class Plan {
   final String? id;
   final String? name;
@@ -18,6 +20,12 @@ class Plan {
   factory Plan.fromJson(Map<String, dynamic> json) => _$PlanFromJson(json);
 
   Map<String, dynamic> toJson() => _$PlanToJson(this);
+
+  @override
+  String toString() {
+    return 'Plan{id: $id, name: $name, sumCost: $sumCost, sumCurrentMoney: $sumCurrentMoney, '
+        'expectedFinishDate: $expectedFinishDate, lastUpdatedDate: $lastUpdatedDate, status: $status, user: $user}';
+  }
 
   Plan({
     this.id,

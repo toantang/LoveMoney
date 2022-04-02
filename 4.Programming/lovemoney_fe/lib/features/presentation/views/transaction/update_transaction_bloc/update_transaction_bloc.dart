@@ -3,6 +3,8 @@ import 'dart:async';
 import 'package:lovemoney_fe/core/helper/bloc_provider.dart';
 import 'package:lovemoney_fe/core/helper/formatDate.dart';
 import 'package:lovemoney_fe/core/helper/remote_event.dart';
+import 'package:lovemoney_fe/features/data/rest_api/datasources/models/api_response.dart';
+import 'package:lovemoney_fe/features/data/rest_api/repositories_impl/transaction_repository_impl.dart';
 import 'package:lovemoney_fe/features/presentation/views/transaction/update_transaction_bloc/update_transaction_event.dart';
 import 'package:lovemoney_fe/features/presentation/views/transaction/update_transaction_bloc/update_transaction_state.dart';
 
@@ -10,6 +12,8 @@ import '../../../../domain/entities/transaction/transaction.dart';
 
 class UpdateTransactionBloc {
   final Transaction transaction;
+  final TransactionRepositoryImpl transactionRepositoryImpl =
+      TransactionRepositoryImpl();
 
   late final UpdateDateBloc updateDateBloc;
   late final UpdateCostBloc updateCostBloc;
@@ -21,10 +25,25 @@ class UpdateTransactionBloc {
     }
     return transaction.note!;
   }
+
   UpdateTransactionBloc({required this.transaction}) {
     updateDateBloc = UpdateDateBloc(transaction.date!);
     updateCostBloc = UpdateCostBloc(transaction.cost!);
     updateNoteBloc = UpdateNoteBloc(getNote());
+  }
+
+  void updateTransaction() async {
+    Transaction _transaction = transaction.copyWith();
+    Transaction newTransaction = _transaction.copyWith(
+      cost: updateCostBloc.updateCostState.newCost,
+      date: updateDateBloc.updateDateState.newDate,
+      note: updateNoteBloc.updateNoteState.newNote,
+    );
+
+    ApiResponse<Transaction>? apiResponse = await transactionRepositoryImpl
+        .updateTransaction(transaction: newTransaction);
+    Transaction? t = apiResponse?.result?.data;
+    print(t.toString());
   }
 }
 
@@ -43,13 +62,14 @@ class UpdateDateBloc extends BlocBase {
 
   void processNewDate(RemoteEvent remoteEvent) {
     if (remoteEvent is UpdateDateEvent) {
-      updateDateState = UpdateDateState(FormatDate.dateToString(remoteEvent.newDate));
+      updateDateState =
+          UpdateDateState(FormatDate.dateToString(remoteEvent.newDate));
     }
     remoteUpdateDateState.sink.add(updateDateState);
   }
+
   @override
-  void dispose() {
-  }
+  void dispose() {}
 }
 
 class UpdateCostBloc extends BlocBase {
@@ -71,9 +91,9 @@ class UpdateCostBloc extends BlocBase {
     }
     remoteUpdateCostState.sink.add(updateCostState);
   }
+
   @override
-  void dispose() {
-  }
+  void dispose() {}
 }
 
 class UpdateNoteBloc extends BlocBase {
@@ -96,7 +116,7 @@ class UpdateNoteBloc extends BlocBase {
     }
     remoteUpdateNoteState.sink.add(updateNoteState);
   }
+
   @override
-  void dispose() {
-  }
+  void dispose() {}
 }

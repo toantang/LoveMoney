@@ -11,8 +11,9 @@ const digitalTypeSchema = mongoose.Schema(
 const digitalWalletSchema = mongoose.Schema(
     {
         userId: {
-            type: ObjectId, 
-            ref: 'users'
+            //type: ObjectId, 
+            type: String, 
+            ref: 'users',
         }, 
         owner: String,
         codeWallet: String,

@@ -1,4 +1,3 @@
-const MongoClient = require('mongodb').MongoClient;
 const Transaction = require('../models/transaction');
 
 const createTransaction = async ({
@@ -19,8 +18,6 @@ const createTransaction = async ({
     transactionPart,
     note,
   });
-  console.log('create transaction: ');
-  console.log('transaction: ' + transaction);
   return transaction;
 };
 
@@ -30,9 +27,10 @@ const updateTransactionById = async (id, {
   cost,
   date,
   typeTransaction,
+  transactionPart, 
   note,
 }) => {
-  const transaction = Transaction.findByIdAndUpdate(
+  const transaction = await Transaction.findByIdAndUpdate(
       {
         _id: id,
       },
@@ -42,12 +40,26 @@ const updateTransactionById = async (id, {
         cost,
         date,
         typeTransaction,
+        transactionPart, 
         note,
       },
       {new: true, runValidators: true},
   );
 
   return transaction;
+};
+
+const getAllTransaction = async ({
+  userId, 
+  date, 
+  endDate,
+}) => {
+  const data = Transaction.find({
+    userId: userId, 
+    date: {$gte: date, $lte: endDate}, 
+  })
+
+  return data;
 };
 
 const getListTransaction = async ({
@@ -63,11 +75,11 @@ const getListTransaction = async ({
     date: {$gte: date, $lte: endDate}, 
     'transactionPart.typeTransactionPart': typeTransactionPart,
   });
-  console.log(data);
   return data;
 };
 module.exports = {
   createTransaction,
   updateTransactionById,
+  getAllTransaction,
   getListTransaction,
 }

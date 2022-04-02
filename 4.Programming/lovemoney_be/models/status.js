@@ -6,7 +6,7 @@ const statusSchema = new mongoose.Schema(
             type: String, 
             required: true
         },
-        name: String
+        name: String,
     }
 );
 

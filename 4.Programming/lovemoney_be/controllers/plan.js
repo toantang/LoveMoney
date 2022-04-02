@@ -1,5 +1,5 @@
-const plan = require('../models/plan');
 const planService = require('../services/plan');
+const dataOfRequest = require('../utils/data_of_request');
 
 const createPlan = async (req, res) => {
   const {
@@ -58,8 +58,10 @@ const updatePlan = async (req, res) => {
 const getListPlan = async (req, res) => {
   const {
     userId,
-  } = req.query;
-  const plans = await planService.getListPlan({userId});
+    status,
+  } = dataOfRequest.getDataFromRequest(req);
+
+  const plans = await planService.getListPlan({userId, status});
   return res.send({status: 1, result: {plans}});
 };
 module.exports = {

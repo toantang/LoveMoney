@@ -5,6 +5,7 @@ import 'package:lovemoney_fe/core/helper/formatDate.dart';
 import 'package:lovemoney_fe/core/helper/remote_event.dart';
 import 'package:lovemoney_fe/features/data/rest_api/repositories_impl/plan_repository_impl.dart';
 import 'package:lovemoney_fe/features/domain/entities/status.dart';
+import 'package:lovemoney_fe/features/presentation/views/auth/auth_bloc/auth_bloc.dart';
 import 'package:lovemoney_fe/features/presentation/views/plan/add_plan_bloc/add_plan_event.dart';
 import 'package:lovemoney_fe/features/presentation/views/plan/add_plan_bloc/add_plan_state.dart';
 
@@ -17,7 +18,7 @@ class AddPlanBloc {
 
   final PlanRepositoryImpl _planRepositoryImpl = PlanRepositoryImpl();
 
-  void createPlan() {
+  void createPlan() async {
     Status _status = Status(
       code: CodeStatus.UNFI,
       name: NameStatus.UNFINISHED,
@@ -25,12 +26,15 @@ class AddPlanBloc {
 
     Plan _plan = Plan(
       name: typeNamePlanBloc.typeNamePlanState.outputNamePlan,
-      sumCurrentMoney: typeSumCostPlanBloc.typeSumCostPlanState.sumCostPlan,
+      sumCost: typeSumCostPlanBloc.typeSumCostPlanState.sumCostPlan,
       expectedFinishDate: selectExpectedDatePlanBloc.selectExpectedDatePlanState.expectedFinishedDatePlan,
+      lastUpdatedDate: selectExpectedDatePlanBloc.selectExpectedDatePlanState.expectedFinishedDatePlan,
+      sumCurrentMoney: 0.0,
+      user: AuthBloc.getInstance().user,
       status: _status.copyWith(),
     );
-
-    _planRepositoryImpl.createPlan(plan: _plan.copyWith());
+    print(_plan.toString());
+    await _planRepositoryImpl.createPlan(plan: _plan.copyWith());
   }
 }
 
@@ -81,6 +85,7 @@ class TypeNamePlanBloc extends BlocBase {
   }
 
 }
+
 class SelectExpectedDatePlanBloc extends BlocBase {
   SelectExpectedDatePlanState selectExpectedDatePlanState = SelectExpectedDatePlanState(FormatDate.formatCurrentDate);
 
@@ -102,7 +107,7 @@ class SelectExpectedDatePlanBloc extends BlocBase {
 
   @override
   void dispose() {
-    remoteSelectExpectedDatePlanState.close();
-    remoteSelectExpectedDatePlanEvent.close();
+    //remoteSelectExpectedDatePlanState.close();
+    //remoteSelectExpectedDatePlanEvent.close();
   }
 }

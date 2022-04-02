@@ -34,5 +34,6 @@ class English extends UsedLanguage {
     KeyUsedWord.YES: 'YES',
     KeyUsedWord.NO: 'NO',
     KeyUsedWord.CANCEL: 'Cancel',
+    KeyUsedWord.CONFIRM: "Confirm",
   };
 }

@@ -34,5 +34,6 @@ class Vietnamese extends UsedLanguage {
     KeyUsedWord.YES: 'Xác nhận',
     KeyUsedWord.NO: 'No',
     KeyUsedWord.CANCEL: 'Huỷ',
+    KeyUsedWord.CONFIRM: "Xác nhận",
   };
 }

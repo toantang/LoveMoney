@@ -19,6 +19,11 @@ class Status {
       name: name ?? this.name,
     );
   }
+
+  @override
+  String toString() {
+    return 'Status{code: $code, name: $name}';
+  }
 }
 
 class CodeStatus {
