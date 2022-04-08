@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:lovemoney_fe/core/helper/formatDate.dart';
 import 'package:lovemoney_fe/features/presentation/common_widget/button_lv.dart';
 import 'package:lovemoney_fe/features/presentation/common_widget/dialog_lv.dart';
 
@@ -61,7 +62,7 @@ class InformationPlan extends StatelessWidget {
         children: [
           _infoSumCost(context, plan.sumCost!),
           _infoSumCurrentMoney(context, plan.sumCurrentMoney!),
-          _infoExpectedFinishedDate(context, plan.expectedFinishDate!),
+          _infoExpectedFinishedDate(context, FormatDate.dateToString(plan.expectedFinishDate!)),
         ],
       ),
       actions: [

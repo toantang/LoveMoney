@@ -14,6 +14,6 @@ FixedTransaction _$FixedTransactionFromJson(Map<String, dynamic> json) =>
 
 Map<String, dynamic> _$FixedTransactionToJson(FixedTransaction instance) =>
     <String, dynamic>{
-      '_id': instance.id,
+      'id': instance.id,
       'periodTime': instance.periodTime,
     };

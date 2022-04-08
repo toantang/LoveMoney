@@ -48,7 +48,7 @@ class AddTransactionBloc extends ManagerBloc {
       cost: typeCostBloc.typeCostState.cost,
       name: selectNameBloc.selectNameState.name,
       note: takeNoteBloc.takeNoteState.note,
-      date: selectDateBloc.selectDateState.date,
+      //date: selectDateBloc.selectDateState.date,
       typeTransaction: _getTypeTransaction(),
       user: AuthBloc.getInstance().user,
       transactionPart: TransactionPart.getTransactionPart(
@@ -125,7 +125,7 @@ class SelectNameBloc extends BlocBase {
 
 class SelectDateBloc extends BlocBase {
   SelectDateTransactionState selectDateState =
-      SelectDateTransactionState(FormatDate.formatCurrentDate);
+      SelectDateTransactionState(FormatDate.currentDate);
   final remoteSelectDateState =
       StreamController<SelectDateTransactionState>.broadcast();
   final remoteSelectDateEvent = StreamController<RemoteEvent>();
@@ -139,7 +139,7 @@ class SelectDateBloc extends BlocBase {
   void processDate(RemoteEvent remoteEvent) {
     if (remoteEvent is SelectDateTransactionEvent) {
       selectDateState =
-          SelectDateTransactionState(FormatDate.dateToString(remoteEvent.date));
+          SelectDateTransactionState(remoteEvent.date);
     }
     remoteSelectDateState.sink.add(selectDateState);
   }

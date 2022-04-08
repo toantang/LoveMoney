@@ -14,4 +14,6 @@ router.get(
     '/transaction/getListTransaction',
     asyncMiddleware(transactionController.getListTransaction));
 
+router.get('/transaction/getAllTransaction', asyncMiddleware(transactionController.getAllTransaction));
+
 module.exports = router;

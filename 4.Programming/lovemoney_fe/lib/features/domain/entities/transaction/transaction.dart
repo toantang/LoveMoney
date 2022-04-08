@@ -15,7 +15,7 @@ class Transaction {
   final String
       typeTransaction; // TypeTransactionConst.EXPENSE or TypeTransactionConst.TURNOVER
   final String? note;
-  final String? date;
+  final DateTime? date;
   final User? user;
   final TransactionPart? transactionPart;
 
@@ -34,7 +34,8 @@ class Transaction {
     typeTransaction: TypeTransactionConst.EXPENSE,
     name: 'coffee',
     cost: 993.5,
-    date: '03-30-2022',
+    //date: '03-30-2022',
+    date: DateTime(2022, 3, 30),
     user: User.fakeUser,
     transactionPart: TransactionPart.getTransactionPart(
         TypeTransactionPartConst.FIXED_TRANSACTION, 5),
@@ -51,7 +52,7 @@ class Transaction {
     double? cost,
     String? typeTransaction,
     String? note,
-    String? date,
+    DateTime? date,
     User? user,
     TransactionPart? transactionPart,
   }) {

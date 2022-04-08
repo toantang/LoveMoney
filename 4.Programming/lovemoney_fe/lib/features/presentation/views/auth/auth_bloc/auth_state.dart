@@ -1,11 +1,8 @@
+import 'package:flutter/cupertino.dart';
 
-class EmailNotificationState {
-  final String notification;
-  EmailNotificationState(this.notification);
-}
-
-class PasswordNotificationState {
-  final String notification;
-  PasswordNotificationState(this.notification);
+class ChangeIndexAuthViewState {
+  final int newIndex;
+  final List<Widget>? listChild; // listChild in PageView, if you want to rebuild child in PageView, use it
+  ChangeIndexAuthViewState(this.newIndex, {this.listChild});
 }
 

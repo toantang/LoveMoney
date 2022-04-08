@@ -112,7 +112,7 @@ class AddTransaction extends StatelessWidget {
                             .add(SelectDateTransactionEvent(
                                 FormatDate.stringToDate(value)));
                       },
-                      leading: Text(snapshot.data!.date),
+                      leading: Text(FormatDate.dateToString(snapshot.data!.date)),
                       trailing: const Icon(
                         Icons.date_range,
                         size: SizeConst.sizeIconButton,

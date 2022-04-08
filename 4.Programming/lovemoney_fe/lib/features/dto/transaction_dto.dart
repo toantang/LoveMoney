@@ -10,10 +10,10 @@ class TransactionDto {
   final double? cost;
   final String typeTransaction; // expense or turnover
   final String? note;
-  final String? date;
+  final DateTime? date;
   final String? userId;
   final TransactionPart? transactionPart;
-  final String? endDate;
+  final DateTime? endDate;
 
   TransactionDto({
     this.id,
@@ -36,10 +36,10 @@ class TransactionDto {
     double? cost,
     String? typeTransaction,
     String? note,
-    String? date,
+    DateTime? date,
     String? userId,
     TransactionPart? transactionPart,
-    String? endDate,
+    DateTime? endDate,
   }) {
     return TransactionDto(
       id: id ?? id,
@@ -56,6 +56,7 @@ class TransactionDto {
 
   @override
   String toString() {
-    return 'TransactionDto{id: $id, name: $name, cost: $cost, typeTransaction: $typeTransaction, note: $note, date: $date, userId: $userId, transactionPart: $transactionPart, endDate: $endDate}';
+    return 'TransactionDto{id: $id, name: $name, cost: $cost, typeTransaction: $typeTransaction, '
+        'note: $note, date: $date, userId: $userId, transactionPart: $transactionPart, endDate: $endDate}';
   }
 }

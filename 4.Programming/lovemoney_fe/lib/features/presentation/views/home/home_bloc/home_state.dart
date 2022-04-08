@@ -1,12 +1,12 @@
 import '../../../../domain/entities/transaction/transaction.dart';
 
 class SelectStartDateState {
-  final String date;
+  final DateTime date;
   SelectStartDateState(this.date);
 }
 class SelectEndDateState {
-  final String date;
-  SelectEndDateState(this.date);
+  final DateTime endDate;
+  SelectEndDateState(this.endDate);
 }
 class SelectTransactionTypeState {
   final String selectedTransactionType;

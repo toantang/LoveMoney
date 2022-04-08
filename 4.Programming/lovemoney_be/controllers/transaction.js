@@ -72,8 +72,24 @@ const getListTransaction = async (req, res) => {
   return res.send({status: 1, result: {transactions}});
 };
 
+const getAllTransaction = async (req, res) => {
+  const {
+    userId,
+    date,
+    endDate,
+  } = req.body;
+
+  const transactions = await transactionService.getAllTransaction({
+    userId,
+    date,
+    endDate,
+  });
+
+  return res.send({status: 1, result: {transactions}});
+}
 module.exports = {
   createTransaction,
   updateTransactionById,
   getListTransaction,
+  getAllTransaction,
 }

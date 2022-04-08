@@ -9,8 +9,8 @@ class PlanDto {
   final String? name;
   final double? sumCost;
   final double? sumCurrentMoney;
-  final String? expectedFinishDate;
-  final String? lastUpdatedDate;
+  final DateTime? expectedFinishDate;
+  final DateTime? lastUpdatedDate;
   final Status? status;
   final String? userId;
 
@@ -33,8 +33,8 @@ class PlanDto {
     String? name,
     double? sumCost,
     double? sumCurrentMoney,
-    String? expectedFinishDate,
-    String? lastUpdatedDate,
+    DateTime? expectedFinishDate,
+    DateTime? lastUpdatedDate,
     Status? status,
     String? userId,
   }) {

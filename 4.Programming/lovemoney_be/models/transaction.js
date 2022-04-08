@@ -34,7 +34,9 @@ const transactionSchema = new mongoose.Schema({
   },
   name: String,
   cost: Number,
-  date: String,
+  date: {
+    type: Date,
+  },
   typeTransaction: {
     type: String,
     enum: [
@@ -43,18 +45,6 @@ const transactionSchema = new mongoose.Schema({
     ],
   },
   transactionPart: transactionPartSchema, 
-  /*transactionPart: {
-    typeTransactionPart: {
-      type: String,
-      require: true,
-      enum: [
-        TYPE_TRANSACTION_PART.FIXED_TRANSACTION,
-        TYPE_TRANSACTION_PART.VARIABLE_TRANSACTION,
-      ]
-    },
-    fixedTransaction,
-    variableTransaction,
-  },*/
   note: String,
 })
 

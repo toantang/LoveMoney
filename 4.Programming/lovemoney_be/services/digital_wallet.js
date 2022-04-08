@@ -1,10 +1,7 @@
-const DigitalWallet = require('../models/digitalWallet');
+const digitalWalletDao = require("../dao/digital_wallet");
 
 const findDigitalWalletByUserId = async (userId) => {
-  const digitalWallet = await DigitalWallet.findOne({
-    userId: userId,
-  })
-
+  const digitalWallet = await digitalWalletDao.findDigitalWalletByUserId(userId);
   return digitalWallet;
 };
 const createDigitalWallet = async ({
@@ -14,17 +11,19 @@ const createDigitalWallet = async ({
   accountBalance,
   digitalType,
 }) => {
-  if (await findDigitalWalletByUserId(userId)) {
+  const newDigitalWallet = {
+    userId: userId,
+    owner: owner,
+    codeWallet: codeWallet,
+    accountBalance: accountBalance,
+    digitalType: digitalType,
+  };
+  const digitalWalletExist = await findDigitalWalletByUserId(userId);
+  if (digitalWalletExist) {
     console.log('digital wallet of user is exists');
-    return null;
+    return digitalWalletExist;
   }
-  const digitalWallet = await DigitalWallet.create({
-    userId,
-    owner,
-    codeWallet,
-    accountBalance,
-    digitalType,
-  });
+  const digitalWallet = await digitalWalletDao.createDigitalWallet({newDigitalWallet});
   return digitalWallet;
 };
 

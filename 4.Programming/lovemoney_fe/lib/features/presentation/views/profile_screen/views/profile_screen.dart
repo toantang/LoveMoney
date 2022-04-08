@@ -5,8 +5,11 @@ import 'package:lovemoney_fe/features/presentation/common_widget/base_screen.dar
 import 'package:lovemoney_fe/features/presentation/common_widget/list_tile_lv.dart';
 import 'package:lovemoney_fe/features/presentation/common_widget/text_lv.dart';
 
+import '../../../../domain/entities/user.dart';
+
 class ProfileScreen extends StatelessWidget {
-  const ProfileScreen({Key? key}) : super(key: key);
+  final User? user;
+  const ProfileScreen({Key? key, this.user}) : super(key: key);
 
   Widget _buildLine(BuildContext context, KeyUsedWord keyUsedWord, String content) {
     return ListTileLv(
@@ -44,7 +47,9 @@ class ProfileScreen extends StatelessWidget {
                 size: 30,
                 color: ColorConst.medialColorConst.white,
               ),
-              onPressed: () {},
+              onPressed: () {
+
+              },
             ),
           )
         ],
@@ -59,12 +64,11 @@ class ProfileScreen extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.start,
         children: [
           _avatar(context),
-          _buildLine(context, KeyUsedWord.NAME, 'Tang The Toan'),
-          _buildLine(context, KeyUsedWord.EMAIL, 'toant123@gmail.con'),
-          _buildLine(context, KeyUsedWord.PASSWORD, '*********'),
-          _buildLine(context, KeyUsedWord.BIO,
-              'fasdgsfgateggtdhtyjhtgrftjyhgrfrgtaehteyahbtbfdggetaghadgfgfsgh'),
-          _buildLine(context, KeyUsedWord.GENDER, 'gender'),
+          _buildLine(context, KeyUsedWord.NAME, user?.name?? 'no name'),
+          _buildLine(context, KeyUsedWord.EMAIL, user?.email?? 'no email'),
+          _buildLine(context, KeyUsedWord.PASSWORD, user?.password?? '******'),
+          _buildLine(context, KeyUsedWord.BIO, user?.bio?? ''),
+          _buildLine(context, KeyUsedWord.GENDER, user?.gender?? 'user.gender'),
         ],
       ),
     );

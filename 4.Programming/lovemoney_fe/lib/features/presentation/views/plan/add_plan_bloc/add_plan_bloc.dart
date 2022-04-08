@@ -27,8 +27,8 @@ class AddPlanBloc {
     Plan _plan = Plan(
       name: typeNamePlanBloc.typeNamePlanState.outputNamePlan,
       sumCost: typeSumCostPlanBloc.typeSumCostPlanState.sumCostPlan,
-      expectedFinishDate: selectExpectedDatePlanBloc.selectExpectedDatePlanState.expectedFinishedDatePlan,
-      lastUpdatedDate: selectExpectedDatePlanBloc.selectExpectedDatePlanState.expectedFinishedDatePlan,
+      //expectedFinishDate: selectExpectedDatePlanBloc.selectExpectedDatePlanState.expectedFinishedDatePlan,
+      //lastUpdatedDate: selectExpectedDatePlanBloc.selectExpectedDatePlanState.expectedFinishedDatePlan,
       sumCurrentMoney: 0.0,
       user: AuthBloc.getInstance().user,
       status: _status.copyWith(),

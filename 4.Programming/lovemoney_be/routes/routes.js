@@ -1,8 +1,9 @@
 const express = require('express');
-var planRouter = require('../routes/plan');
-var transactionRouter = require('../routes/transaction');
-var userRouter = require('../routes/user');
-var digitalWalletRouter = require('../routes/digital_wallet');
+const planRouter = require('../routes/plan');
+const transactionRouter = require('../routes/transaction');
+const userRouter = require('../routes/user');
+const digitalWalletRouter = require('../routes/digital_wallet');
+const authRouter = require('../routes/auth');
 
 module.exports = function(app) {
     app.use(express.json());
@@ -10,4 +11,5 @@ module.exports = function(app) {
     app.use(transactionRouter);
     app.use(userRouter);
     app.use(digitalWalletRouter);
+    app.use(authRouter);
 }

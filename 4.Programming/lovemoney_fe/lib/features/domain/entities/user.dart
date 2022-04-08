@@ -1,5 +1,4 @@
 import 'package:json_annotation/json_annotation.dart';
-import 'package:lovemoney_fe/features/domain/entities/digital_wallet.dart';
 import 'package:lovemoney_fe/features/domain/entities/role_user.dart';
 import 'package:lovemoney_fe/features/domain/entities/status.dart';
 

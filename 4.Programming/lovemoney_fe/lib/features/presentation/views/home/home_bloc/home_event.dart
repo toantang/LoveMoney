@@ -17,6 +17,6 @@ class SelectTransactionTypeEvent extends RemoteEvent {
 
 class BuildListTransactionEvent extends RemoteEvent {
   final Transaction transaction;
-  final String endDate;
+  final DateTime endDate;
   BuildListTransactionEvent(this.transaction, this.endDate);
 }

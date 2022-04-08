@@ -1,4 +1,4 @@
-const Plan = require('../models/plan');
+const planDao = require('../dao/plan');
 
 const createPlan = async ({
   userId,
@@ -9,28 +9,25 @@ const createPlan = async ({
   lastUpdateDate,
   status,
 }) => {
-  const plan = await Plan.create({
-    userId,
-    name,
-    sumCost,
-    sumCurrentMoney,
-    expectedFinishDate,
-    lastUpdateDate,
-    status,
-  });
+  const newPlan = {
+    userId: userId,
+    name: name,
+    sumCost: sumCost,
+    sumCurrentMoney: sumCurrentMoney,
+    expectedFinishDate: expectedFinishDate,
+    lastUpdateDate: lastUpdateDate,
+    status: status,
+  };
+  const plan = await planDao.createPlan({newPlan});
   console.log(plan);
   return plan;
 };
 
-const getListPlan = async ({
+const getListPlanByIdStatus = async ({
   userId,
   status,
 }) => {
-  const data = await Plan.find({
-    userId: userId,
-    'status.code': status.code,
-    'status.name': status.name,
-  });
+  const data = await planDao.getListPlanByIdStatus({userId, status});
   console.log('list plans: ');
   console.log(data);
   return data;
@@ -45,23 +42,18 @@ const updatePlan = async (id, {
   lastUpdateDate,
   status,
 }) => {
-  const plan = Plan.findByIdAndUpdate(
-      {
-        _id: id,
-      },
-      {
-        userId: userId,
-        name: name,
-        sumCost: sumCost,
-        sumCurrentMoney: sumCurrentMoney,
-        expectedFinishDate: expectedFinishDate,
-        lastUpdateDate: lastUpdateDate,
-        status: status,
-      });
+  const plan = await planDao.updatePlan(userId, {
+    name,
+    sumCost,
+    sumCurrentMoney,
+    expectedFinishDate,
+    lastUpdateDate,
+    status
+  });
   return plan;
-}; 
+};
 module.exports = {
   createPlan,
   updatePlan,
-  getListPlan,
+  getListPlanByIdStatus,
 }

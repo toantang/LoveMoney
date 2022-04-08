@@ -31,7 +31,7 @@ class HomeScreen extends StatelessWidget {
         homeBloc.buildListTransactionBloc.remoteBuildTransactionEvent.sink.add(
           BuildListTransactionEvent(
             homeBloc.getTransaction(),
-            homeBloc.selectEndDateBloc.selectEndDateState.date,
+            homeBloc.selectEndDateBloc.selectEndDateState.endDate,
           ),
         );
       },
@@ -100,15 +100,14 @@ class HomeScreen extends StatelessWidget {
               stream: homeBloc
                   .selectStartDateBloc.remoteSelectStartDateState.stream,
               builder: (context, snapshot) {
-                return Text(snapshot.data!.date);
+                return Text(FormatDate.dateToString(snapshot.data!.date));
               },
             ),
             onPressed: () async {
               final date = await Nav.pushTo(
                 context,
                 NavDateTimePicker(
-                  limitedDateTime: FormatDate.stringToDate(
-                      homeBloc.selectEndDateBloc.selectEndDateState.date),
+                  limitedDateTime: homeBloc.selectEndDateBloc.selectEndDateState.endDate,
                 ),
               );
               String value = FormatDate.dateToString(date as DateTime);
@@ -128,7 +127,7 @@ class HomeScreen extends StatelessWidget {
               stream:
                   homeBloc.selectEndDateBloc.remoteSelectEndDateState.stream,
               builder: (context, snapshot) {
-                return Text(snapshot.data!.date);
+                return Text(FormatDate.dateToString(snapshot.data!.endDate));
               },
             ),
             onPressed: () async {
@@ -136,8 +135,7 @@ class HomeScreen extends StatelessWidget {
               final date = await Nav.pushTo(
                 context,
                 NavDateTimePicker(
-                  lowerDateTime: FormatDate.stringToDate(
-                      homeBloc.selectStartDateBloc.selectStartDateState.date),
+                  lowerDateTime: homeBloc.selectStartDateBloc.selectStartDateState.date,
                 ),
               );
               String value = FormatDate.dateToString(date as DateTime);

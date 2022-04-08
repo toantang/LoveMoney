@@ -12,6 +12,6 @@ abstract class TransactionRepository {
 
   Future<ApiResponse<List<Transaction>>>? getListTransaction({
     required Transaction transaction,
-    required String endDate,
+    required DateTime endDate,
   });
 }

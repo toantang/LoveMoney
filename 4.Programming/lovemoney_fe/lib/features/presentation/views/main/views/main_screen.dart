@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:lovemoney_fe/core/constant/color_const.dart';
 import 'package:lovemoney_fe/core/util/screen_path.dart';
+import 'package:lovemoney_fe/features/presentation/views/auth/auth_bloc/auth_bloc.dart';
 import 'package:lovemoney_fe/features/presentation/views/home/views/home_screen.dart';
 import 'package:lovemoney_fe/features/presentation/views/plan/plan_view.dart';
 import 'package:lovemoney_fe/features/presentation/views/settings/views/settings_screen.dart';
@@ -8,6 +9,7 @@ import 'package:lovemoney_fe/features/presentation/views/settings/views/settings
 import '../../../../../core/constant/error_const.dart';
 import '../../../../../core/helper/bloc_provider.dart';
 import '../../../../../core/helper/navigation_screen.dart';
+import '../../../../domain/entities/user.dart';
 import '../../transaction/views/add_transaction.dart';
 import '../main_bloc/main_bloc.dart';
 import '../main_bloc/main_event.dart';
@@ -31,8 +33,10 @@ class MainScreen extends StatelessWidget {
   );
 
   AppBar _appBar(BuildContext context) {
+    final User user = AuthBloc.getInstance().user;
     return AppBar(
       backgroundColor: ColorConst.primaryColorConst.blueShade200,
+      automaticallyImplyLeading: false,
       actions: [
         Padding(
           padding: const EdgeInsets.only(top: 5, bottom: 5, right: 10),
@@ -41,10 +45,10 @@ class MainScreen extends StatelessWidget {
             height: AppBar().preferredSize.height,
             child: InkWell(
               onTap: () {
-                Nav.to(context, ScreenPath.PROFILE_PATH);
+                Nav.to(context, ScreenPath.PROFILE_PATH, arguments: user);
               },
-              child: const CircleAvatar(
-                backgroundImage: AssetImage('lib/assets/itachi.jpg'),
+              child: CircleAvatar(
+                backgroundImage: AssetImage(user.avatarUrl?? 'lib/assets/itachi.jpg'),
               ),
             ),
             decoration: const BoxDecoration(
@@ -107,7 +111,6 @@ class MainScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-
     return BlocProvider(
       bloc: homeBloc,
       child: StreamBuilder<ChangeIndexViewState>(

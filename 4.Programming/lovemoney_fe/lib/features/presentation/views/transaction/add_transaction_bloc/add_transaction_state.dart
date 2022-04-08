@@ -9,7 +9,7 @@ class SelectNameState {
 }
 
 class SelectDateTransactionState {
-  final String date;
+  final DateTime date;
   SelectDateTransactionState(this.date);
 }
 

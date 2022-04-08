@@ -38,7 +38,7 @@ class TransactionMapper implements Mapper<Transaction, TransactionDto> {
     );
   }
 
-  TransactionDto dtoForGetTransaction(Transaction _transaction, String endDate) {
+  TransactionDto dtoForGetTransaction(Transaction _transaction, DateTime endDate) {
     TransactionDto _transactionDto = TransactionDto(
       typeTransaction: _transaction.typeTransaction,
     );

@@ -12,8 +12,8 @@ class Plan {
   final String? name;
   final double? sumCost;
   final double? sumCurrentMoney;
-  final String? expectedFinishDate;
-  final String? lastUpdatedDate;
+  final DateTime? expectedFinishDate;
+  final DateTime? lastUpdatedDate;
   final Status? status;
   final User? user;
 
@@ -43,19 +43,19 @@ class Plan {
     String? name,
     double? sumCost,
     double? sumCurrentMoney,
-    String? expectedFinishDate,
-    String? lastUpdatedDate,
+    DateTime? expectedFinishDate,
+    DateTime? lastUpdatedDate,
     Status? status,
     User? user,
   }) {
     return Plan(
-      id: id ?? id,
-      name: name ?? name,
-      sumCost: sumCost ?? sumCost,
-      sumCurrentMoney: sumCurrentMoney ?? sumCurrentMoney,
-      expectedFinishDate: expectedFinishDate ?? expectedFinishDate,
-      lastUpdatedDate: lastUpdatedDate ?? lastUpdatedDate,
-      status: status ?? status,
+      id: id ?? this.id,
+      name: name ?? this.name,
+      sumCost: sumCost ?? this.sumCost,
+      sumCurrentMoney: sumCurrentMoney ?? this.sumCurrentMoney,
+      expectedFinishDate: expectedFinishDate ?? this.expectedFinishDate,
+      lastUpdatedDate: lastUpdatedDate ?? this.lastUpdatedDate,
+      status: status ?? this.status,
       user: user ?? user,
     );
   }

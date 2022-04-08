@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:lovemoney_fe/core/constant/color_const.dart';
 import 'package:lovemoney_fe/core/helper/bloc_provider.dart';
 import 'package:lovemoney_fe/features/presentation/common_widget/base_screen.dart';
+import 'package:lovemoney_fe/features/presentation/views/auth/authScreen.dart';
+import 'package:lovemoney_fe/features/presentation/views/splash/splash_screen.dart';
 import 'package:lovemoney_fe/router.dart';
 import 'core/constant/api_const.dart';
 import 'features/presentation/global_controllers/user_language_bloc/user_language_bloc.dart';
@@ -40,8 +42,8 @@ class MyHomePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BaseScreen(
-      body: MainScreen(),
+    return const BaseScreen(
+      body: SplashScreen(),
     );
   }
 }

@@ -1,4 +1,5 @@
-const Transaction = require('../models/transaction');
+const formatDate = require('../utils/format_date');
+const transactionDao = require('../dao/transaction');
 
 const createTransaction = async ({
   userId,
@@ -9,15 +10,18 @@ const createTransaction = async ({
   transactionPart,
   note,
 }) => {
-  const transaction = await Transaction.create({
-    userId,
-    name,
-    cost,
-    date,
-    typeTransaction,
-    transactionPart,
-    note,
-  });
+  const formatedDate = formatDate.format(date);
+  const newTransaction = {
+    userId: userId,
+    name: name,
+    cost: cost,
+    date: formatedDate,
+    typeTransaction: typeTransaction,
+    transactionPart: transactionPart,
+    note: note,
+  };
+  console.log(newTransaction);
+  const transaction = await transactionDao.createTransaction({newTransaction});
   return transaction;
 };
 
@@ -27,38 +31,43 @@ const updateTransactionById = async (id, {
   cost,
   date,
   typeTransaction,
-  transactionPart, 
+  transactionPart,
   note,
 }) => {
-  const transaction = await Transaction.findByIdAndUpdate(
-      {
-        _id: id,
-      },
+  const transactionDb = await transactionDao.findTransactionById(id);
+  if (!transactionDb) {
+    console.log('can not find transaction have id: ' + id.toString());
+    return null;
+  }
+  const newDate = formatDate.format(date);
+  const transaction = await transactionDao.updateTransactionById(
+      id,
       {
         userId,
         name,
         cost,
-        date,
+        date: newDate,
         typeTransaction,
-        transactionPart, 
+        transactionPart,
         note,
       },
-      {new: true, runValidators: true},
   );
 
   return transaction;
 };
 
 const getAllTransaction = async ({
-  userId, 
-  date, 
+  userId,
+  date,
   endDate,
 }) => {
-  const data = Transaction.find({
-    userId: userId, 
-    date: {$gte: date, $lte: endDate}, 
-  })
-
+  const start = formatDate.format(date);
+  const end = formatDate.format(endDate);
+  const data = await transactionDao.getAllTransaction({
+    userId: userId,
+    start,
+    end,
+  });
   return data;
 };
 
@@ -69,11 +78,14 @@ const getListTransaction = async ({
   endDate,
   typeTransactionPart,
 }) => {
-  const data = await Transaction.find({
-    userId: userId,
-    typeTransaction: typeTransaction,
-    date: {$gte: date, $lte: endDate}, 
-    'transactionPart.typeTransactionPart': typeTransactionPart,
+  const start = formatDate.format(date);
+  const end = formatDate.format(endDate);
+  const data = await transactionDao.getListTransaction({
+    userId,
+    typeTransaction,
+    start,
+    end,
+    typeTransactionPart,
   });
   return data;
 };

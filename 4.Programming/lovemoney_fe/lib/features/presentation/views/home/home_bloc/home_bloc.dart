@@ -65,7 +65,7 @@ class SelectTransactionTypeBloc extends BlocBase {
 
 class SelectStartDateBloc extends BlocBase {
   SelectStartDateState selectStartDateState =
-      SelectStartDateState(FormatDate.formatCurrentDate);
+      SelectStartDateState(FormatDate.currentDate);
 
   final remoteSelectStartDateState =
       StreamController<SelectStartDateState>.broadcast();
@@ -80,7 +80,7 @@ class SelectStartDateBloc extends BlocBase {
   void processStartDate(RemoteEvent remoteEvent) {
     if (remoteEvent is SelectStartDateEvent) {
       selectStartDateState =
-          SelectStartDateState(FormatDate.dateToString(remoteEvent.date));
+          SelectStartDateState(remoteEvent.date);
     }
     remoteSelectStartDateState.sink.add(selectStartDateState);
   }
@@ -91,7 +91,7 @@ class SelectStartDateBloc extends BlocBase {
 
 class SelectEndDateBloc extends BlocBase {
   SelectEndDateState selectEndDateState =
-      SelectEndDateState(FormatDate.formatCurrentDate);
+      SelectEndDateState(FormatDate.currentDate);
   final remoteSelectEndDateState =
       StreamController<SelectEndDateState>.broadcast();
   final remoteSelectEndDateEvent = StreamController<RemoteEvent>();
@@ -105,7 +105,7 @@ class SelectEndDateBloc extends BlocBase {
   void processEndDate(RemoteEvent remoteEvent) {
     if (remoteEvent is SelectEndDateEvent) {
       selectEndDateState =
-          SelectEndDateState(FormatDate.dateToString(remoteEvent.date));
+          SelectEndDateState(remoteEvent.date);
     }
     remoteSelectEndDateState.sink.add(selectEndDateState);
   }

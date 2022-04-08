@@ -13,8 +13,8 @@ const planSchema = mongoose.Schema(
         name: String,
         sumCost: Number,
         sumCurrentMoney: Number,
-        expectedFinishDate: String,
-        lastUpdateDate: String,
+        expectedFinishDate: Date,
+        lastUpdateDate: Date,
         status: Status,
     }
 )

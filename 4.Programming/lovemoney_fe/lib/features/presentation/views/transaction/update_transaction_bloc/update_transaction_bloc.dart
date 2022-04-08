@@ -27,7 +27,7 @@ class UpdateTransactionBloc {
   }
 
   UpdateTransactionBloc({required this.transaction}) {
-    updateDateBloc = UpdateDateBloc(transaction.date!);
+    //updateDateBloc = UpdateDateBloc(transaction.date!);
     updateCostBloc = UpdateCostBloc(transaction.cost!);
     updateNoteBloc = UpdateNoteBloc(getNote());
   }
@@ -36,7 +36,7 @@ class UpdateTransactionBloc {
     Transaction _transaction = transaction.copyWith();
     Transaction newTransaction = _transaction.copyWith(
       cost: updateCostBloc.updateCostState.newCost,
-      date: updateDateBloc.updateDateState.newDate,
+      //date: updateDateBloc.updateDateState.newDate,
       note: updateNoteBloc.updateNoteState.newNote,
     );
 

@@ -57,7 +57,7 @@ class TransactionRepositoryImpl implements TransactionRepository {
   @override
   Future<ApiResponse<List<Transaction>>>? getListTransaction({
     required Transaction transaction,
-    required String endDate,
+    required DateTime endDate,
   }) async {
     final TransactionDto transactionDto =
         _transactionMapper.dtoForGetTransaction(transaction, endDate);
