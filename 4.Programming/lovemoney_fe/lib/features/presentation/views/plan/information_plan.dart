@@ -37,10 +37,6 @@ class InformationPlan extends StatelessWidget {
     );
   }
 
-  Widget _infoName(BuildContext context, String name) {
-    return _buildLine(context, keyUsedWord: KeyUsedWord.NAME, content: name);
-  }
-
   Widget _infoSumCost(BuildContext context, double sumCost) {
     return _buildLine(context, keyUsedWord: KeyUsedWord.SUM_COST, content: sumCost.toString());
   }

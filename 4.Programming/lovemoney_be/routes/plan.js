@@ -7,6 +7,6 @@ router.post('/plan', asyncMiddleware(planController.createPlan));
 
 router.post('/plan/update/:id', asyncMiddleware(planController.updatePlan));
 
-router.get('/plan/getListPlan', asyncMiddleware(planController.getListPlan));
+router.get('/plan/getListPlan', asyncMiddleware(planController.getListPlanByIdStatus));
 
 module.exports = router;

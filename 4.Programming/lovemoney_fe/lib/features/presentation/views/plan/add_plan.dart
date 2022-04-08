@@ -57,14 +57,13 @@ class AddPlan extends StatelessWidget {
               onTap: () async {
                 final date =
                     await Nav.pushTo(context, const NavDateTimePicker());
-                String value = FormatDate.dateToString(date as DateTime);
                 addPlanBloc.selectExpectedDatePlanBloc
                     .remoteSelectExpectedDatePlanEvent.sink
                     .add(
-                  SelectExpectedDatePlanEvent(FormatDate.stringToDate(value)),
+                  SelectExpectedDatePlanEvent(date as DateTime),
                 );
               },
-              leading: Text(snapshot.data!.expectedFinishedDatePlan),
+              leading: Text(FormatDate.dateToString(snapshot.data!.expectedFinishedDatePlan)),
               trailing: const Icon(
                 Icons.date_range,
                 size: SizeConst.sizeIconButton,
@@ -79,13 +78,19 @@ class AddPlan extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BaseScreenWithBack(
-      resizeToAvoidBottomInset: false,
       body: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          _inputSumCost(context),
-          _inputNamePlan(context),
-          _selectExpectedDatePlan(context),
+          Padding(
+            padding: const EdgeInsets.only(left: 30, right: 30),
+            child: Column(
+              children: [
+                _inputSumCost(context),
+                _inputNamePlan(context),
+                _selectExpectedDatePlan(context),
+              ],
+            ),
+          ),
           ButtonLv(
             keyUsedWord: KeyUsedWord.ADD,
             onPressed: () {

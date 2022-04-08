@@ -14,7 +14,7 @@ Plan _$PlanFromJson(Map<String, dynamic> json) => Plan(
       expectedFinishDate: json['expectedFinishDate'] == null
           ? null
           : DateTime.parse(json['expectedFinishDate'] as String),
-      lastUpdatedDate: json['lastUpdatedDate'] == null
+      lastUpdateDate: json['lastUpdateDate'] == null
           ? null
           : DateTime.parse(json['lastUpdatedDate'] as String),
       status: json['status'] == null
@@ -31,7 +31,7 @@ Map<String, dynamic> _$PlanToJson(Plan instance) => <String, dynamic>{
       'sumCost': instance.sumCost,
       'sumCurrentMoney': instance.sumCurrentMoney,
       'expectedFinishDate': instance.expectedFinishDate?.toIso8601String(),
-      'lastUpdatedDate': instance.lastUpdatedDate?.toIso8601String(),
+      'lastUpdateDate': instance.lastUpdateDate?.toIso8601String(),
       'status': instance.status?.toJson(),
       'user': instance.user?.toJson(),
     };

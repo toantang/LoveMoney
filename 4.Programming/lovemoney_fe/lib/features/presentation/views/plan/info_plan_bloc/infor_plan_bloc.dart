@@ -19,9 +19,7 @@ class BuildListPlanBloc extends BlocBase {
   //late StreamController<RemoteEvent> remoteBuildListPlanEvent;
 
   BuildListPlanBloc() {
-    //remoteBuildListPlanState = StreamController<BuildListPlanState>();
-    //remoteBuildListPlanEvent = StreamController<RemoteEvent>();
-
+    //openStream();
     remoteBuildListPlanEvent.stream.listen((RemoteEvent remoteEvent) {
       processBuildListPlan(remoteEvent);
     });
@@ -35,15 +33,22 @@ class BuildListPlanBloc extends BlocBase {
       if (plans != null) {
         buildListPlanState = BuildListPlanState(plans);
       }
+      else {
+        buildListPlanState = BuildListPlanState([]);
+      }
     }
 
     remoteBuildListPlanState.sink.add(buildListPlanState);
   }
 
+  void openStream() {
+    //remoteBuildListPlanState = StreamController<BuildListPlanState>.broadcast();
+    //remoteBuildListPlanEvent = StreamController<RemoteEvent>();
+  }
   @override
   void dispose() {
-    remoteBuildListPlanState.close();
-    remoteBuildListPlanEvent.close();
+    //remoteBuildListPlanState.close();
+    //remoteBuildListPlanEvent.close();
   }
 
 }

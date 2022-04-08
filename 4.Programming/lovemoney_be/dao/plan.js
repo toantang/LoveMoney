@@ -4,7 +4,6 @@ const createPlan = async ({
   newPlan, 
 }) => {
   const plan = await Plan.create(newPlan);
-  console.log(plan);
   return plan;
 };
 
@@ -17,7 +16,6 @@ const getListPlanByIdStatus = async ({
     'status.code': status.code,
     'status.name': status.name,
   });
-  console.log('list plans: ');
   console.log(data);
   return data;
 };

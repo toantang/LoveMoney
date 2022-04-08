@@ -14,11 +14,12 @@ class PlanRepositoryImpl implements PlanRepository {
 
   @override
   Future<ApiResponse<Plan>>? createPlan({required Plan plan}) async {
+    final PlanDto _planDto = _planMapper.toDTO(plan);
     try {
-      var response = await _restClient.postMethod('/plan', data: plan);
+      var response = await _restClient.postMethod('/plan', data: _planDto.toJson());
       return ApiResponse.withResult(
         response: response.data,
-        resultConverter: (json) => ApiResultSingle(
+        resultConverter: (json) => ApiResultSingle<Plan>(
           json: json,
           rootName: 'plan',
           jsonConverter: (json) => _planMapper.toEntity(PlanDto.fromJson(json)),
@@ -37,7 +38,7 @@ class PlanRepositoryImpl implements PlanRepository {
           params: planDto.toJson());
       return ApiResponse.withResult(
         response: response.data,
-        resultConverter: (json) => ApiResultList(
+        resultConverter: (json) => ApiResultList<Plan>(
           json: json,
           rootName: 'plans',
           jsonConverter: (json) => _planMapper.toEntity(PlanDto.fromJson(json)),
@@ -56,7 +57,7 @@ class PlanRepositoryImpl implements PlanRepository {
           data: planDto.toJson());
       return ApiResponse.withResult(
         response: response.data,
-        resultConverter: (json) => ApiResultSingle(
+        resultConverter: (json) => ApiResultSingle<Plan>(
           json: json,
           rootName: 'plan',
           jsonConverter: (json) => _planMapper.toEntity(PlanDto.fromJson(json)),

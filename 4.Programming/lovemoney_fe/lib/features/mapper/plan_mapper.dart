@@ -15,7 +15,7 @@ class PlanMapper implements Mapper<Plan, PlanDto> {
       status: _plan.status,
       expectedFinishDate: _plan.expectedFinishDate,
       sumCurrentMoney: _plan.sumCurrentMoney,
-      lastUpdatedDate: _plan.lastUpdatedDate,
+      lastUpdateDate: _plan.lastUpdateDate,
     );
   }
 
@@ -30,7 +30,7 @@ class PlanMapper implements Mapper<Plan, PlanDto> {
       expectedFinishDate: _planDto.expectedFinishDate,
       sumCost: _planDto.sumCost,
       sumCurrentMoney: _planDto.sumCurrentMoney,
-      lastUpdatedDate: _planDto.lastUpdatedDate,
+      lastUpdateDate: _planDto.lastUpdateDate,
       user: null,
     );
   }

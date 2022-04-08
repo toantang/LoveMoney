@@ -17,7 +17,7 @@ const setDefault = date => {
 const format = day => {
   const stringFormated = dateToString(day);
   if (stringFormated == null) {
-    console.log('formated date is failed');
+    console.log('dateToString is null');
     return null;
   }
   return new Date(stringFormated);
@@ -25,6 +25,7 @@ const format = day => {
 
 const dateToString = day => {
   if (day == null || day == undefined) {
+    console.log('day is null');
     return null;
   }
   var convertDay = null;

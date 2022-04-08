@@ -10,7 +10,7 @@ class PlanDto {
   final double? sumCost;
   final double? sumCurrentMoney;
   final DateTime? expectedFinishDate;
-  final DateTime? lastUpdatedDate;
+  final DateTime? lastUpdateDate;
   final Status? status;
   final String? userId;
 
@@ -23,7 +23,7 @@ class PlanDto {
     this.sumCost,
     this.sumCurrentMoney,
     this.expectedFinishDate,
-    this.lastUpdatedDate,
+    this.lastUpdateDate,
     this.status,
     this.userId,
   });
@@ -34,19 +34,19 @@ class PlanDto {
     double? sumCost,
     double? sumCurrentMoney,
     DateTime? expectedFinishDate,
-    DateTime? lastUpdatedDate,
+    DateTime? lastUpdateDate,
     Status? status,
     String? userId,
   }) {
     return PlanDto(
-      id: id ?? id,
-      name: name ?? name,
-      sumCost: sumCost ?? sumCost,
-      sumCurrentMoney: sumCurrentMoney ?? sumCurrentMoney,
-      expectedFinishDate: expectedFinishDate ?? expectedFinishDate,
-      lastUpdatedDate: lastUpdatedDate ?? lastUpdatedDate,
-      status: status ?? status,
-      userId: userId ?? userId,
+      id: id ?? this.id,
+      name: name ?? this.name,
+      sumCost: sumCost ?? this.sumCost,
+      sumCurrentMoney: sumCurrentMoney ?? this.sumCurrentMoney,
+      expectedFinishDate: expectedFinishDate ?? this.expectedFinishDate,
+      lastUpdateDate: lastUpdateDate ?? this.lastUpdateDate,
+      status: status ?? this.status,
+      userId: userId ?? this.userId,
     );
   }
 }

@@ -48,7 +48,7 @@ class AddTransactionBloc extends ManagerBloc {
       cost: typeCostBloc.typeCostState.cost,
       name: selectNameBloc.selectNameState.name,
       note: takeNoteBloc.takeNoteState.note,
-      //date: selectDateBloc.selectDateState.date,
+      date: selectDateBloc.selectDateState.date,
       typeTransaction: _getTypeTransaction(),
       user: AuthBloc.getInstance().user,
       transactionPart: TransactionPart.getTransactionPart(

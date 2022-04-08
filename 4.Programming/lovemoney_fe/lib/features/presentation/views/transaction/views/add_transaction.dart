@@ -105,12 +105,11 @@ class AddTransaction extends StatelessWidget {
                       onTap: () async {
                         final date = await Nav.pushTo(
                             context, const NavDateTimePicker());
-                        String value =
-                            FormatDate.dateToString(date as DateTime);
+                        /*String value =
+                            FormatDate.dateToString(date as DateTime);*/
                         addTransactionBloc
                             .selectDateBloc.remoteSelectDateEvent.sink
-                            .add(SelectDateTransactionEvent(
-                                FormatDate.stringToDate(value)));
+                            .add(SelectDateTransactionEvent(date as DateTime));
                       },
                       leading: Text(FormatDate.dateToString(snapshot.data!.date)),
                       trailing: const Icon(

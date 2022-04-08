@@ -1,5 +1,5 @@
 class UpdateDateState {
-  final String newDate;
+  final DateTime newDate;
   UpdateDateState(this.newDate);
 }
 

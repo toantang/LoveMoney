@@ -13,7 +13,7 @@ class Plan {
   final double? sumCost;
   final double? sumCurrentMoney;
   final DateTime? expectedFinishDate;
-  final DateTime? lastUpdatedDate;
+  final DateTime? lastUpdateDate;
   final Status? status;
   final User? user;
 
@@ -24,7 +24,7 @@ class Plan {
   @override
   String toString() {
     return 'Plan{id: $id, name: $name, sumCost: $sumCost, sumCurrentMoney: $sumCurrentMoney, '
-        'expectedFinishDate: $expectedFinishDate, lastUpdatedDate: $lastUpdatedDate, status: $status, user: $user}';
+        'expectedFinishDate: $expectedFinishDate, lastUpdatedDate: $lastUpdateDate, status: $status, user: $user}';
   }
 
   Plan({
@@ -33,7 +33,7 @@ class Plan {
     this.sumCost,
     this.sumCurrentMoney,
     this.expectedFinishDate,
-    this.lastUpdatedDate,
+    this.lastUpdateDate,
     this.status,
     this.user,
   });
@@ -44,7 +44,7 @@ class Plan {
     double? sumCost,
     double? sumCurrentMoney,
     DateTime? expectedFinishDate,
-    DateTime? lastUpdatedDate,
+    DateTime? lastUpdateDate,
     Status? status,
     User? user,
   }) {
@@ -54,9 +54,9 @@ class Plan {
       sumCost: sumCost ?? this.sumCost,
       sumCurrentMoney: sumCurrentMoney ?? this.sumCurrentMoney,
       expectedFinishDate: expectedFinishDate ?? this.expectedFinishDate,
-      lastUpdatedDate: lastUpdatedDate ?? this.lastUpdatedDate,
+      lastUpdateDate: lastUpdateDate ?? this.lastUpdateDate,
       status: status ?? this.status,
-      user: user ?? user,
+      user: user ?? this.user,
     );
   }
 }

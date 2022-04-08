@@ -1,5 +1,5 @@
 class SelectExpectedDatePlanState {
-  String expectedFinishedDatePlan;
+  final DateTime expectedFinishedDatePlan;
   SelectExpectedDatePlanState(this.expectedFinishedDatePlan);
 }
 

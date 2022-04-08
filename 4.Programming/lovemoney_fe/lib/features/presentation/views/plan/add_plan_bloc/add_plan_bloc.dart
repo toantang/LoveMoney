@@ -27,8 +27,8 @@ class AddPlanBloc {
     Plan _plan = Plan(
       name: typeNamePlanBloc.typeNamePlanState.outputNamePlan,
       sumCost: typeSumCostPlanBloc.typeSumCostPlanState.sumCostPlan,
-      //expectedFinishDate: selectExpectedDatePlanBloc.selectExpectedDatePlanState.expectedFinishedDatePlan,
-      //lastUpdatedDate: selectExpectedDatePlanBloc.selectExpectedDatePlanState.expectedFinishedDatePlan,
+      expectedFinishDate: selectExpectedDatePlanBloc.selectExpectedDatePlanState.expectedFinishedDatePlan,
+      lastUpdateDate: selectExpectedDatePlanBloc.selectExpectedDatePlanState.expectedFinishedDatePlan,
       sumCurrentMoney: 0.0,
       user: AuthBloc.getInstance().user,
       status: _status.copyWith(),
@@ -87,7 +87,7 @@ class TypeNamePlanBloc extends BlocBase {
 }
 
 class SelectExpectedDatePlanBloc extends BlocBase {
-  SelectExpectedDatePlanState selectExpectedDatePlanState = SelectExpectedDatePlanState(FormatDate.formatCurrentDate);
+  SelectExpectedDatePlanState selectExpectedDatePlanState = SelectExpectedDatePlanState(FormatDate.currentDate);
 
   final remoteSelectExpectedDatePlanState = StreamController<SelectExpectedDatePlanState>();
   final remoteSelectExpectedDatePlanEvent = StreamController<RemoteEvent>();
@@ -100,7 +100,7 @@ class SelectExpectedDatePlanBloc extends BlocBase {
 
   void processExpectedFinishedDate(RemoteEvent remoteEvent) {
     if (remoteEvent is SelectExpectedDatePlanEvent) {
-      selectExpectedDatePlanState = SelectExpectedDatePlanState(FormatDate.dateToString(remoteEvent.expectedDate));
+      selectExpectedDatePlanState = SelectExpectedDatePlanState(remoteEvent.expectedDate);
     }
     remoteSelectExpectedDatePlanState.sink.add(selectExpectedDatePlanState);
   }

@@ -38,6 +38,7 @@ class RestClient {
 
   Future<Response<T>> getMethod<T>(String uri, {required Map<String, dynamic> params}) async {
     await _configRequestHeaders();
+    log('rest_client.dart', error: 'REQUEST: ' + params.toString());
     return await _dio.get(uri, queryParameters: params);
   }
 

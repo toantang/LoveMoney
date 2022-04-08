@@ -1,7 +1,6 @@
 import 'dart:async';
 
 import 'package:lovemoney_fe/core/helper/bloc_provider.dart';
-import 'package:lovemoney_fe/core/helper/formatDate.dart';
 import 'package:lovemoney_fe/core/helper/remote_event.dart';
 import 'package:lovemoney_fe/features/data/rest_api/datasources/models/api_response.dart';
 import 'package:lovemoney_fe/features/data/rest_api/repositories_impl/transaction_repository_impl.dart';
@@ -12,8 +11,7 @@ import '../../../../domain/entities/transaction/transaction.dart';
 
 class UpdateTransactionBloc {
   final Transaction transaction;
-  final TransactionRepositoryImpl transactionRepositoryImpl =
-      TransactionRepositoryImpl();
+  final TransactionRepositoryImpl transactionRepositoryImpl = TransactionRepositoryImpl();
 
   late final UpdateDateBloc updateDateBloc;
   late final UpdateCostBloc updateCostBloc;
@@ -27,7 +25,7 @@ class UpdateTransactionBloc {
   }
 
   UpdateTransactionBloc({required this.transaction}) {
-    //updateDateBloc = UpdateDateBloc(transaction.date!);
+    updateDateBloc = UpdateDateBloc(transaction.date!);
     updateCostBloc = UpdateCostBloc(transaction.cost!);
     updateNoteBloc = UpdateNoteBloc(getNote());
   }
@@ -36,7 +34,7 @@ class UpdateTransactionBloc {
     Transaction _transaction = transaction.copyWith();
     Transaction newTransaction = _transaction.copyWith(
       cost: updateCostBloc.updateCostState.newCost,
-      //date: updateDateBloc.updateDateState.newDate,
+      date: updateDateBloc.updateDateState.newDate,
       note: updateNoteBloc.updateNoteState.newNote,
     );
 
@@ -53,7 +51,7 @@ class UpdateDateBloc extends BlocBase {
   final remoteUpdateDateState = StreamController<UpdateDateState>();
   final remoteUpdateDateEvent = StreamController<RemoteEvent>();
 
-  UpdateDateBloc(String date) {
+  UpdateDateBloc(DateTime date) {
     updateDateState = UpdateDateState(date);
     remoteUpdateDateEvent.stream.listen((RemoteEvent remoteEvent) {
       processNewDate(remoteEvent);
@@ -62,8 +60,7 @@ class UpdateDateBloc extends BlocBase {
 
   void processNewDate(RemoteEvent remoteEvent) {
     if (remoteEvent is UpdateDateEvent) {
-      updateDateState =
-          UpdateDateState(FormatDate.dateToString(remoteEvent.newDate));
+      updateDateState = UpdateDateState(remoteEvent.newDate);
     }
     remoteUpdateDateState.sink.add(updateDateState);
   }

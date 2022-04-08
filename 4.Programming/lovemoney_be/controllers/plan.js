@@ -55,17 +55,17 @@ const updatePlan = async (req, res) => {
       });
       res.send({status: 1, result: { plan }});
 };
-const getListPlan = async (req, res) => {
+const getListPlanByIdStatus = async (req, res) => {
   const {
     userId,
     status,
   } = dataOfRequest.getDataFromRequest(req);
 
-  const plans = await planService.getListPlan({userId, status});
+  const plans = await planService.getListPlanByIdStatus({userId, status});
   return res.send({status: 1, result: {plans}});
 };
 module.exports = {
   createPlan,
   updatePlan,
-  getListPlan,
+  getListPlanByIdStatus,
 }

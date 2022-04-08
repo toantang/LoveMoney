@@ -1,4 +1,5 @@
 const planDao = require('../dao/plan');
+const formatDate = require('../utils/format_date');
 
 const createPlan = async ({
   userId,
@@ -9,13 +10,15 @@ const createPlan = async ({
   lastUpdateDate,
   status,
 }) => {
+  const expectedFinishDateFormated = formatDate.format(expectedFinishDate);
+  const lastUpdateDateFormated = formatDate.format(lastUpdateDate);
   const newPlan = {
     userId: userId,
     name: name,
     sumCost: sumCost,
     sumCurrentMoney: sumCurrentMoney,
-    expectedFinishDate: expectedFinishDate,
-    lastUpdateDate: lastUpdateDate,
+    expectedFinishDate: expectedFinishDateFormated,
+    lastUpdateDate: lastUpdateDateFormated,
     status: status,
   };
   const plan = await planDao.createPlan({newPlan});
@@ -28,8 +31,6 @@ const getListPlanByIdStatus = async ({
   status,
 }) => {
   const data = await planDao.getListPlanByIdStatus({userId, status});
-  console.log('list plans: ');
-  console.log(data);
   return data;
 };
 
