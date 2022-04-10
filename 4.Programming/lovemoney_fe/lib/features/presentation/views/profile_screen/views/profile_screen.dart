@@ -4,12 +4,10 @@ import 'package:lovemoney_fe/core/enum/enum_const.dart';
 import 'package:lovemoney_fe/core/helper/bloc_provider.dart';
 import 'package:lovemoney_fe/features/presentation/common_widget/base_screen.dart';
 import 'package:lovemoney_fe/features/presentation/common_widget/button_lv.dart';
-import 'package:lovemoney_fe/features/presentation/views/profile_screen/edit_profile_screen.dart';
 import 'package:lovemoney_fe/features/presentation/views/profile_screen/update_user_bloc/update_user_bloc.dart';
 import 'package:lovemoney_fe/features/presentation/views/profile_screen/update_user_bloc/update_user_state.dart';
 import '../../../../../core/helper/navigation_screen.dart';
 import '../../../../../core/util/screen_path.dart';
-import 'package:lovemoney_fe/features/presentation/views/user/user_bloc/user_bloc.dart';
 
 import '../../../medium_widget/info_item_widget/info_item.dart';
 
@@ -124,24 +122,26 @@ class ProfileScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BaseScreenWithBack(
-      body: Column(
-        children: [
-          _avatar(context),
-          _infoName(context),
-          InfoItem(
-            keyUsedWord: KeyUsedWord.EMAIL,
-            content: updateUserBloc.user.email ?? '',
-          ),
-          _infoPassword(context),
-          _infoBio(context),
-          _infoGender(context),
-          ButtonLv(
-            onPressed: () {
-              Nav.to(context, ScreenPath.EDIT_PROFILE_PATH, arguments: updateUserBloc);
-            },
-            keyUsedWord: KeyUsedWord.EDIT,
-          )
-        ],
+      body: SingleChildScrollView(
+        child: Column(
+          children: [
+            _avatar(context),
+            _infoName(context),
+            InfoItem(
+              keyUsedWord: KeyUsedWord.EMAIL,
+              content: updateUserBloc.user.email ?? '',
+            ),
+            _infoPassword(context),
+            _infoBio(context),
+            _infoGender(context),
+            ButtonLv(
+              onPressed: () {
+                Nav.to(context, ScreenPath.EDIT_PROFILE_PATH, arguments: updateUserBloc);
+              },
+              keyUsedWord: KeyUsedWord.EDIT,
+            )
+          ],
+        ),
       ),
     );
   }

@@ -35,7 +35,7 @@ class UserRepositoryImpl implements UserRepository {
         resultConverter: (json) => ApiResultSingle<User>(
             json: json,
             rootName: 'user',
-            jsonConverter: (Json) => User.fromJson(json),
+            jsonConverter: (json) => User.fromJson(json),
         ),
       );
     } catch (error) {

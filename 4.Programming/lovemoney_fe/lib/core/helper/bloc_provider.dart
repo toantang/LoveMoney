@@ -26,9 +26,11 @@ class BlocProvider<T extends BlocBase> extends StatefulWidget {
     _BlocProviderInherited<T>? provider =
         context.dependOnInheritedWidgetOfExactType(aspect: type);
     if (provider == null) {
-      log("class BlocProvider", error: "bloc_provider: provider is null");
+      String tString = T.toString();
+      log("bloc: $tString", error: "bloc_provider: provider is null");
+      return null;
     }
-    return provider?.bloc;
+    return provider.bloc;
   }
 }
 

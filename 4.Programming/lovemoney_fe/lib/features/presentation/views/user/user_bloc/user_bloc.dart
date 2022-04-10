@@ -8,24 +8,15 @@ import 'package:lovemoney_fe/features/presentation/views/user/user_bloc/user_sta
 
 class UserBloc extends BlocBase {
   UserState _userState = UserState(user: AuthBloc.getInstance().user);
-  late bool closedStream;
-  //final StreamController<UserState> remoteUserState = StreamController();
-  //final StreamController<RemoteEvent> remoteUserEvent = StreamController();
-  late StreamController<UserState> remoteUserState;
-  late StreamController<RemoteEvent> remoteUserEvent;
+  final StreamController<UserState> remoteUserState = StreamController();
+  final StreamController<RemoteEvent> remoteUserEvent = StreamController();
 
   UserBloc() {
-    openStream();
     remoteUserEvent.stream.listen((RemoteEvent remoteEvent) {
       _processUser(remoteEvent);
     });
   }
 
-  void openStream() {
-    remoteUserState = StreamController();
-    remoteUserEvent = StreamController();
-    closedStream = false;
-  }
   void _processUser(RemoteEvent remoteEvent) {
     if (remoteEvent is NewUserEvent) {
       _userState = UserState(user: remoteEvent.newUser);
@@ -37,7 +28,6 @@ class UserBloc extends BlocBase {
   void dispose() {
     remoteUserState.close();
     remoteUserEvent.close();
-    closedStream = true;
   }
 
   UserState get userState => _userState;

@@ -1,18 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:lovemoney_fe/core/constant/color_const.dart';
 import 'package:lovemoney_fe/core/util/screen_path.dart';
-import 'package:lovemoney_fe/features/presentation/views/auth/auth_bloc/auth_bloc.dart';
 import 'package:lovemoney_fe/features/presentation/views/home/views/home_screen.dart';
 import 'package:lovemoney_fe/features/presentation/views/plan/plan_view.dart';
 import 'package:lovemoney_fe/features/presentation/views/profile_screen/update_user_bloc/update_user_bloc.dart';
-import 'package:lovemoney_fe/features/presentation/views/profile_screen/views/profile_screen.dart';
 import 'package:lovemoney_fe/features/presentation/views/settings/views/settings_screen.dart';
 import 'package:lovemoney_fe/features/presentation/views/user/user_bloc/user_bloc.dart';
 
 import '../../../../../core/constant/error_const.dart';
 import '../../../../../core/helper/bloc_provider.dart';
 import '../../../../../core/helper/navigation_screen.dart';
-import '../../../../domain/entities/user.dart';
 import '../../transaction/views/add_transaction.dart';
 import '../../user/user_bloc/user_state.dart';
 import '../main_bloc/main_bloc.dart';
@@ -20,10 +17,10 @@ import '../main_bloc/main_event.dart';
 import '../main_bloc/main_state.dart';
 
 class MainScreen extends StatelessWidget {
-  MainScreen({Key? key}) : super(key: key);
+  final UserBloc userBloc;
+  MainScreen({Key? key, required this.userBloc}) : super(key: key);
 
   final MainBloc homeBloc = MainBloc();
-  final User _user = AuthBloc.getInstance().user;
 
   final List<Widget> listChild = [
     HomeScreen(),
@@ -37,8 +34,7 @@ class MainScreen extends StatelessWidget {
     keepPage: true,
   );
 
-  AppBar _appBar(BuildContext context) {
-    final UserBloc userBloc = BlocProvider.of(context)!;
+  AppBar _appBar(BuildContext context, /*{required UserBloc userBloc}*/) {
 
     return AppBar(
       backgroundColor: ColorConst.primaryColorConst.blueShade200,
@@ -56,6 +52,8 @@ class MainScreen extends StatelessWidget {
                 if (snapshot.hasData) {
                   return InkWell(
                     onTap: () {
+                      print('main screen: ');
+                      print(snapshot.data!.user.toString());
                       Nav.to(context, ScreenPath.PROFILE_PATH,
                           arguments: UpdateUserBloc(user: snapshot.data!.user));
                     },
@@ -132,6 +130,8 @@ class MainScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final UserBloc userBloc = BlocProvider.of(context)!;
+
     return BlocProvider(
       bloc: homeBloc,
       child: StreamBuilder<ChangeIndexViewState>(
@@ -141,7 +141,7 @@ class MainScreen extends StatelessWidget {
           if (snapshot.hasData) {
             return Scaffold(
               resizeToAvoidBottomInset: false,
-              appBar: _appBar(context),
+              appBar: _appBar(context,),
               body: SafeArea(
                 child: PageView(
                   //children: snapshot.data!.listChild!, // if you want to rebuild in PageView, use this line

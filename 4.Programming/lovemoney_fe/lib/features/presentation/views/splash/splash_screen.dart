@@ -25,7 +25,7 @@ class _SplashScreenState extends State<SplashScreen> {
       userBloc.remoteUserEvent.sink.add(NewUserEvent(newUser: AuthBloc.getInstance().user));
       Nav.back(context);
       Nav.to(context, ScreenPath.AUTH_PATH);
-      Nav.to(context, ScreenPath.HOME_PATH);
+      Nav.to(context, ScreenPath.MAIN_PATH, arguments: userBloc);
     }
     else {
       Nav.back(context);

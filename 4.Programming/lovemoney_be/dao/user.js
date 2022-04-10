@@ -30,7 +30,7 @@ const updateInfo = async ({
       },
       {new: true, runValidators: true},
   );
-
+  
   return user;
 };
 module.exports = {

@@ -1,6 +1,5 @@
 import 'dart:async';
 
-import 'package:flutter/material.dart';
 import 'package:lovemoney_fe/core/helper/remote_event.dart';
 import 'package:lovemoney_fe/features/data/rest_api/datasources/models/api_response.dart';
 import 'package:lovemoney_fe/features/data/rest_api/repositories_impl/user_repository_impl.dart';

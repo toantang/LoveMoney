@@ -33,7 +33,7 @@ class RegisterForm extends StatelessWidget {
       _clearTextField();
       final UserBloc userBloc = BlocProvider.of(context)!;
       userBloc.remoteUserEvent.sink.add(NewUserEvent(newUser: AuthBloc.getInstance().user));
-      Nav.to(context, ScreenPath.HOME_PATH);
+      Nav.to(context, ScreenPath.MAIN_PATH, arguments: userBloc);
     }
   }
 

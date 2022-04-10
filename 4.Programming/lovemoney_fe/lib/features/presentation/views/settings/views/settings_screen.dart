@@ -38,19 +38,13 @@ class SettingsScreen extends StatelessWidget {
   }
 
   Widget _logout(BuildContext context) {
-    final UserBloc userBloc = BlocProvider.of(context)!;
-    final SelectLanguageBloc? selectLanguageBloc = BlocProvider.of(context);
-
     return Card(
       child: ListTileLv(
         leading: const TextLv(
           keyUsedWord: KeyUsedWord.LOGOUT,
         ),
         onTap: () {
-          userBloc.dispose();
-          //selectLanguageBloc?.dispose();
           Nav.back(context);
-          //Nav.pushTo(context, RootScreen());
         },
       ),
     );
