@@ -37,5 +37,7 @@ class English extends UsedLanguage {
     KeyUsedWord.CONFIRM: "Confirm",
     KeyUsedWord.EXPECTED_FINISH_DATE: '''Expected 
     finished date''',
+    KeyUsedWord.EDIT: 'Edit profile',
+    KeyUsedWord.LOGOUT: "LOGOUT",
   };
 }

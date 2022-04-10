@@ -8,6 +8,7 @@ import 'package:lovemoney_fe/router.dart';
 import 'core/constant/api_const.dart';
 import 'features/presentation/global_controllers/user_language_bloc/user_language_bloc.dart';
 import 'features/presentation/views/main/views/main_screen.dart';
+import 'features/presentation/views/user/user_bloc/user_bloc.dart';
 
 void main() {
   //APIConst.setBaseUrl(Enviroment.LOCAL);
@@ -20,30 +21,66 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final UserLanguageBloc userLanguageBloc = UserLanguageBloc();
-
-    return BlocProvider(
-      bloc: userLanguageBloc,
-      child: MaterialApp(
-        debugShowCheckedModeBanner: false,
-        theme: ThemeData(
-          scaffoldBackgroundColor: ColorConst.primaryColorConst.blueShade200,
-        ),
-        routes: RouterLV.pages,
-        home: MyHomePage(),
-      ),
-    );
+    return const RootScreen();
   }
 }
-
-class MyHomePage extends StatelessWidget {
-  MyHomePage({Key? key}) : super(key: key);
-  final UserLanguageBloc userLanguageBloc = UserLanguageBloc();
+/*class MyApp extends StatelessWidget {
+  const MyApp({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return const BaseScreen(
-      body: SplashScreen(),
+    final UserLanguageBloc userLanguageBloc = UserLanguageBloc();
+    final UserBloc userBloc = UserBloc();
+
+    return BlocProvider(
+      bloc: userLanguageBloc,
+      child: BlocProvider(
+        bloc: userBloc,
+        child: MaterialApp(
+          debugShowCheckedModeBanner: false,
+          theme: ThemeData(
+            scaffoldBackgroundColor: ColorConst.primaryColorConst.blueShade200,
+          ),
+          routes: RouterLV.pages,
+          home: MyHomePage(),
+        ),
+      ),
     );
+  }
+}*/
+
+class RootScreen extends StatelessWidget {
+  const RootScreen({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    final UserLanguageBloc userLanguageBloc = UserLanguageBloc();
+    final UserBloc userBloc = UserBloc();
+
+    return BlocProvider(
+      bloc: userLanguageBloc,
+      child: BlocProvider(
+        bloc: userBloc,
+        child: MaterialApp(
+          debugShowCheckedModeBanner: false,
+          theme: ThemeData(
+            scaffoldBackgroundColor: ColorConst.primaryColorConst.blueShade200,
+          ),
+          routes: RouterLV.pages,
+          home: MyHomePage(),
+        ),
+      ),
+    );
+  }
+
+}
+class MyHomePage extends StatelessWidget {
+  MyHomePage({Key? key}) : super(key: key);
+  final UserLanguageBloc userLanguageBloc = UserLanguageBloc();
+  final UserBloc userBloc = UserBloc();
+
+  @override
+  Widget build(BuildContext context) {
+    return const SplashScreen();
   }
 }

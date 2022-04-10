@@ -1,9 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:lovemoney_fe/core/helper/bloc_provider.dart';
 import 'package:lovemoney_fe/core/util/screen_path.dart';
 import 'package:lovemoney_fe/features/presentation/common_widget/base_screen.dart';
 import 'package:lovemoney_fe/features/presentation/views/auth/auth_bloc/auth_bloc.dart';
+import 'package:lovemoney_fe/features/presentation/views/user/user_bloc/user_event.dart';
+import 'package:lovemoney_fe/main.dart';
 
 import '../../../../core/helper/navigation_screen.dart';
+import '../user/user_bloc/user_bloc.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({Key? key}) : super(key: key);
@@ -14,10 +18,13 @@ class SplashScreen extends StatefulWidget {
 
 class _SplashScreenState extends State<SplashScreen> {
 
-  Future<void> nextToScreen() async {
+  Future<void> _nextToScreen() async {
     await Future.delayed(const Duration(seconds: 2));
     if (await AuthBloc.getInstance().autoLogin()) {
+      final UserBloc userBloc = BlocProvider.of(context)!;
+      userBloc.remoteUserEvent.sink.add(NewUserEvent(newUser: AuthBloc.getInstance().user));
       Nav.back(context);
+      Nav.to(context, ScreenPath.AUTH_PATH);
       Nav.to(context, ScreenPath.HOME_PATH);
     }
     else {
@@ -28,7 +35,7 @@ class _SplashScreenState extends State<SplashScreen> {
   @override
   void initState(){
     super.initState();
-    nextToScreen();
+    _nextToScreen();
   }
 
   @override

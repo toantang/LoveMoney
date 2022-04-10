@@ -19,7 +19,7 @@ import '../../../../global_controllers/user_language_bloc/user_language_event.da
 class SelectedLanguage extends StatelessWidget {
   const SelectedLanguage({Key? key}) : super(key: key);
 
-  void _selectVietNamese(
+  void _selectVietnamese(
     SelectLanguageBloc selectLanguageBloc,
     UserLanguageBloc? userLanguageBloc,
   ) {
@@ -56,11 +56,11 @@ class SelectedLanguage extends StatelessWidget {
                     value: KeyUsedWord.VIETNAMESE,
                     groupValue: snapshot.data!.keyUsedWord,
                     onChanged: (KeyUsedWord? value) {
-                      _selectVietNamese(selectLanguageBloc, userLanguageBloc);
+                      _selectVietnamese(selectLanguageBloc, userLanguageBloc);
                     },
                   ),
                   onTap: () {
-                    _selectVietNamese(selectLanguageBloc, userLanguageBloc);
+                    _selectVietnamese(selectLanguageBloc, userLanguageBloc);
                   },
                 ),
                 ListTile(

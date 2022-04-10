@@ -31,5 +31,7 @@ enum KeyUsedWord {
   CANCEL,
   CONFIRM,
   EXPECTED_FINISH_DATE,
+  EDIT,
+  LOGOUT,
 }
 

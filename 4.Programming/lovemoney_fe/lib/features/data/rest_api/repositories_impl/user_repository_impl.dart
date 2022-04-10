@@ -25,5 +25,21 @@ class UserRepositoryImpl implements UserRepository {
       return ApiResponse.withError(error);
     }
   }
-  
+
+  @override
+  Future<ApiResponse<User>>? updateUser({required User user}) async {
+    try {
+      var response = await _restClient.putMethod('/user/updateInfo', data: user.toJson());
+      return ApiResponse.withResult(
+        response: response.data,
+        resultConverter: (json) => ApiResultSingle<User>(
+            json: json,
+            rootName: 'user',
+            jsonConverter: (Json) => User.fromJson(json),
+        ),
+      );
+    } catch (error) {
+      return ApiResponse.withError(error);
+    }
+  }
 }

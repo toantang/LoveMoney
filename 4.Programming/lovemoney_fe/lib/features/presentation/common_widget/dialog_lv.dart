@@ -88,26 +88,3 @@ class AlertDialogLvUpdate extends StatelessWidget {
   }
 }
 
-/*class CustomDialog {
-  void showDialog(BuildContext context, Widget child) {
-    showGeneralDialog(
-      context: context,
-      barrierLabel: "Barrier",
-      barrierDismissible: true,
-      barrierColor: ColorConst.medialColorConst.black.withOpacity(0.5),
-      //transitionDuration: Duration(milliseconds: 700),
-      pageBuilder: (_, __, ___) {
-        return Align(
-          alignment: Alignment.center,
-          child: SizedBox(
-            height: 400,
-            child: ClipRRect(
-              borderRadius: BorderRadius.circular(40),
-              child: child,
-            ),
-          ),
-        );
-      },
-    );
-  }
-}*/

@@ -39,5 +39,7 @@ class Vietnamese extends UsedLanguage {
     KeyUsedWord.EXPECTED_FINISH_DATE: '''Ngày dự kiến
     hoàn thành
     ''',
+    KeyUsedWord.EDIT: 'Chỉnh sửa thông tin cá nhân',
+    KeyUsedWord.LOGOUT: 'Đăng xuất',
   };
 }

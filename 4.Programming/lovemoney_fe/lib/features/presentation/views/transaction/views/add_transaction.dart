@@ -8,6 +8,8 @@ import 'package:lovemoney_fe/features/presentation/common_widget/button_lv.dart'
 import 'package:lovemoney_fe/features/presentation/common_widget/date_time_picker_lv.dart';
 import 'package:lovemoney_fe/features/presentation/common_widget/list_tile_lv.dart';
 import 'package:lovemoney_fe/features/presentation/common_widget/text_field_lv.dart';
+import 'package:lovemoney_fe/features/presentation/medium_widget/text_field_widget/money_field.dart';
+import 'package:lovemoney_fe/features/presentation/medium_widget/text_field_widget/note_field.dart';
 import 'package:lovemoney_fe/features/presentation/views/transaction/add_transaction_bloc/add_transaction_bloc.dart';
 import 'package:lovemoney_fe/features/presentation/views/transaction/add_transaction_bloc/add_transaction_state.dart';
 import 'package:lovemoney_fe/core/helper/navigation_screen.dart';
@@ -19,24 +21,13 @@ import '../../../../../core/helper/format_text_to_number.dart';
 import '../add_transaction_bloc/add_transaction_event.dart';
 
 class AddTransaction extends StatelessWidget {
-  final TextEditingController ecControllerCost = TextEditingController();
-  final TextEditingController ecControllerPeriodTime = TextEditingController();
-  final TextEditingController ecControllerNote = TextEditingController();
+  final TextEditingController ecCost = TextEditingController();
+  final TextEditingController ecPeriodTime = TextEditingController();
+  final TextEditingController ecNote = TextEditingController();
 
   final AddTransactionBloc addTransactionBloc = AddTransactionBloc();
 
   AddTransaction({Key? key}) : super(key: key);
-
-  Widget _inputCost() {
-    return TextFieldLv(
-      textEditingController: ecControllerCost,
-      keyUsedWord: KeyUsedWord.COST,
-      textInputType: const TextInputType.numberWithOptions(
-      signed: true,
-      ),
-      maxLength: 15,
-    );
-  }
 
   Widget _inputNameTransaction(BuildContext context) {
     return SizedBox(
@@ -85,82 +76,95 @@ class AddTransaction extends StatelessWidget {
     );
   }
 
+  Widget _periodTime(BuildContext context) {
+    return BlocProvider(
+      bloc: addTransactionBloc.typePeriodTimeBloc,
+      child: StreamBuilder<TextFieldPeriodTimeState>(
+        initialData: addTransactionBloc
+            .typePeriodTimeBloc.textFieldPeriodTimeState,
+        stream: addTransactionBloc
+            .typePeriodTimeBloc.remoteTextFieldPeriodTimeState.stream,
+        builder: (context, snapshot) {
+          return TextFieldLv(
+            keyUsedWord: KeyUsedWord.PERIOD_TIME,
+            textEditingController: ecPeriodTime,
+            maxLength: 2,
+            enabled: snapshot.data?.enabled,
+            textInputType: const TextInputType.numberWithOptions(
+              signed: true,
+              decimal: false,
+            ),
+            countText: '',
+          );
+        },
+      ),
+    );
+  }
+
+  Widget _selectDate(BuildContext context) {
+    return Card(
+      child: BlocProvider(
+        bloc: addTransactionBloc.selectDateBloc,
+        child: StreamBuilder<SelectDateTransactionState>(
+          initialData:
+          addTransactionBloc.selectDateBloc.selectDateState,
+          stream: addTransactionBloc
+              .selectDateBloc.remoteSelectDateState.stream,
+          builder: (context,
+              AsyncSnapshot<SelectDateTransactionState> snapshot) {
+            return ListTileLv(
+              onTap: () async {
+                final date = await Nav.pushTo(
+                    context, const NavDateTimePicker());
+                addTransactionBloc
+                    .selectDateBloc.remoteSelectDateEvent.sink
+                    .add(SelectDateTransactionEvent(date as DateTime));
+              },
+              leading: Text(FormatDate.dateToString(snapshot.data!.date)),
+              trailing: const Icon(
+                Icons.date_range,
+                size: SizeConst.sizeIconButton,
+              ),
+            );
+          },
+        ),
+      ),
+    );
+  }
+
   Widget _inputDateAndPeriodTime(BuildContext context) {
     return Row(
       children: [
         Expanded(
           child: Align(
             alignment: Alignment.centerLeft,
-            child: Card(
-              child: BlocProvider(
-                bloc: addTransactionBloc.selectDateBloc,
-                child: StreamBuilder<SelectDateTransactionState>(
-                  initialData:
-                      addTransactionBloc.selectDateBloc.selectDateState,
-                  stream: addTransactionBloc
-                      .selectDateBloc.remoteSelectDateState.stream,
-                  builder: (context,
-                      AsyncSnapshot<SelectDateTransactionState> snapshot) {
-                    return ListTileLv(
-                      onTap: () async {
-                        final date = await Nav.pushTo(
-                            context, const NavDateTimePicker());
-                        /*String value =
-                            FormatDate.dateToString(date as DateTime);*/
-                        addTransactionBloc
-                            .selectDateBloc.remoteSelectDateEvent.sink
-                            .add(SelectDateTransactionEvent(date as DateTime));
-                      },
-                      leading: Text(FormatDate.dateToString(snapshot.data!.date)),
-                      trailing: const Icon(
-                        Icons.date_range,
-                        size: SizeConst.sizeIconButton,
-                      ),
-                    );
-                  },
-                ),
-              ),
-            ),
+            child: _selectDate(context),
           ),
         ),
         Expanded(
           child: Align(
             alignment: Alignment.centerRight,
-            child: BlocProvider(
-              bloc: addTransactionBloc.typePeriodTimeBloc,
-              child: StreamBuilder<TextFieldPeriodTimeState>(
-                initialData: addTransactionBloc
-                    .typePeriodTimeBloc.textFieldPeriodTimeState,
-                stream: addTransactionBloc
-                    .typePeriodTimeBloc.remoteTextFieldPeriodTimeState.stream,
-                builder: (context, snapshot) {
-                  return TextFieldLv(
-                    keyUsedWord: KeyUsedWord.PERIOD_TIME,
-                    textEditingController: ecControllerPeriodTime,
-                    maxLength: 2,
-                    enabled: snapshot.data?.enabled,
-                    textInputType: const TextInputType.numberWithOptions(
-                      signed: true,
-                      decimal: false,
-                    ),
-                    countText: '',
-                  );
-                },
-              ),
-            ),
+            child: _periodTime(context),
           ),
         ),
       ],
     );
   }
 
-  Widget _inputNote() {
-    return TextFieldLv(
-      textEditingController: ecControllerNote,
-      keyUsedWord: KeyUsedWord.NOTE,
-      maxLines: 4,
-      maxLength: 100,
-    );
+  void _addTransactionButton() {
+    addTransactionBloc.typeCostBloc.typeCostState =
+        TypeCostState(FormatTextToNumber.formatTextToDouble(
+            ecCost.text));
+    addTransactionBloc.takeNoteBloc.takeNoteState =
+        TakeNoteState(note: ecNote.text);
+
+    String textPeriodTime = ecPeriodTime.text;
+    addTransactionBloc.typePeriodTimeBloc.typePeriodTimeState =
+        TypePeriodTimeState(
+            periodTime: textPeriodTime.isEmpty
+                ? null
+                : double.parse(textPeriodTime));
+    addTransactionBloc.createTransaction();
   }
 
   @override
@@ -174,7 +178,7 @@ class AddTransaction extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.start,
             children: [
               Padding(
-                child: _inputCost(),
+                child: MoneyField(ecCost: ecCost),
                 padding: const EdgeInsets.only(top: 26),
               ),
               Padding(
@@ -186,26 +190,12 @@ class AddTransaction extends StatelessWidget {
                 padding: const EdgeInsets.only(top: 16),
               ),
               Padding(
-                child: _inputNote(),
+                child: NoteField(ecNote: ecNote),
                 padding: const EdgeInsets.only(top: 16),
               ),
               Padding(
                 child: ButtonLv(
-                  onPressed: () {
-                    addTransactionBloc.typeCostBloc.typeCostState =
-                        TypeCostState(FormatTextToNumber.formatTextToDouble(
-                            ecControllerCost.text));
-                    addTransactionBloc.takeNoteBloc.takeNoteState =
-                        TakeNoteState(note: ecControllerNote.text);
-
-                    String textPeriodTime = ecControllerPeriodTime.text;
-                    addTransactionBloc.typePeriodTimeBloc.typePeriodTimeState =
-                        TypePeriodTimeState(
-                            periodTime: textPeriodTime.isEmpty
-                                ? null
-                                : double.parse(textPeriodTime));
-                    addTransactionBloc.createTransaction();
-                  },
+                  onPressed: _addTransactionButton,
                   keyUsedWord: KeyUsedWord.ADD,
                   textStyle: const TextStyle(
                     fontSize: SizeConst.sizeTextButton,

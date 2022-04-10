@@ -32,7 +32,6 @@ class AuthBloc {
     ApiResponse<User>? apiResponse =
         await _authRepositoryImpl.signUp(user: _registerBloc.createUser());
     User? user = apiResponse?.result?.data;
-    print(user.toString());
     if (user != null) {
       return true;
     }
@@ -70,6 +69,9 @@ class AuthBloc {
     return false;
   }
 
+  void updateUser(User user) {
+    _user = user;
+  }
   String get loginStatus => _loginStatus;
 
   static AuthBloc getInstance() => authBloc;

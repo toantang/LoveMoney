@@ -6,7 +6,13 @@ class BaseScreen extends StatelessWidget {
   final Widget body;
   final bool? onWillPop;
   final bool? resizeToAvoidBottomInset;
-  const BaseScreen({Key? key, required this.body, this.onWillPop, this.resizeToAvoidBottomInset}) : super(key: key);
+
+  const BaseScreen(
+      {Key? key,
+      required this.body,
+      this.onWillPop,
+      this.resizeToAvoidBottomInset})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -19,7 +25,7 @@ class BaseScreen extends StatelessWidget {
       },
       child: Scaffold(
         body: body,
-        resizeToAvoidBottomInset: resizeToAvoidBottomInset?? true,
+        resizeToAvoidBottomInset: resizeToAvoidBottomInset ?? true,
       ),
     );
   }
@@ -29,7 +35,13 @@ class BaseScreenWithBack extends StatelessWidget {
   final bool? resizeToAvoidBottomInset;
   final Widget body;
   final bool? onWillPop;
-  const BaseScreenWithBack({Key? key, this.resizeToAvoidBottomInset, this.onWillPop, required this.body}) : super(key: key);
+
+  const BaseScreenWithBack(
+      {Key? key,
+      this.resizeToAvoidBottomInset,
+      this.onWillPop,
+      required this.body})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -51,7 +63,7 @@ class BaseScreenWithBack extends StatelessWidget {
             ),
           ),
         ),
-        resizeToAvoidBottomInset: resizeToAvoidBottomInset?? true,
+        resizeToAvoidBottomInset: resizeToAvoidBottomInset ?? true,
         body: body,
       ),
     );

@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:lovemoney_fe/core/constant/color_const.dart';
 import 'package:lovemoney_fe/core/constant/error_const.dart';
-import 'package:lovemoney_fe/core/helper/format_text_to_number.dart';
 import 'package:lovemoney_fe/features/presentation/global_controllers/user_language_bloc/user_language_bloc.dart';
 import 'package:lovemoney_fe/features/presentation/global_controllers/user_language_bloc/user_language_state.dart';
 
@@ -18,8 +17,9 @@ class TextFieldLv extends StatelessWidget {
   final int? maxLength;
   final String? countText;
   final bool? enabled;
+  final ValueChanged<String>? onChanged;
 
-  TextFieldLv({
+  const TextFieldLv({
     Key? key,
     required this.textEditingController,
     required this.keyUsedWord,
@@ -29,22 +29,11 @@ class TextFieldLv extends StatelessWidget {
     this.maxLength,
     this.countText,
     this.enabled,
+    this.onChanged,
   }) : super(key: key);
-
-  final FormatTextToNumber formatTextToNumber = FormatTextToNumber();
 
   String _getText(UsedLanguage usedLanguage) {
     return usedLanguage.getTextByLanguage(keyUsedWord);
-  }
-
-  bool _checkInputNumber() {
-    if (textInputType.hashCode ==
-            const TextInputType.numberWithOptions(signed: true).hashCode ||
-        textInputType.hashCode ==
-            const TextInputType.numberWithOptions().hashCode) {
-      return true;
-    }
-    return false;
   }
 
   void dispose() {
@@ -67,17 +56,7 @@ class TextFieldLv extends StatelessWidget {
             maxLines: maxLines,
             maxLength: maxLength,
             enabled: enabled ?? true,
-            onChanged: (value) {
-              if (_checkInputNumber()) {
-                textEditingController.text =
-                    formatTextToNumber.changeText(value);
-                textEditingController.selection = TextSelection.fromPosition(
-                  TextPosition(
-                    offset: textEditingController.text.length,
-                  ),
-                );
-              }
-            },
+            onChanged: onChanged,
             decoration: InputDecoration(
               filled: true,
               hintText: _getText(snapshot.data!.usedLanguage),

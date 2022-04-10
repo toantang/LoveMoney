@@ -15,11 +15,8 @@ class BuildListPlanBloc extends BlocBase {
   BuildListPlanState buildListPlanState = BuildListPlanState([]);
   final remoteBuildListPlanState = StreamController<BuildListPlanState>.broadcast();
   final remoteBuildListPlanEvent = StreamController<RemoteEvent>();
-  //late StreamController<BuildListPlanState> remoteBuildListPlanState;
-  //late StreamController<RemoteEvent> remoteBuildListPlanEvent;
 
   BuildListPlanBloc() {
-    //openStream();
     remoteBuildListPlanEvent.stream.listen((RemoteEvent remoteEvent) {
       processBuildListPlan(remoteEvent);
     });

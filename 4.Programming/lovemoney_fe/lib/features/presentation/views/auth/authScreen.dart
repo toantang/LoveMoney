@@ -25,6 +25,7 @@ class AuthScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+
     return BaseScreen(
       body: SafeArea(
         child: BlocProvider(

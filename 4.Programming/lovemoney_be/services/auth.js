@@ -15,16 +15,16 @@ const register = async ({
   bio,
   phone,
 }) => {
-  const lowerEmail = email.toLowerCase(); 
   const userExist = await userService.findUserByEmail({email});
   if (userExist) {
     console.log('User is exist');
+    userExist.password = security.decrypt(userExist.password);
     return userExist;
   }
   const hashPassword = security.encrypt(password);
   const newUser = {
     name: name,
-    email: lowerEmail,
+    email: email,
     password: hashPassword,
     status: status,
     birthday: formatDate.format(birthday),
@@ -33,6 +33,7 @@ const register = async ({
     phone: phone,
   };
   const user = await authDao.register({newUser});
+  user.password = security.decrypt(user.password);
   return user;
 };
 
@@ -46,6 +47,7 @@ const login = async ({
     console.log('email is not exist');
     return {};
   }
+  
   const isValidPassword = userService.isPasswordValid(password, user.password);
   if (!isValidPassword) {
     console.log('password is not valid');
