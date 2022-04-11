@@ -1,4 +1,4 @@
-import 'package:lovemoney_fe/core/util/env_config.dart';
+import '../../configs/env_config.dart';
 
 class APIConst {
   static String _baseUrl = "";
@@ -15,6 +15,9 @@ class APIConst {
         break;
       case Enviroment.REAL_DEVICE:
         _baseUrl = EnvConfig.baseUrlRealDevice;
+        break;
+      default:
+        _baseUrl = EnvConfig.baseUrlLocal;
         break;
     }
   }

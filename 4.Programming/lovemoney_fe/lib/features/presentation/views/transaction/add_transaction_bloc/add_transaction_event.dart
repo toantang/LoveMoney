@@ -23,6 +23,7 @@ class TypePeriodTimeEvent extends RemoteEvent {
 class TakeNoteEvent extends RemoteEvent {
   final String? note;
   TakeNoteEvent({this.note});
+
 }
 
 class TextFieldPeriodTimeEvent extends RemoteEvent {

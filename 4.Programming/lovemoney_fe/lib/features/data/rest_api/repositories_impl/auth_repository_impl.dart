@@ -5,6 +5,7 @@ import 'package:lovemoney_fe/features/domain/entities/user.dart';
 import 'package:lovemoney_fe/features/domain/repositories/auth_repository.dart';
 import 'package:lovemoney_fe/features/dto/auth_dto/login_dto.dart';
 import 'package:lovemoney_fe/features/mapper/auth_mapper/login_mapper.dart';
+import '../../../../configs/api_config.dart';
 import '../../../dto/user_dto/register_user_dto.dart';
 import 'package:lovemoney_fe/features/mapper/user_mapper/register_user_mapper.dart';
 
@@ -21,7 +22,7 @@ class AuthRepositoryImpl implements AuthRepository {
       {required user}) async {
     final RegisterUserDto _userDto = _registerUserMapper.toDTO(user);
     try {
-      var response = await _restClient.postMethod('/user', data: _userDto.toJson());
+      var response = await _restClient.postMethod(ApiConfig.signup, data: _userDto.toJson());
 
       return ApiResponse.withResult(
           response: response.data,
@@ -39,7 +40,7 @@ class AuthRepositoryImpl implements AuthRepository {
   Future<ApiResponse<User>>? login({required user}) async {
     final LoginDto _loginDto = _loginMapper.toDTO(user);
     try {
-      var response = await _restClient.postMethod('/auth/login', data: _loginDto.toJson());
+      var response = await _restClient.postMethod(ApiConfig.login, data: _loginDto.toJson());
       _authenticationStorage.updateToken(response.data['result']['accessToken']);
 
       return ApiResponse.withResult(
@@ -59,7 +60,7 @@ class AuthRepositoryImpl implements AuthRepository {
   Future<ApiResponse<User>>? autoLogin({required user}) async {
     final LoginDto _loginDto = _loginMapper.toDTO(user);
     try {
-      var response = await _restClient.postMethod('/auth/autoLogin', data: _loginDto.toJson());
+      var response = await _restClient.postMethod(ApiConfig.autoLogin, data: _loginDto.toJson());
 
       return ApiResponse.withResult(
         response: response.data,

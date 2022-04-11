@@ -1,7 +1,6 @@
 import 'dart:async';
 import 'package:lovemoney_fe/core/helper/bloc_provider.dart';
 import 'package:lovemoney_fe/core/helper/formatDate.dart';
-import 'package:lovemoney_fe/core/helper/manager_bloc.dart';
 import 'package:lovemoney_fe/core/helper/remote_event.dart';
 import 'package:lovemoney_fe/features/data/rest_api/datasources/models/api_response.dart';
 import 'package:lovemoney_fe/features/data/rest_api/repositories_impl/transaction_repository_impl.dart';
@@ -14,8 +13,9 @@ import 'package:lovemoney_fe/features/presentation/views/transaction/add_transac
 import '../../../../../core/constant/error_const.dart';
 import '../../../../../core/constant/string_const.dart';
 
-class AddTransactionBloc extends ManagerBloc {
+class AddTransactionBloc {
   String? baseDataId;
+  bool canCreateTransaction = false;
 
   final TypeCostBloc typeCostBloc = TypeCostBloc();
   final SelectNameBloc selectNameBloc = SelectNameBloc();
@@ -39,11 +39,25 @@ class AddTransactionBloc extends ManagerBloc {
     }
   }
 
+  bool checkTransaction() {
+    if (typeCostBloc.typeCostState.validateCost() &&
+        selectNameBloc.selectNameState.validateNameTransaction() &&
+        selectDateBloc.selectDateState.validateDate() &&
+        typePeriodTimeBloc.typePeriodTimeState.validatePeriodTime() &&
+        takeNoteBloc.takeNoteState.validateNote()) {
+      return true;
+    }
+    return false;
+  }
+
   void createTransaction() async {
+    if (!checkTransaction()) {
+      print('can not create transaction');
+      return;
+    }
     TransactionPart? _transactionPart = TransactionPart();
     String typeTransactionPart =
         _transactionPart.getTypeTransactionPartByBaseId(baseDataId);
-
     Transaction _transaction = Transaction(
       cost: typeCostBloc.typeCostState.cost,
       name: selectNameBloc.selectNameState.name,
@@ -103,18 +117,9 @@ class SelectNameBloc extends BlocBase {
     });
   }
 
-  bool checkSelectedName(String inputName) {
-    if (inputName == 'TRANSACTION') {
-      return false;
-    }
-    return true;
-  }
-
   void processName(RemoteEvent remoteEvent) {
     if (remoteEvent is SelectNameEvent) {
-      if (checkSelectedName(remoteEvent.name)) {
-        selectNameState = SelectNameState(remoteEvent.name);
-      }
+      selectNameState = SelectNameState(remoteEvent.name);
     }
     remoteSelectNameState.sink.add(selectNameState);
   }
@@ -138,8 +143,7 @@ class SelectDateBloc extends BlocBase {
 
   void processDate(RemoteEvent remoteEvent) {
     if (remoteEvent is SelectDateTransactionEvent) {
-      selectDateState =
-          SelectDateTransactionState(remoteEvent.date);
+      selectDateState = SelectDateTransactionState(remoteEvent.date);
     }
     remoteSelectDateState.sink.add(selectDateState);
   }

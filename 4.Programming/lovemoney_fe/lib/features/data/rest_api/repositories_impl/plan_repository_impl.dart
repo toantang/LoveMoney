@@ -1,3 +1,4 @@
+import 'package:lovemoney_fe/configs/api_config.dart';
 import 'package:lovemoney_fe/features/data/rest_api/datasources/models/api_response.dart';
 import 'package:lovemoney_fe/features/data/rest_api/datasources/models/api_result.dart';
 import 'package:lovemoney_fe/features/data/rest_api/datasources/rest_client.dart';
@@ -16,7 +17,8 @@ class PlanRepositoryImpl implements PlanRepository {
   Future<ApiResponse<Plan>>? createPlan({required Plan plan}) async {
     final PlanDto _planDto = _planMapper.toDTO(plan);
     try {
-      var response = await _restClient.postMethod('/plan', data: _planDto.toJson());
+      var response = await _restClient.postMethod(ApiConfig.createPlan,
+          data: _planDto.toJson());
       return ApiResponse.withResult(
         response: response.data,
         resultConverter: (json) => ApiResultSingle<Plan>(
@@ -34,7 +36,7 @@ class PlanRepositoryImpl implements PlanRepository {
   Future<ApiResponse<List<Plan>>>? getPlans({required Plan plan}) async {
     PlanDto planDto = _planMapper.toDTO(plan);
     try {
-      var response = await _restClient.getMethod('/plan/getListPlan',
+      var response = await _restClient.getMethod(ApiConfig.getListPlan,
           params: planDto.toJson());
       return ApiResponse.withResult(
         response: response.data,
@@ -53,7 +55,8 @@ class PlanRepositoryImpl implements PlanRepository {
   Future<ApiResponse<Plan>>? updatePLan({required Plan plan}) async {
     PlanDto planDto = _planMapper.toDTO(plan);
     try {
-      var response = await _restClient.putMethod('/plan/update/${plan.id}',
+      var response = await _restClient.putMethod(
+          ApiConfig.updatePlanById + plan.id.toString(),
           data: planDto.toJson());
       return ApiResponse.withResult(
         response: response.data,

@@ -1,3 +1,4 @@
+import 'package:lovemoney_fe/configs/api_config.dart';
 import 'package:lovemoney_fe/features/data/rest_api/datasources/models/api_response.dart';
 import 'package:lovemoney_fe/features/data/rest_api/datasources/models/api_result.dart';
 import 'package:lovemoney_fe/features/data/rest_api/datasources/rest_client.dart';
@@ -17,7 +18,7 @@ class TransactionRepositoryImpl implements TransactionRepository {
     final TransactionDto transactionDto = _transactionMapper.toDTO(transaction);
     try {
       print('request: ' + transactionDto.toJson().toString());
-      var response = await _restClient.postMethod('/transaction',
+      var response = await _restClient.postMethod(ApiConfig.createTransaction,
           data: transactionDto.toJson(),);
       //print('response: ' + response.data);
       return ApiResponse.withResult(
@@ -39,7 +40,7 @@ class TransactionRepositoryImpl implements TransactionRepository {
     final TransactionDto transactionDto = _transactionMapper.toDTO(transaction);
     try {
       var response = await _restClient.putMethod(
-          '/transaction/update/${transaction.id}',
+          ApiConfig.updateTransactionById + transaction.id.toString(),
           data: transactionDto.toJson());
       return ApiResponse.withResult(
           response: response.data,
@@ -61,18 +62,10 @@ class TransactionRepositoryImpl implements TransactionRepository {
   }) async {
     final TransactionDto transactionDto =
         _transactionMapper.dtoForGetTransaction(transaction, endDate);
-    print("transactionDto.toString()" + transactionDto.toString());
     try {
-      print('transactionDto.toJson: ' + transactionDto.toJson().toString());
       var response = await _restClient.getMethod(
-        '/transaction/getListTransaction',
+        ApiConfig.getListTransaction,
         params: transactionDto.toJson(),
-        /*params: {
-          "userId": "1",
-          "typeTransaction": "Turnover",
-          "date": "03-27-2022",
-          "endDate": "03-28-2022"
-        }*/
       );
       return ApiResponse.withResult(
           response: response.data,

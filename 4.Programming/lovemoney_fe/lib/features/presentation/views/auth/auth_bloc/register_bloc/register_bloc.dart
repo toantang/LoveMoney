@@ -12,12 +12,26 @@ class RegisterBloc {
   final NameRegisterBloc nameRegisterBloc = NameRegisterBloc();
   final ConfirmRegisterBloc confirmRegisterBloc = ConfirmRegisterBloc();
 
-  User createUser() {
-    return User(
+  bool validateConfirmPassword() {
+    String pass = passwordRegisterBloc.passwordRegisterState.password;
+    String confirmPass = confirmRegisterBloc.confirmRegisterState.confirmPassword;
+    if (pass == confirmPass) {
+      return true;
+    }
+    return false;
+  }
+
+  User? createUser() {
+    if (!validateConfirmPassword()) {
+      print('can not validate confirm password');
+      return null;
+    }
+    User newUser = User(
       email: emailRegisterBloc.emailRegisterState.email,
       password: passwordRegisterBloc.passwordRegisterState.password,
       name: nameRegisterBloc.nameRegisterState.name,
     );
+    return newUser;
   }
 }
 
@@ -26,6 +40,7 @@ class EmailRegisterBloc extends BlocBase {
 
   final remoteEmailRegisterState = StreamController<EmailRegisterState>();
   final remoteEmailRegisterEvent = StreamController<RemoteEvent>();
+
   EmailRegisterBloc() {
     remoteEmailRegisterEvent.stream.listen((RemoteEvent remoteEvent) {
       processEmail(remoteEvent);
@@ -40,8 +55,7 @@ class EmailRegisterBloc extends BlocBase {
   }
 
   @override
-  void dispose() {
-  }
+  void dispose() {}
 }
 
 class PasswordRegisterBloc extends BlocBase {
@@ -49,6 +63,7 @@ class PasswordRegisterBloc extends BlocBase {
 
   final remotePasswordRegisterState = StreamController<PasswordRegisterState>();
   final remotePasswordRegisterEvent = StreamController<RemoteEvent>();
+
   PasswordRegisterBloc() {
     remotePasswordRegisterEvent.stream.listen((RemoteEvent remoteEvent) {
       processPassword(remoteEvent);
@@ -63,8 +78,7 @@ class PasswordRegisterBloc extends BlocBase {
   }
 
   @override
-  void dispose() {
-  }
+  void dispose() {}
 }
 
 class NameRegisterBloc extends BlocBase {
@@ -72,6 +86,7 @@ class NameRegisterBloc extends BlocBase {
 
   final remoteNameRegisterState = StreamController<NameRegisterState>();
   final remoteNameRegisterEvent = StreamController<RemoteEvent>();
+
   NameRegisterBloc() {
     remoteNameRegisterEvent.stream.listen((RemoteEvent remoteEvent) {
       processName(remoteEvent);
@@ -86,8 +101,7 @@ class NameRegisterBloc extends BlocBase {
   }
 
   @override
-  void dispose() {
-  }
+  void dispose() {}
 }
 
 class ConfirmRegisterBloc extends BlocBase {
@@ -95,6 +109,7 @@ class ConfirmRegisterBloc extends BlocBase {
 
   final remoteConfirmRegisterState = StreamController<ConfirmRegisterState>();
   final remoteConfirmRegisterEvent = StreamController<RemoteEvent>();
+
   ConfirmRegisterBloc() {
     remoteConfirmRegisterEvent.stream.listen((RemoteEvent remoteEvent) {
       processConfirmPassword(remoteEvent);
@@ -109,6 +124,5 @@ class ConfirmRegisterBloc extends BlocBase {
   }
 
   @override
-  void dispose() {
-  }
+  void dispose() {}
 }

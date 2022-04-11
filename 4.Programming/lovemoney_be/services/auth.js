@@ -18,7 +18,6 @@ const register = async ({
   const userExist = await userService.findUserByEmail({email});
   if (userExist) {
     console.log('User is exist');
-    userExist.password = security.decrypt(userExist.password);
     return userExist;
   }
   const hashPassword = security.encrypt(password);

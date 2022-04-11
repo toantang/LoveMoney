@@ -29,10 +29,17 @@ class AuthBloc {
   }
 
   Future<bool> register() async {
+    User? userRegister = _registerBloc.createUser();
+    if (userRegister == null) {
+      return false;
+    }
     ApiResponse<User>? apiResponse =
-        await _authRepositoryImpl.signUp(user: _registerBloc.createUser());
+        await _authRepositoryImpl.signUp(user: userRegister);
     User? user = apiResponse?.result?.data;
     if (user != null) {
+      _user = user;
+      await _authenticationStorage.updateLoginInfo(
+        email: user.email, password: user.password,);
       return true;
     }
     return false;

@@ -11,8 +11,8 @@ import 'features/presentation/views/main/views/main_screen.dart';
 import 'features/presentation/views/user/user_bloc/user_bloc.dart';
 
 void main() {
-  //APIConst.setBaseUrl(Enviroment.LOCAL);
-  APIConst.setBaseUrl(Enviroment.REAL_DEVICE);
+  //APIConst.setBaseUrl(Enviroment.LOCAL); // if you use emulator with local backend, use this line
+  APIConst.setBaseUrl(Enviroment.REAL_DEVICE); // if you use real device, user this line
   runApp(const MyApp());
 }
 
@@ -24,30 +24,6 @@ class MyApp extends StatelessWidget {
     return const RootScreen();
   }
 }
-/*class MyApp extends StatelessWidget {
-  const MyApp({Key? key}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    final UserLanguageBloc userLanguageBloc = UserLanguageBloc();
-    final UserBloc userBloc = UserBloc();
-
-    return BlocProvider(
-      bloc: userLanguageBloc,
-      child: BlocProvider(
-        bloc: userBloc,
-        child: MaterialApp(
-          debugShowCheckedModeBanner: false,
-          theme: ThemeData(
-            scaffoldBackgroundColor: ColorConst.primaryColorConst.blueShade200,
-          ),
-          routes: RouterLV.pages,
-          home: MyHomePage(),
-        ),
-      ),
-    );
-  }
-}*/
 
 class RootScreen extends StatelessWidget {
   const RootScreen({Key? key}) : super(key: key);

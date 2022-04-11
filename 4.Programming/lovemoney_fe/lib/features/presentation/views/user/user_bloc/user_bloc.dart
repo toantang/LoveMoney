@@ -8,7 +8,7 @@ import 'package:lovemoney_fe/features/presentation/views/user/user_bloc/user_sta
 
 class UserBloc extends BlocBase {
   UserState _userState = UserState(user: AuthBloc.getInstance().user);
-  final StreamController<UserState> remoteUserState = StreamController();
+  final StreamController<UserState> remoteUserState = StreamController.broadcast();
   final StreamController<RemoteEvent> remoteUserEvent = StreamController();
 
   UserBloc() {

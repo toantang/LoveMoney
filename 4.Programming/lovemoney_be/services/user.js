@@ -4,6 +4,8 @@ const userDao = require('../dao/user');
 const findUserByEmail = async ({email}) => {
   const user = await userDao.findUserByEmail({email});
   if (user) {
+    console.log('da tim thay user');
+    console.log(user.password);
     user.password = security.decrypt(user.password);
   }
   return user;

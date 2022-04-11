@@ -12,13 +12,26 @@ import 'package:lovemoney_fe/features/presentation/views/plan/add_plan_bloc/add_
 import '../../../../domain/entities/plan.dart';
 
 class AddPlanBloc {
-  final SelectExpectedDatePlanBloc selectExpectedDatePlanBloc = SelectExpectedDatePlanBloc();
+  final SelectExpectedDatePlanBloc selectExpectedDatePlanBloc =
+      SelectExpectedDatePlanBloc();
   final TypeSumCostPlanBloc typeSumCostPlanBloc = TypeSumCostPlanBloc();
   final TypeNamePlanBloc typeNamePlanBloc = TypeNamePlanBloc();
 
   final PlanRepositoryImpl _planRepositoryImpl = PlanRepositoryImpl();
 
+  bool checkPlan() {
+    if (typeSumCostPlanBloc.typeSumCostPlanState.validateSumCostPlan() &&
+        typeNamePlanBloc.typeNamePlanState.validateName()) {
+      return true;
+    }
+    return false;
+  }
+
   void createPlan() async {
+    if (!checkPlan()) {
+      print('can not create plan');
+      return;
+    }
     Status _status = Status(
       code: CodeStatus.UNFI,
       name: NameStatus.UNFINISHED,
@@ -27,8 +40,10 @@ class AddPlanBloc {
     Plan _plan = Plan(
       name: typeNamePlanBloc.typeNamePlanState.outputNamePlan,
       sumCost: typeSumCostPlanBloc.typeSumCostPlanState.sumCostPlan,
-      expectedFinishDate: selectExpectedDatePlanBloc.selectExpectedDatePlanState.expectedFinishedDatePlan,
-      lastUpdateDate: selectExpectedDatePlanBloc.selectExpectedDatePlanState.expectedFinishedDatePlan,
+      expectedFinishDate: selectExpectedDatePlanBloc
+          .selectExpectedDatePlanState.expectedFinishedDatePlan,
+      lastUpdateDate: selectExpectedDatePlanBloc
+          .selectExpectedDatePlanState.expectedFinishedDatePlan,
       sumCurrentMoney: 0.0,
       user: AuthBloc.getInstance().user,
       status: _status.copyWith(),
@@ -56,14 +71,14 @@ class TypeSumCostPlanBloc extends BlocBase {
     }
     remoteTypeSumCostPlanState.sink.add(typeSumCostPlanState);
   }
-  @override
-  void dispose() {
 
-  }
+  @override
+  void dispose() {}
 }
 
 class TypeNamePlanBloc extends BlocBase {
-  TypeNamePlanState typeNamePlanState = TypeNamePlanState('no have name of plan');
+  TypeNamePlanState typeNamePlanState =
+      TypeNamePlanState('no have name of plan');
 
   final remoteTypeNamePlanState = StreamController<TypeNamePlanState>();
   final remoteTypeNamePlanEvent = StreamController<RemoteEvent>();
@@ -80,16 +95,17 @@ class TypeNamePlanBloc extends BlocBase {
     }
     remoteTypeNamePlanState.sink.add(typeNamePlanState);
   }
-  @override
-  void dispose() {
-  }
 
+  @override
+  void dispose() {}
 }
 
 class SelectExpectedDatePlanBloc extends BlocBase {
-  SelectExpectedDatePlanState selectExpectedDatePlanState = SelectExpectedDatePlanState(FormatDate.currentDate);
+  SelectExpectedDatePlanState selectExpectedDatePlanState =
+      SelectExpectedDatePlanState(FormatDate.currentDate);
 
-  final remoteSelectExpectedDatePlanState = StreamController<SelectExpectedDatePlanState>();
+  final remoteSelectExpectedDatePlanState =
+      StreamController<SelectExpectedDatePlanState>();
   final remoteSelectExpectedDatePlanEvent = StreamController<RemoteEvent>();
 
   SelectExpectedDatePlanBloc() {
@@ -100,7 +116,8 @@ class SelectExpectedDatePlanBloc extends BlocBase {
 
   void processExpectedFinishedDate(RemoteEvent remoteEvent) {
     if (remoteEvent is SelectExpectedDatePlanEvent) {
-      selectExpectedDatePlanState = SelectExpectedDatePlanState(remoteEvent.expectedDate);
+      selectExpectedDatePlanState =
+          SelectExpectedDatePlanState(remoteEvent.expectedDate);
     }
     remoteSelectExpectedDatePlanState.sink.add(selectExpectedDatePlanState);
   }

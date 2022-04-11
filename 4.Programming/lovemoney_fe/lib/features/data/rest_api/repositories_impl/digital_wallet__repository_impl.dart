@@ -1,3 +1,4 @@
+import 'package:lovemoney_fe/configs/api_config.dart';
 import 'package:lovemoney_fe/features/data/rest_api/datasources/models/api_response.dart';
 import 'package:lovemoney_fe/features/data/rest_api/datasources/models/api_result.dart';
 import 'package:lovemoney_fe/features/data/rest_api/datasources/rest_client.dart';
@@ -11,16 +12,20 @@ class DigitalWalletImpl implements DigitalWalletRepository {
   final RestClient _restClient = RestClient();
 
   @override
-  Future<ApiResponse<DigitalWallet>>? createDigitalWallet({required DigitalWallet digitalWallet}) async {
-    DigitalWalletDto digitalWalletDto = _digitalWalletMapper.toDTO(digitalWallet);
+  Future<ApiResponse<DigitalWallet>>? createDigitalWallet(
+      {required DigitalWallet digitalWallet}) async {
+    DigitalWalletDto digitalWalletDto =
+        _digitalWalletMapper.toDTO(digitalWallet);
     try {
-      var response = await _restClient.putMethod('/digitalWallet', data: digitalWalletDto.toJson());
+      var response = await _restClient.putMethod(ApiConfig.createDigitalWallet,
+          data: digitalWalletDto.toJson());
       return ApiResponse.withResult(
         response: response.data,
         resultConverter: (json) => ApiResultSingle(
           json: json,
           rootName: 'digitalWallet',
-          jsonConverter: (json) => _digitalWalletMapper.toEntity(DigitalWalletDto.fromJson(json)),
+          jsonConverter: (json) =>
+              _digitalWalletMapper.toEntity(DigitalWalletDto.fromJson(json)),
         ),
       );
     } catch (error) {
@@ -29,21 +34,25 @@ class DigitalWalletImpl implements DigitalWalletRepository {
   }
 
   @override
-  Future<ApiResponse<DigitalWallet>>? getDigitalWallet({required DigitalWallet digitalWallet}) async {
-    DigitalWalletDto digitalWalletDto = _digitalWalletMapper.toGetDTO(digitalWallet);
+  Future<ApiResponse<DigitalWallet>>? getDigitalWallet(
+      {required DigitalWallet digitalWallet}) async {
+    DigitalWalletDto digitalWalletDto =
+        _digitalWalletMapper.toGetDTO(digitalWallet);
     try {
-      var response = await _restClient.getMethod('/digitalWallet/get/' + digitalWallet.id.toString(), params: digitalWalletDto.toJson());
+      var response = await _restClient.getMethod(
+          ApiConfig.getDigitalWalletById + digitalWallet.id.toString(),
+          params: digitalWalletDto.toJson());
       return ApiResponse.withResult(
         response: response.data,
         resultConverter: (json) => ApiResultSingle(
           json: (json),
           rootName: 'digitalWallet',
-          jsonConverter: (json) => _digitalWalletMapper.toEntity(DigitalWalletDto.fromJson(json)),
+          jsonConverter: (json) =>
+              _digitalWalletMapper.toEntity(DigitalWalletDto.fromJson(json)),
         ),
       );
     } catch (error) {
       return ApiResponse.withError(error);
     }
   }
-
 }

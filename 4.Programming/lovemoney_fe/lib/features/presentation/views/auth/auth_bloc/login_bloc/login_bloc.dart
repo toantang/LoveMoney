@@ -1,5 +1,7 @@
 import 'dart:async';
 
+import '../../../../../../core/helper/reg_exp.dart';
+
 import '../../../../../../core/helper/bloc_provider.dart';
 import '../../../../../../core/helper/remote_event.dart';
 import '../../../../../domain/entities/user.dart';
@@ -53,7 +55,12 @@ class PasswordLoginBloc extends BlocBase {
 
   void processPassword(RemoteEvent remoteEvent) {
     if (remoteEvent is PasswordLoginEvent) {
-      passwordLoginState = PasswordLoginState(remoteEvent.password);
+      if (RegExpUtil.validatePassword(remoteEvent.password)) {
+        passwordLoginState = PasswordLoginState(remoteEvent.password);
+      }
+      else {
+        print('password have special characters or null');
+      }
     }
     remotePasswordLoginState.sink.add(passwordLoginState);
   }
