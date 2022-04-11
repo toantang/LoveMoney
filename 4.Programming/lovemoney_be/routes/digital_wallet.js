@@ -3,8 +3,10 @@ const express = require('express');
 const router = express.Router();
 const asyncMiddleware = require("../middlewares/async");
 
-router.post('/digitalWallet', asyncMiddleware(digitalWalletController.createDigitalWallet));
+const {DIGITAL_WALLET, DIGITAL_WALLET_GET_BY_USER_ID} = process.env;
 
-router.get('/digitalWallet/getByUser/:id', asyncMiddleware(digitalWalletController.findDigitalWalletByUserId));
+router.post(DIGITAL_WALLET, asyncMiddleware(digitalWalletController.createDigitalWallet));
+
+router.get(DIGITAL_WALLET_GET_BY_USER_ID, asyncMiddleware(digitalWalletController.findDigitalWalletByUserId));
 
 module.exports = router;

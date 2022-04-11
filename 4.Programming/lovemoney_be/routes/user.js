@@ -3,11 +3,12 @@ const router = new express.Router();
 const userController = require('../controllers/user');
 const asyncMiddleware = require('../middlewares/async');
 const auth = require("../middlewares/auth");
+const {USER, USER_INFORMATION, USER_UPDATE_INFO} = process.env;
 
-router.post('/user', asyncMiddleware(userController.createUser));
+router.post(USER, asyncMiddleware(userController.createUser));
 
-router.get('/user/information', auth.isAuth, asyncMiddleware(userController.getInformation));
+router.get(USER_INFORMATION, auth.isAuth, asyncMiddleware(userController.getInformation));
 
-router.put('/user/updateInfo',  auth.isAuth, asyncMiddleware(userController.updateInfo));
+router.put(USER_UPDATE_INFO,  auth.isAuth, asyncMiddleware(userController.updateInfo));
 
 module.exports = router;

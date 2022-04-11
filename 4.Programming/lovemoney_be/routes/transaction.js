@@ -2,18 +2,25 @@ const express = require('express');
 const router = new express.Router();
 const transactionController = require('../controllers/transaction');
 const asyncMiddleware = require('../middlewares/async');
-
+const {
+  TRANSACTION,
+  TRANSACTION_UPDATE_BY_ID,
+  TRANSACTION_GET_LIST_TRANSACTION,
+  TRANSACTION_GET_ALL_TRANSACTION
+} = process.env;
 router.post(
-    '/transaction', asyncMiddleware(transactionController.createTransaction));
+    TRANSACTION, asyncMiddleware(transactionController.createTransaction));
 
 router.put(
-    '/transaction/update/:id',
+    TRANSACTION_UPDATE_BY_ID,
     asyncMiddleware(transactionController.updateTransactionById));
 
 router.get(
-    '/transaction/getListTransaction',
+    TRANSACTION_GET_LIST_TRANSACTION,
     asyncMiddleware(transactionController.getListTransaction));
 
-router.get('/transaction/getAllTransaction', asyncMiddleware(transactionController.getAllTransaction));
+router.get(
+    TRANSACTION_GET_ALL_TRANSACTION,
+    asyncMiddleware(transactionController.getAllTransaction));
 
 module.exports = router;
