@@ -2,7 +2,6 @@ import 'dart:async';
 
 import 'package:lovemoney_fe/core/constant/error_const.dart';
 import 'package:lovemoney_fe/core/error/custom_error.dart';
-import 'package:lovemoney_fe/core/helper/remote_event.dart';
 import 'package:lovemoney_fe/features/data/rest_api/datasources/models/api_response.dart';
 import 'package:lovemoney_fe/features/data/rest_api/repositories_impl/user_repository_impl.dart';
 import 'package:lovemoney_fe/features/presentation/views/auth/auth_bloc/auth_bloc.dart';
@@ -10,6 +9,7 @@ import 'package:lovemoney_fe/features/presentation/views/profile_screen/update_u
 import 'package:lovemoney_fe/features/presentation/views/profile_screen/update_user_bloc/update_user_state.dart';
 
 import '../../../../../core/helper/bloc_provider.dart';
+import '../../../../../core/util/remote_event.dart';
 import '../../../../domain/entities/user.dart';
 
 class UpdateUserBloc {

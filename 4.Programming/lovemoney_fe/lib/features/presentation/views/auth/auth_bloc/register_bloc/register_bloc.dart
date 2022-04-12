@@ -1,10 +1,11 @@
 import 'dart:async';
 
 import 'package:lovemoney_fe/core/helper/bloc_provider.dart';
-import 'package:lovemoney_fe/core/helper/remote_event.dart';
 import 'package:lovemoney_fe/features/domain/entities/user.dart';
 import 'package:lovemoney_fe/features/presentation/views/auth/auth_bloc/register_bloc/register_event.dart';
 import 'package:lovemoney_fe/features/presentation/views/auth/auth_bloc/register_bloc/register_state.dart';
+
+import '../../../../../../core/util/remote_event.dart';
 
 class RegisterBloc {
   final EmailRegisterBloc emailRegisterBloc = EmailRegisterBloc();

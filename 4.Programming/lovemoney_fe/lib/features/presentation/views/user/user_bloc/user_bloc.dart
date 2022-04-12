@@ -1,10 +1,11 @@
 import 'dart:async';
 
 import 'package:lovemoney_fe/core/helper/bloc_provider.dart';
-import 'package:lovemoney_fe/core/helper/remote_event.dart';
 import 'package:lovemoney_fe/features/presentation/views/auth/auth_bloc/auth_bloc.dart';
 import 'package:lovemoney_fe/features/presentation/views/user/user_bloc/user_event.dart';
 import 'package:lovemoney_fe/features/presentation/views/user/user_bloc/user_state.dart';
+
+import '../../../../../core/util/remote_event.dart';
 
 class UserBloc extends BlocBase {
   UserState _userState = UserState(user: AuthBloc.getInstance().user);

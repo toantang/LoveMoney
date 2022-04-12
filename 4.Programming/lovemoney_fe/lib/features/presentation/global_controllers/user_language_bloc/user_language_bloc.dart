@@ -2,10 +2,10 @@ import 'dart:async';
 import '../../../../core/helper/bloc_provider.dart';
 import 'package:lovemoney_fe/features/presentation/global_controllers/user_language_bloc/user_language_event.dart';
 import 'package:lovemoney_fe/features/presentation/global_controllers/user_language_bloc/user_language_state.dart';
-import '../../../../core/helper/remote_event.dart';
 import '../../../../core/util/language/init_language/english.dart';
 import '../../../../core/util/language/init_language/vietnamese.dart';
 import '../../../../core/util/language/used_language.dart';
+import '../../../../core/util/remote_event.dart';
 class UserLanguageBloc extends BlocBase {
   RemoteState state = RemoteState(UsedLanguage());
   final eventController = StreamController<RemoteEvent>();

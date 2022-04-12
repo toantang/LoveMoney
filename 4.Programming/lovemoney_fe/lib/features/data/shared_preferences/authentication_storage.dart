@@ -1,4 +1,4 @@
-import 'package:lovemoney_fe/core/helper/secure_storage.dart';
+import '../../../core/util/secure_storage.dart';
 
 class LoginInfo {
   final String loginEmail;

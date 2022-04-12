@@ -1,5 +1,6 @@
 import 'package:lovemoney_fe/core/enum/enum_const.dart';
-import 'package:lovemoney_fe/core/helper/remote_event.dart';
+
+import '../../../../../../../core/util/remote_event.dart';
 
 class SelectVietnameseEvent extends RemoteEvent {
   final KeyUsedWord keyUsedWord;

@@ -2,7 +2,6 @@ import 'dart:async';
 
 import 'package:lovemoney_fe/core/constant/error_const.dart';
 import 'package:lovemoney_fe/core/error/custom_error.dart';
-import 'package:lovemoney_fe/core/helper/remote_event.dart';
 import 'package:lovemoney_fe/features/data/rest_api/datasources/models/api_response.dart';
 import 'package:lovemoney_fe/features/data/rest_api/repositories_impl/auth_repository_impl.dart';
 import 'package:lovemoney_fe/features/presentation/views/auth/auth_bloc/login_bloc/login_bloc.dart';
@@ -10,6 +9,7 @@ import 'package:lovemoney_fe/features/presentation/views/auth/auth_bloc/register
 import 'package:lovemoney_fe/features/domain/entities/user.dart';
 
 import '../../../../../core/helper/bloc_provider.dart';
+import '../../../../../core/util/remote_event.dart';
 import '../../../../data/shared_preferences/authentication_storage.dart';
 import 'auth_event.dart';
 import 'auth_state.dart';

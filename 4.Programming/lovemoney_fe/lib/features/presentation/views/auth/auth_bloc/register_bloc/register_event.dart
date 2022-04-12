@@ -1,4 +1,5 @@
-import 'package:lovemoney_fe/core/helper/remote_event.dart';
+
+import '../../../../../../core/util/remote_event.dart';
 
 class EmailRegisterEvent extends RemoteEvent {
   final String email;

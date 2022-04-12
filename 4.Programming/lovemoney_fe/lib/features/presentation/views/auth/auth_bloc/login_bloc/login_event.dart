@@ -1,4 +1,4 @@
-import '../../../../../../core/helper/remote_event.dart';
+import '../../../../../../core/util/remote_event.dart';
 
 class EmailLoginEvent extends RemoteEvent {
   final String email;

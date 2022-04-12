@@ -1,4 +1,4 @@
-import '../../../../../core/helper/remote_event.dart';
+import '../../../../../core/util/remote_event.dart';
 import '../../../../domain/entities/transaction/transaction.dart';
 
 class SelectStartDateEvent extends RemoteEvent {

@@ -1,5 +1,5 @@
 import 'package:json_annotation/json_annotation.dart';
-import 'package:lovemoney_fe/core/helper/reg_exp.dart';
+import '../../../core/util/reg_exp.dart';
 import 'package:lovemoney_fe/features/domain/entities/role_user.dart';
 import 'package:lovemoney_fe/features/domain/entities/status.dart';
 

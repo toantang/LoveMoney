@@ -1,8 +1,8 @@
 import 'dart:async';
 
 import 'package:lovemoney_fe/core/helper/bloc_provider.dart';
-import 'package:lovemoney_fe/core/helper/remote_event.dart';
 
+import '../../../../../core/util/remote_event.dart';
 import 'main_event.dart';
 import 'main_state.dart';
 

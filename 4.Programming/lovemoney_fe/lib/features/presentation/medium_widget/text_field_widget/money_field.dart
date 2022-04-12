@@ -2,7 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:lovemoney_fe/features/presentation/common_widget/text_field_lv.dart';
 
 import '../../../../core/enum/enum_const.dart';
-import '../../../../core/helper/format_text_to_number.dart';
+import '../../../../core/util/format_text_to_number.dart';
 
 class MoneyField extends StatelessWidget {
   final TextEditingController ecCost;

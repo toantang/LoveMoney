@@ -1,9 +1,9 @@
 import 'dart:async';
 
-import '../../../../../../core/helper/reg_exp.dart';
+import '../../../../../../core/util/reg_exp.dart';
 
 import '../../../../../../core/helper/bloc_provider.dart';
-import '../../../../../../core/helper/remote_event.dart';
+import '../../../../../../core/util/remote_event.dart';
 import '../../../../../domain/entities/user.dart';
 import 'login_event.dart';
 import 'login_state.dart';
