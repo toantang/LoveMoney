@@ -57,13 +57,13 @@ class Transaction {
     TransactionPart? transactionPart,
   }) {
     return Transaction(
-      id: id ?? id,
-      name: name ?? name,
-      cost: cost ?? cost,
+      id: id ?? this.id,
+      name: name ?? this.name,
+      cost: cost ?? this.cost,
       typeTransaction: typeTransaction ?? this.typeTransaction,
-      note: note ?? note,
-      date: date ?? date,
-      user: user ?? user,
+      note: note ?? this.note,
+      date: date ?? this.date,
+      user: user ?? this.user,
       transactionPart: transactionPart ?? transactionPart,
     );
   }

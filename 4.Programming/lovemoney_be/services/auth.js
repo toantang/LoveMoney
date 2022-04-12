@@ -4,6 +4,10 @@ const userService = require('../services/user');
 const security = require('../utils/security');
 const formatDate = require('../utils/format_date');
 const authDao = require('../dao/auth');
+const userDao = require('../dao/user');
+const apiError = require('../error/api_error');
+const errorCode = require('../error/error_code');
+const ServiceResult = require('./service_result');
 
 const register = async ({
   name,
@@ -15,10 +19,14 @@ const register = async ({
   bio,
   phone,
 }) => {
-  const userExist = await userService.findUserByEmail({email});
-  if (userExist) {
+  const findUserServiceResult = await userService.findUserByEmail({email});
+  if (findUserServiceResult.data.user) {
     console.log('User is exist');
-    return userExist;
+    const user = findUserServiceResult.data.user;
+    return new ServiceResult({
+      apiError: apiError.createApiError(errorCode.USER_EXISTS),
+      data: {user},
+    });
   }
   const hashPassword = security.encrypt(password);
   const newUser = {
@@ -32,48 +40,72 @@ const register = async ({
     phone: phone,
   };
   const user = await authDao.register({newUser});
+  if (!user) {
+    return new ServiceResult({
+      apiError: apiError.createApiError(errorCode.CREATE_USER_FAILED),
+      data: {user},
+    });
+  }
   user.password = security.decrypt(user.password);
-  return user;
+  return new ServiceResult({
+    apiError: apiError.createApiError(errorCode.CREATE_USER_SUCCESSFUL),
+    data: {user},
+  });
 };
 
 const login = async ({
   email,
-  password, 
+  password,
 }) => {
-  const user = await userService.findUserByEmail({email});
-  
+  let accessToken = null;
+  const user = await userDao.findUserByEmail({email});
+
   if (!user) {
     console.log('email is not exist');
-    return {};
+    return new ServiceResult({
+      apiError: apiError.createApiError(errorCode.NOT_FOUND),
+      data: {user, accessToken},
+    });
   }
-  
+
   const isValidPassword = userService.isPasswordValid(password, user.password);
   if (!isValidPassword) {
     console.log('password is not valid');
-    return {};
+    let user = null;
+    return new ServiceResult({
+      apiError: apiError.createApiError(errorCode.INVALID_PASSWORD),
+      data: {user, accessToken},
+    });
   };
 
   const dataAccessToken = {
     email: email,
   }
 
-  const accessToken = await tokenUtil.generateToken(
+  accessToken = await tokenUtil.generateToken(
       dataAccessToken,
       process.env.ACCESS_TOKEN_SECRET,
       process.env.ACCESS_TOKEN_LIFE,
   );
 
   if (!accessToken) {
-    console.log('Đăng nhập không thành công, vui lòng thử lại.');
-    return;
+    return new ServiceResult({
+      apiError: apiError.createApiError(errorCode.NOT_GENERATE_TOKEN),
+      data: {user, accessToken},
+    });
   }
 
-  return {user, accessToken};
+  user.password = security.decrypt(user.password);
+  return new ServiceResult({
+    apiError: apiError.createApiError(errorCode.LOGIN_SUCCESS),
+    data: {user, accessToken},
+  });
 };
 
 const autoLogin = async ({email}) => {
-  return await userService.findUserByEmail({email});
-}
+  const serviceResult = await userService.findUserByEmail({email});
+  return serviceResult;
+};
 module.exports = {
   register,
   login,

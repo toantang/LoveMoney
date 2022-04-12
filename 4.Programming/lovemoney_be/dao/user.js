@@ -3,10 +3,11 @@ const User = require('../models/user');
 const findUserByEmail = async ({email}) => {
   const lowerEmail = email.toLowerCase();
   const user = await User.findOne({email: lowerEmail});
-  if (user) {
+  return user;
+  /*if (user) {
     return user;
   }
-  return null;
+  return null;*/
 };
 
 const updateInfo = async ({

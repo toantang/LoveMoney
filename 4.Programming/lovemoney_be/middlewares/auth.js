@@ -5,7 +5,8 @@ const isAuth = async (req, res, next) => {
     console.log(req.headers);
     const accessTokenFromHeader = req.headers.authorization;
     if (!accessTokenFromHeader) {
-        return res.status(401).send('Không tìm thấy access token!');
+        const nullObject = null;
+        return res.send({status: '0001', message: 'Không tìm thấy access token!', result: {nullObject}});
     }
 
     const accessTokenSecret = process.env.ACCESS_TOKEN_SECRET || config.configToken.accessTokenSecret;
@@ -13,7 +14,8 @@ const isAuth = async (req, res, next) => {
     const verified = await tokenUtil.verifyToken(accessTokenFromHeader, accessTokenSecret);
     if (!verified || verified == null) {
         const nullObject = null;
-		return res.send({status: 1, result: { nullObject }});
+        console.log('chay vao ham nay');
+		return res.send({status: '0002', message: 'jwt expired', result: { nullObject }});
 	}
     const email = verified.payload.email;
     req.email = email;

@@ -8,7 +8,7 @@ part of 'transaction_dto.dart';
 
 TransactionDto _$TransactionDtoFromJson(Map<String, dynamic> json) =>
     TransactionDto(
-      id: json['id'] as String?,
+      id: json['_id'] as String?,
       name: json['name'] as String?,
       cost: (json['cost'] as num?)?.toDouble(),
       typeTransaction: json['typeTransaction'] as String,

@@ -7,7 +7,7 @@ part of 'user_language.dart';
 // **************************************************************************
 
 UserLanguage _$UserLanguageFromJson(Map<String, dynamic> json) => UserLanguage(
-      id: json['id'] as String?,
+      id: json['_id'] as String?,
       code: json['code'] as String,
       name: json['name'] as String?,
       description: json['description'] as String?,

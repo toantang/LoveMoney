@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:lovemoney_fe/core/enum/enum_const.dart';
+import 'package:lovemoney_fe/core/error/custom_error.dart';
 import 'package:lovemoney_fe/core/util/screen_path.dart';
 import 'package:lovemoney_fe/features/presentation/common_widget/base_screen.dart';
 import 'package:lovemoney_fe/features/presentation/common_widget/button_lv.dart';
+import 'package:lovemoney_fe/features/presentation/common_widget/error_lv.dart';
 import 'package:lovemoney_fe/features/presentation/medium_widget/text_field_widget/email_field.dart';
 import 'package:lovemoney_fe/features/presentation/medium_widget/text_field_widget/name_field.dart';
 import 'package:lovemoney_fe/features/presentation/medium_widget/text_field_widget/password_field.dart';
@@ -29,12 +31,15 @@ class RegisterForm extends StatelessWidget {
     _authBloc.registerBloc.emailRegisterBloc.emailRegisterState = EmailRegisterState(ecEmail.text);
     _authBloc.registerBloc.confirmRegisterBloc.confirmRegisterState = ConfirmRegisterState(ecConfirmPassword.text);
 
-    if (await _authBloc.register()) {
+    CustomError customError = await _authBloc.register();
+    if (CustomError.validateCodeError(customError)) {
       _clearTextField();
       final UserBloc userBloc = BlocProvider.of(context)!;
       userBloc.remoteUserEvent.sink.add(NewUserEvent(newUser: AuthBloc.getInstance().user));
       Nav.to(context, ScreenPath.MAIN_PATH, arguments: userBloc);
     }
+
+    NavSnackBar.displayError(context, customError: customError);
   }
 
   @override

@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:lovemoney_fe/configs/api_config.dart';
 import 'package:lovemoney_fe/features/data/rest_api/datasources/models/api_response.dart';
 import 'package:lovemoney_fe/features/data/rest_api/datasources/models/api_result.dart';
@@ -44,9 +46,9 @@ class TransactionRepositoryImpl implements TransactionRepository {
           data: transactionDto.toJson());
       return ApiResponse.withResult(
           response: response.data,
-          resultConverter: (json) => ApiResultSingle(
+          resultConverter: (json) => ApiResultSingle<Transaction>(
                 json: (json),
-                rootName: '/transaction',
+                rootName: 'transaction',
                 jsonConverter: (json) =>
                     _transactionMapper.toEntity(TransactionDto.fromJson(json)),
               ));
@@ -76,6 +78,7 @@ class TransactionRepositoryImpl implements TransactionRepository {
                     _transactionMapper.toEntity(TransactionDto.fromJson(json)),
               ));
     } catch (error) {
+      print(error.toString());
       return ApiResponse.withError(error);
     }
   }

@@ -1,5 +1,7 @@
 import 'dart:async';
 
+import 'package:lovemoney_fe/core/constant/error_const.dart';
+import 'package:lovemoney_fe/core/error/custom_error.dart';
 import 'package:lovemoney_fe/core/helper/remote_event.dart';
 import 'package:lovemoney_fe/features/data/rest_api/datasources/models/api_response.dart';
 import 'package:lovemoney_fe/features/data/rest_api/repositories_impl/user_repository_impl.dart';
@@ -18,15 +20,28 @@ class UpdateUserBloc {
   late final UpdatePasswordBloc updatePasswordBloc;
   late final UpdateBioBloc updateBioBloc;
   late final UpdateGenderBloc updateGenderBloc;
+  late final UpdateConfirmPasswordBloc updateConfirmPasswordBloc;
 
   UpdateUserBloc({required this.user}) {
     updateNameBloc = UpdateNameBloc(currentName: user.name!);
     updatePasswordBloc = UpdatePasswordBloc(currentPass: user.password!);
+    updateConfirmPasswordBloc = UpdateConfirmPasswordBloc(currentPass: user.password!);
     updateBioBloc = UpdateBioBloc(currentBio: user.bio);
     updateGenderBloc = UpdateGenderBloc(currentGender: user.gender);
   }
 
-  void updateUser() async {
+  bool validateConfirmPassword() {
+    String pass = updatePasswordBloc.updatePasswordState.newPassword;
+    String confirmPass = updateConfirmPasswordBloc.updateConfirmPasswordState.confirmPassword;
+    if (pass == confirmPass) {
+      return true;
+    }
+    return false;
+  }
+  Future<CustomError> updateUser() async {
+    if (!validateConfirmPassword()) {
+      return CustomError(code: ErrorCode.FAILED, name: ErrorConst.INVALID_CONFIRM_PASSWORD);
+    }
     User _user = user.copyWith(
       email: user.email!,
       name: updateNameBloc.updateNameState.newName,
@@ -36,10 +51,12 @@ class UpdateUserBloc {
     );
 
     AuthBloc.getInstance().updateUser(_user);
-    print("user send: " + _user.toString());
     ApiResponse<User>? apiResponse = await _userRepositoryImpl.updateUser(user: _user);
-    User? userRes = apiResponse?.result?.data;
-    print(userRes.toString());
+    User? resUser = apiResponse?.result?.data;
+    if (resUser == null) {
+      return CustomError(code: ErrorCode.FAILED, name: ErrorConst.UPDATE_USER_FAILED);
+    }
+    return CustomError(code: ErrorCode.FAILED, name: ErrorConst.UPDATE_USER_SUCCESS);
   }
 }
 
@@ -106,6 +123,39 @@ class UpdatePasswordBloc extends BlocBase {
 
   set updatePasswordState(UpdatePasswordState value) {
     _updatePasswordState = value;
+  }
+}
+
+class UpdateConfirmPasswordBloc extends BlocBase {
+  final String currentPass;
+  late UpdateConfirmPasswordState _updateConfirmPasswordState;
+
+  final StreamController<RemoteEvent> remoteUpdateConfirmPasswordEvent = StreamController();
+  final StreamController<UpdateConfirmPasswordState> remoteUpdateConfirmPasswordState = StreamController();
+
+  UpdateConfirmPasswordBloc({required this.currentPass}) {
+    _updateConfirmPasswordState = UpdateConfirmPasswordState(confirmPassword: currentPass);
+    remoteUpdateConfirmPasswordEvent.stream.listen((RemoteEvent remoteEvent) {
+      _processConfirmPassword(remoteEvent);
+    });
+  }
+
+  void _processConfirmPassword(RemoteEvent remoteEvent) {
+    if (remoteEvent is UpdateConfirmPasswordEvent) {
+      _updateConfirmPasswordState = UpdateConfirmPasswordState(confirmPassword: remoteEvent.confirmPassword);
+    }
+    remoteUpdateConfirmPasswordState.sink.add(_updateConfirmPasswordState);
+  }
+
+  @override
+  void dispose() {
+
+  }
+
+  UpdateConfirmPasswordState get updateConfirmPasswordState => _updateConfirmPasswordState;
+
+  set updatePasswordState(UpdateConfirmPasswordState value) {
+    _updateConfirmPasswordState = value;
   }
 }
 

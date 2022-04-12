@@ -30,10 +30,10 @@ class UserLanguage {
   UserLanguage copyWith(
       {String? id, required String code, String? name, String? description}) {
     return UserLanguage(
-      id: id ?? id,
-      code: code,
-      name: name ?? name,
-      description: description ?? description,
+      id: id ?? this.id,
+      code: this.code,
+      name: name ?? this.name,
+      description: description ?? this.description,
     );
   }
 }

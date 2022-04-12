@@ -8,7 +8,7 @@ part of 'digital_wallet.dart';
 
 DigitalWallet _$DigitalWalletFromJson(Map<String, dynamic> json) =>
     DigitalWallet(
-      id: json['id'] as String?,
+      id: json['_id'] as String?,
       owner: json['owner'] as String?,
       codeWallet: json['codeWallet'] as String?,
       accountBalance: (json['accountBalance'] as num?)?.toDouble(),

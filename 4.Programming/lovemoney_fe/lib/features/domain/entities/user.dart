@@ -1,4 +1,5 @@
 import 'package:json_annotation/json_annotation.dart';
+import 'package:lovemoney_fe/core/helper/reg_exp.dart';
 import 'package:lovemoney_fe/features/domain/entities/role_user.dart';
 import 'package:lovemoney_fe/features/domain/entities/status.dart';
 
@@ -51,7 +52,12 @@ class User {
     name: 'toantang',
   );
 
-
+  bool validateUser() {
+    if (RegExpUtil.validateEmail(email) && RegExpUtil.validatePassword(password)) {
+      return true;
+    }
+    return false;
+  }
   @override
   String toString() {
     return 'User{id: $id, email: $email, password: $password, '

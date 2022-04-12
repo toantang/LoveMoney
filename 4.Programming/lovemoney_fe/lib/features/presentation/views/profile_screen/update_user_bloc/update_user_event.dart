@@ -10,10 +10,16 @@ class UpdatePasswordEvent extends RemoteEvent {
   UpdatePasswordEvent({required this.newPassword,});
 }
 
+class UpdateConfirmPasswordEvent extends RemoteEvent {
+  final String confirmPassword;
+  UpdateConfirmPasswordEvent({required this.confirmPassword});
+}
+
 class UpdateBioEvent extends RemoteEvent {
   final String? bio;
   UpdateBioEvent({this.bio});
 }
+
 class UpdateGenderEvent extends RemoteEvent {
   final String? gender;
   UpdateGenderEvent({this.gender});

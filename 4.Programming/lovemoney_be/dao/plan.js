@@ -33,10 +33,6 @@ const updatePlan = async (id, {
   lastUpdateDate,
   status,
 }) => {
-  const planDb = await findPlanById(id);
-  if (!planDb) {
-    return null;
-  }
   const plan = await Plan.findByIdAndUpdate(
       {
         _id: id,

@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'package:lovemoney_fe/core/error/custom_error.dart';
 import 'package:lovemoney_fe/core/helper/bloc_provider.dart';
 import 'package:lovemoney_fe/core/helper/formatDate.dart';
 import 'package:lovemoney_fe/core/helper/remote_event.dart';
@@ -39,25 +40,37 @@ class AddTransactionBloc {
     }
   }
 
+  bool checkFixedTransaction(String typeTransactionPart) {
+    if (typeTransactionPart == TypeTransactionPartConst.FIXED_TRANSACTION &&
+        typePeriodTimeBloc.typePeriodTimeState.validatePeriodTime()) {
+      return true;
+    }
+    return false;
+  }
+
   bool checkTransaction() {
     if (typeCostBloc.typeCostState.validateCost() &&
         selectNameBloc.selectNameState.validateNameTransaction() &&
         selectDateBloc.selectDateState.validateDate() &&
-        typePeriodTimeBloc.typePeriodTimeState.validatePeriodTime() &&
         takeNoteBloc.takeNoteState.validateNote()) {
       return true;
     }
     return false;
   }
 
-  void createTransaction() async {
+  Future<CustomError> createTransaction() async {
     if (!checkTransaction()) {
       print('can not create transaction');
-      return;
+      return CustomError(
+          code: ErrorCode.FAILED, name: ErrorConst.CREATE_TRANSACTION_FAILED,);
     }
     TransactionPart? _transactionPart = TransactionPart();
     String typeTransactionPart =
         _transactionPart.getTypeTransactionPartByBaseId(baseDataId);
+    if (!checkFixedTransaction(typeTransactionPart)) {
+      return CustomError(
+        code: ErrorCode.FAILED, name: ErrorConst.CREATE_TRANSACTION_FAILED,);
+    }
     Transaction _transaction = Transaction(
       cost: typeCostBloc.typeCostState.cost,
       name: selectNameBloc.selectNameState.name,
@@ -75,7 +88,12 @@ class AddTransactionBloc {
     ApiResponse<Transaction>? apiResponse = await _transactionRepositoryImpl
         .createTransaction(transaction: _transaction);
     Transaction? transaction = apiResponse?.result?.data;
-    print(transaction.toString());
+    if (transaction != null) {
+      return CustomError(
+          code: ErrorCode.SUCCESS, name: ErrorConst.CREATE_TRANSACTION_SUCCESS);
+    }
+    return CustomError(
+        code: ErrorCode.FAILED, name: ErrorConst.CREATE_TRANSACTION_FAILED);
   }
 }
 

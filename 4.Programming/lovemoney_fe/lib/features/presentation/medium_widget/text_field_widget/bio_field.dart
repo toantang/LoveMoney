@@ -12,7 +12,7 @@ class BioField extends StatelessWidget {
   Widget build(BuildContext context) {
     return TextFieldLv(
       textEditingController: ecBio,
-      keyUsedWord: KeyUsedWord.EMAIL,
+      keyUsedWord: KeyUsedWord.BIO,
       countText: '',
       maxLength: 100,
     );

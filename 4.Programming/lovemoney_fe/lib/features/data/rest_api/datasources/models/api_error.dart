@@ -1,7 +1,7 @@
 import 'package:dio/dio.dart';
 
 class ApiError {
-  int? _code;
+  String? _code;
   String? _message;
   ApiError({dynamic error}) {
     if (error != null) _handleError(error);
@@ -9,13 +9,13 @@ class ApiError {
 
   factory ApiError.fromJson(Map<String, dynamic> json) {
     return ApiError()
-        .._code = json['code'] as int
+        .._code = json['status'] as String
         .._message = json['message'] as String;
   }
 
   _handleError(dynamic error) {
     if (error is DioError) {
-      _code = error.response?.statusCode ?? 0;
+      _code = error.response?.statusCode.toString() ?? '0';
       switch(error.type) {
         case DioErrorType.connectTimeout:
         case DioErrorType.sendTimeout:

@@ -6,9 +6,12 @@ const findDigitalWalletByUserId = async (req, res) => {
     userId,
   } = dataOfRequest.getDataFromRequest(req);
 
-  const digitalWallet =
+  const serviceResult =
       await digitalWalletService.findDigitalWalletByUserId(userId);
-  return res.send({status: 1, result: {digitalWallet}});
+  const code = serviceResult.apiError.code;
+  const message = serviceResult.apiError.message;
+  const digitalWallet = serviceResult.data.digitalWallet;
+  return res.send({status: code, message: message, result: {digitalWallet}});
 };
 
 const createDigitalWallet = async (req, res) => {
@@ -20,14 +23,17 @@ const createDigitalWallet = async (req, res) => {
     digitalType,
   } = req.body;
 
-  const digitalWallet = await digitalWalletService.createDigitalWallet({
+  const serviceResult = await digitalWalletService.createDigitalWallet({
     userId,
     owner,
     codeWallet,
     accountBalance,
     digitalType,
   });
-  return res.send({status: 1, result: {digitalWallet}});
+  const code = serviceResult.apiError.code;
+  const digitalWallet = serviceResult.data.digitalWallet;
+  const message = serviceResult.apiError.message;
+  return res.send({status: code, message: message, result: {digitalWallet}});
 };
 
 module.exports = {

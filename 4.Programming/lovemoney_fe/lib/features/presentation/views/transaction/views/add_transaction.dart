@@ -6,6 +6,7 @@ import 'package:lovemoney_fe/core/helper/bloc_provider.dart';
 import 'package:lovemoney_fe/core/helper/formatDate.dart';
 import 'package:lovemoney_fe/features/presentation/common_widget/button_lv.dart';
 import 'package:lovemoney_fe/features/presentation/common_widget/date_time_picker_lv.dart';
+import 'package:lovemoney_fe/features/presentation/common_widget/error_lv.dart';
 import 'package:lovemoney_fe/features/presentation/common_widget/list_tile_lv.dart';
 import 'package:lovemoney_fe/features/presentation/common_widget/text_field_lv.dart';
 import 'package:lovemoney_fe/features/presentation/medium_widget/text_field_widget/money_field.dart';
@@ -19,6 +20,7 @@ import '../select_name_transaction/select_name_transaction.dart';
 
 import '../../../../../core/helper/format_text_to_number.dart';
 import '../add_transaction_bloc/add_transaction_event.dart';
+import 'package:lovemoney_fe/core/error/custom_error.dart';
 
 class AddTransaction extends StatelessWidget {
   final TextEditingController ecCost = TextEditingController();
@@ -151,10 +153,11 @@ class AddTransaction extends StatelessWidget {
     );
   }
 
-  void _addTransactionButton() {
+  void _addTransactionButton(BuildContext context) async {
+    String textCost = ecCost.text.isEmpty ? '0' : ecCost.text;
     addTransactionBloc.typeCostBloc.typeCostState =
         TypeCostState(FormatTextToNumber.formatTextToDouble(
-            ecCost.text));
+            textCost));
     addTransactionBloc.takeNoteBloc.takeNoteState =
         TakeNoteState(note: ecNote.text);
 
@@ -162,9 +165,10 @@ class AddTransaction extends StatelessWidget {
     addTransactionBloc.typePeriodTimeBloc.typePeriodTimeState =
         TypePeriodTimeState(
             periodTime: textPeriodTime.isEmpty
-                ? null
+                ? 0
                 : double.parse(textPeriodTime));
-    addTransactionBloc.createTransaction();
+    CustomError customError = await addTransactionBloc.createTransaction();
+    NavSnackBar.displayError(context, customError: customError);
   }
 
   @override
@@ -195,7 +199,9 @@ class AddTransaction extends StatelessWidget {
               ),
               Padding(
                 child: ButtonLv(
-                  onPressed: _addTransactionButton,
+                  onPressed: () {
+                    _addTransactionButton(context);
+                  },
                   keyUsedWord: KeyUsedWord.ADD,
                   textStyle: const TextStyle(
                     fontSize: SizeConst.sizeTextButton,

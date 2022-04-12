@@ -1,8 +1,11 @@
 import 'dart:async';
 
+import 'package:lovemoney_fe/core/constant/error_const.dart';
+import 'package:lovemoney_fe/core/error/custom_error.dart';
 import 'package:lovemoney_fe/core/helper/bloc_provider.dart';
 import 'package:lovemoney_fe/core/helper/formatDate.dart';
 import 'package:lovemoney_fe/core/helper/remote_event.dart';
+import 'package:lovemoney_fe/features/data/rest_api/datasources/models/api_response.dart';
 import 'package:lovemoney_fe/features/data/rest_api/repositories_impl/plan_repository_impl.dart';
 import 'package:lovemoney_fe/features/domain/entities/status.dart';
 import 'package:lovemoney_fe/features/presentation/views/auth/auth_bloc/auth_bloc.dart';
@@ -27,10 +30,10 @@ class AddPlanBloc {
     return false;
   }
 
-  void createPlan() async {
+  Future<CustomError> createPlan() async {
     if (!checkPlan()) {
       print('can not create plan');
-      return;
+      CustomError(code: ErrorCode.FAILED, name: ErrorConst.CREATE_PLAN_FAILED);
     }
     Status _status = Status(
       code: CodeStatus.UNFI,
@@ -48,8 +51,13 @@ class AddPlanBloc {
       user: AuthBloc.getInstance().user,
       status: _status.copyWith(),
     );
-    print(_plan.toString());
-    await _planRepositoryImpl.createPlan(plan: _plan.copyWith());
+    ApiResponse<Plan>? apiResponse = await _planRepositoryImpl.createPlan(plan: _plan.copyWith());
+    Plan? plan = apiResponse?.result?.data;
+    if (plan != null) {
+      return CustomError(code: ErrorCode.SUCCESS, name: ErrorConst.CREATE_PLAN_SUCCESS);
+    }
+
+    return CustomError(code: ErrorCode.FAILED, name: ErrorConst.CREATE_PLAN_FAILED);
   }
 }
 

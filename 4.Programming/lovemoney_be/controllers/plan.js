@@ -12,7 +12,7 @@ const createPlan = async (req, res) => {
     status,
   } = req.body;
 
-  const plan = await planService.createPlan({
+  const serviceResult = await planService.createPlan({
     userId,
     name,
     sumCost,
@@ -22,7 +22,10 @@ const createPlan = async (req, res) => {
     status,
   });
 
-  return res.send({status: 1, result: {plan}});
+  const code = serviceResult.apiError.code;
+  const plan = serviceResult.data.plan;
+  const message = serviceResult.apiError.message;
+  return res.send({status: code, message: message, result: {plan}});
 };
 
 const updatePlan = async (req, res) => {
@@ -40,7 +43,7 @@ const updatePlan = async (req, res) => {
     id,
   } = req.params;
 
-  const plan = planService.updatePlan(
+  const serviceResult = await planService.updatePlan(
       {
         id,
       },
@@ -53,7 +56,11 @@ const updatePlan = async (req, res) => {
         lastUpdateDate,
         status,
       });
-      res.send({status: 1, result: { plan }});
+
+      const code = serviceResult.apiError.code;
+      const message = serviceResult.apiError.message;
+      const plan = serviceResult.data.plan;
+      res.send({status: code, message: message, result: { plan }});
 };
 const getListPlanByIdStatus = async (req, res) => {
   const {
@@ -61,8 +68,11 @@ const getListPlanByIdStatus = async (req, res) => {
     status,
   } = dataOfRequest.getDataFromRequest(req);
 
-  const plans = await planService.getListPlanByIdStatus({userId, status});
-  return res.send({status: 1, result: {plans}});
+  const serviceResult = await planService.getListPlanByIdStatus({userId, status});
+  const code = serviceResult.apiError.code;
+  const plans = serviceResult.data.plans;
+  const message = serviceResult.apiError.message;
+  return res.send({status: code, message: message, result: {plans}});
 };
 module.exports = {
   createPlan,

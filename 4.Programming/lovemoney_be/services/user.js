@@ -1,18 +1,27 @@
 const security = require('../utils/security');
 const userDao = require('../dao/user');
+const errorCode = require('../error/error_code');
+const ServiceResult = require('./service_result');
+const apiError = require('../error/api_error');
 
 const findUserByEmail = async ({email}) => {
   const user = await userDao.findUserByEmail({email});
   if (user) {
     console.log('da tim thay user');
-    console.log(user.password);
     user.password = security.decrypt(user.password);
-  }
-  return user;
+    return new ServiceResult({
+      apiError: apiError.createApiError(errorCode.USER_EXISTS),
+      data: {user},
+    });
+  };
+  return new ServiceResult({
+    apiError: apiError.createApiError(errorCode.USER_NOT_EXISTS),
+    data: { user }, 
+  });
 };
 
 const isPasswordValid = (sentPass, userPass) => {
-  return sentPass.toString() === userPass.toString();
+  return sentPass.toString() === security.decrypt(userPass);
 };
 
 const updateInfo = async ({
@@ -31,7 +40,10 @@ const updateInfo = async ({
     gender,
   });
   user.password = security.decrypt(user.password);
-  return user;
+  return new ServiceResult({
+    apiError: apiError.createApiError(errorCode.UPDATE_USER_SUCCESS),
+    data: {user},
+  });
 };
 
 module.exports = {

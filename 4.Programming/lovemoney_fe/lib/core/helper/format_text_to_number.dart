@@ -1,9 +1,10 @@
 class FormatTextToNumber {
-  String _formatText(String text) {
+  String _formatTextToMoney(String text) {
     int len = text.length;
     if (len <= 3) {
       return text;
     }
+
     int cnt = 0;
     String ans = "";
     for (int i = len - 1; i >= 0; i--) {
@@ -27,7 +28,7 @@ class FormatTextToNumber {
     String val = value.replaceAll(' ', '');
     int len = val.length;
     if (len <= 3) {
-      return value;
+      return val;
     }
 
     String decimal = '';
@@ -44,9 +45,9 @@ class FormatTextToNumber {
       decimalPart += val[index];
       index++;
     }
-    String x = _formatText(decimalPart) == "" ? '': _formatText(decimalPart);
+    String x = _formatTextToMoney(decimalPart) == "" ? '': _formatTextToMoney(decimalPart);
     decimal = decimal + x;
-    return _formatText(realPart) +  decimal;
+    return _formatTextToMoney(realPart) +  decimal;
   }
 
   static double formatTextToDouble(String formattedNumber) {

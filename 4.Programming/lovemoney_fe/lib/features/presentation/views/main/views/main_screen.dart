@@ -52,8 +52,6 @@ class MainScreen extends StatelessWidget {
                 if (snapshot.hasData) {
                   return InkWell(
                     onTap: () {
-                      print('main screen: ');
-                      print(snapshot.data!.user.toString());
                       Nav.to(context, ScreenPath.PROFILE_PATH,
                           arguments: UpdateUserBloc(user: snapshot.data!.user));
                     },

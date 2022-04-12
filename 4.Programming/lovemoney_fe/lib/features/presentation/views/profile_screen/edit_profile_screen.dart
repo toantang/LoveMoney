@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:lovemoney_fe/features/presentation/common_widget/dialog_lv.dart';
+import 'package:lovemoney_fe/features/presentation/common_widget/error_lv.dart';
 import 'package:lovemoney_fe/features/presentation/medium_widget/text_field_widget/bio_field.dart';
 import 'package:lovemoney_fe/features/presentation/medium_widget/text_field_widget/name_field.dart';
 import 'package:lovemoney_fe/features/presentation/medium_widget/text_field_widget/password_field.dart';
@@ -10,6 +11,7 @@ import 'package:lovemoney_fe/features/presentation/views/profile_screen/update_u
 import 'package:lovemoney_fe/core/helper/bloc_provider.dart';
 import 'package:lovemoney_fe/features/presentation/views/user/user_bloc/user_event.dart';
 import '../../../../core/enum/enum_const.dart';
+import '../../../../core/error/custom_error.dart';
 import '../../../../core/helper/navigation_screen.dart';
 import '../../common_widget/button_lv.dart';
 import '../user/user_bloc/user_bloc.dart';
@@ -21,14 +23,16 @@ class EditProfileScreen extends StatelessWidget {
   final TextEditingController ecName = TextEditingController();
   final TextEditingController ecBio = TextEditingController();
   final TextEditingController ecPassword = TextEditingController();
+  final TextEditingController ecConfirmPassword = TextEditingController();
 
   void _defaultText() {
     ecName.text = updateUserBloc.updateNameBloc.updateNameState.newName;
     ecBio.text = updateUserBloc.updateBioBloc.updateBioState.bio ?? '';
     ecPassword.text = updateUserBloc.updatePasswordBloc.updatePasswordState.newPassword;
+    ecConfirmPassword.text = updateUserBloc.updatePasswordBloc.updatePasswordState.newPassword;
   }
 
-  void _onChangeInfoButton() {
+  void _onChangeInfoButton(BuildContext context) async {
     updateUserBloc.updateNameBloc.updateNameState = UpdateNameState(newName: ecName.text);
     updateUserBloc.updateBioBloc.updateBioState = UpdateBioState(bio: ecBio.text);
     updateUserBloc.updatePasswordBloc.updatePasswordState = UpdatePasswordState(newPassword: ecPassword.text);
@@ -37,7 +41,9 @@ class EditProfileScreen extends StatelessWidget {
     updateUserBloc.updateBioBloc.remoteUpdateBioEvent.sink.add(UpdateBioEvent(bio: ecBio.text));
     updateUserBloc.updatePasswordBloc.remoteUpdatePasswordEvent.sink.add(UpdatePasswordEvent(newPassword: ecPassword.text));
 
-    updateUserBloc.updateUser();
+    CustomError customError = await updateUserBloc.updateUser();
+    Nav.back(context);
+    NavSnackBar.displayError(context, customError: customError);
   }
 
   @override
@@ -50,16 +56,25 @@ class EditProfileScreen extends StatelessWidget {
         mainAxisSize: MainAxisSize.min,
         children: [
           NameField(ecName: ecName),
-          PasswordField(ecPassword: ecPassword),
-          BioField(ecBio: ecBio),
+          Padding(
+            padding: const EdgeInsets.only(top: 10),
+            child: PasswordField(ecPassword: ecPassword),
+          ),
+          Padding(
+            padding: const EdgeInsets.only(top: 10),
+            child: PasswordField(ecPassword: ecConfirmPassword),
+          ),
+          Padding(
+            padding: const EdgeInsets.only(top: 10),
+            child: BioField(ecBio: ecBio),
+          ),
         ],
       ),
       actions: [
         ButtonLv(
           onPressed: () {
-            _onChangeInfoButton();
+            _onChangeInfoButton(context);
             userBloc.remoteUserEvent.sink.add(NewUserEvent(newUser: AuthBloc.getInstance().user));
-            Nav.back(context);
           },
           keyUsedWord: KeyUsedWord.CONFIRM,
         ),

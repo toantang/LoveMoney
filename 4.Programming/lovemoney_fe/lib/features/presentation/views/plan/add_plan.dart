@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:lovemoney_fe/core/enum/enum_const.dart';
+import 'package:lovemoney_fe/core/error/custom_error.dart';
 import 'package:lovemoney_fe/core/helper/format_text_to_number.dart';
 import 'package:lovemoney_fe/features/presentation/common_widget/base_screen.dart';
 import 'package:lovemoney_fe/features/presentation/common_widget/button_lv.dart';
+import 'package:lovemoney_fe/features/presentation/common_widget/error_lv.dart';
 import 'package:lovemoney_fe/features/presentation/common_widget/list_tile_lv.dart';
 import 'package:lovemoney_fe/features/presentation/common_widget/text_field_lv.dart';
 import 'package:lovemoney_fe/features/presentation/views/plan/add_plan_bloc/add_plan_bloc.dart';
@@ -75,6 +77,15 @@ class AddPlan extends StatelessWidget {
     );
   }
 
+  void _addPlanButton(BuildContext context) async {
+    addPlanBloc.typeSumCostPlanBloc.typeSumCostPlanState =
+        TypeSumCostPlanState(FormatTextToNumber.formatTextToDouble(ecControllerSumCost.text));
+    addPlanBloc.typeNamePlanBloc.typeNamePlanState =
+        TypeNamePlanState(ecControllerName.text);
+    CustomError customError = await addPlanBloc.createPlan();
+
+    NavSnackBar.displayError(context, customError: customError);
+  }
   @override
   Widget build(BuildContext context) {
     return BaseScreenWithBack(
@@ -94,11 +105,7 @@ class AddPlan extends StatelessWidget {
           ButtonLv(
             keyUsedWord: KeyUsedWord.ADD,
             onPressed: () {
-              addPlanBloc.typeSumCostPlanBloc.typeSumCostPlanState =
-                  TypeSumCostPlanState(FormatTextToNumber.formatTextToDouble(ecControllerSumCost.text));
-              addPlanBloc.typeNamePlanBloc.typeNamePlanState =
-                  TypeNamePlanState(ecControllerName.text);
-              addPlanBloc.createPlan();
+              _addPlanButton(context);
             },
           ),
         ],

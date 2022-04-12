@@ -1,5 +1,7 @@
 import 'dart:async';
 
+import 'package:lovemoney_fe/core/constant/error_const.dart';
+import 'package:lovemoney_fe/core/error/custom_error.dart';
 import 'package:lovemoney_fe/core/helper/remote_event.dart';
 import 'package:lovemoney_fe/features/data/rest_api/datasources/models/api_response.dart';
 import 'package:lovemoney_fe/features/data/rest_api/repositories_impl/auth_repository_impl.dart';
@@ -28,10 +30,11 @@ class AuthBloc {
     _loginStatus = LoginStatus.LOGIN_FAILED;
   }
 
-  Future<bool> register() async {
+  Future<CustomError> register() async {
     User? userRegister = _registerBloc.createUser();
     if (userRegister == null) {
-      return false;
+      return CustomError(code: ErrorCode.FAILED, name: ErrorConst.CREATE_USER_FAILED);
+
     }
     ApiResponse<User>? apiResponse =
         await _authRepositoryImpl.signUp(user: userRegister);
@@ -40,12 +43,12 @@ class AuthBloc {
       _user = user;
       await _authenticationStorage.updateLoginInfo(
         email: user.email, password: user.password,);
-      return true;
+      return CustomError(code: ErrorCode.SUCCESS, name: ErrorConst.SUCCESS);
     }
-    return false;
+    return CustomError(code: ErrorCode.FAILED, name: ErrorConst.CREATE_USER_FAILED);
   }
 
-  Future<bool> login() async {
+  Future<CustomError> login() async {
     ApiResponse<User>? apiResponse =
         await _authRepositoryImpl.login(user: _loginBloc.createUser());
     User? user = apiResponse?.result?.data;
@@ -53,9 +56,10 @@ class AuthBloc {
       _user = user;
       await _authenticationStorage.updateLoginInfo(
           email: user.email, password: user.password,);
-      return true;
+      return CustomError(code: ErrorCode.SUCCESS, name: ErrorConst.LOGIN_SUCCESS);
+
     }
-    return false;
+    return CustomError(code: ErrorCode.FAILED, name: ErrorConst.LOGIN_FAILED);
   }
 
   Future<bool> autoLogin() async {

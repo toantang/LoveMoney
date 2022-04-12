@@ -16,8 +16,8 @@ class UserRole {
 
   UserRole copyWith({String? type, String? name}) {
     return UserRole(
-      type: type ?? type,
-      name: name ?? name,
+      type: type ?? this.type,
+      name: name ?? this.name,
     );
   }
 }

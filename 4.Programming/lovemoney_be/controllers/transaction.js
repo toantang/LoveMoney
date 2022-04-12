@@ -13,7 +13,7 @@ const createTransaction =
     transactionPart,
   } = req.body;
 
-  const transaction = await transactionService.createTransaction({
+  const serviceResult = await transactionService.createTransaction({
     userId,
     name,
     cost,
@@ -22,7 +22,11 @@ const createTransaction =
     transactionPart,
     note,
   });
-  return res.send({status: 1, result: {transaction}});
+
+  const code = serviceResult.apiError.code;
+  const transaction = serviceResult.data.transaction;
+  const message = serviceResult.apiError.message;
+  return res.send({status: code, message: message, result: {transaction}});
 }
 
 const updateTransactionById =
@@ -39,7 +43,7 @@ const updateTransactionById =
     note,
   } = req.body;
 
-  const transaction = await transactionService.updateTransactionById(id, {
+  const serviceResult = await transactionService.updateTransactionById(id, {
     userId,
     name,
     cost,
@@ -48,8 +52,10 @@ const updateTransactionById =
     transactionPart, 
     note,
   });
-
-  return res.send({status: 1, result: {transaction}});
+  const code = serviceResult.apiError.code;
+  const transaction = serviceResult.data.transaction;
+  const message = serviceResult.apiError.message;
+  return res.send({status: code, message: message, result: {transaction}});
 }
 
 const getListTransaction = async (req, res) => {
@@ -62,14 +68,18 @@ const getListTransaction = async (req, res) => {
   } = dataOfRequest.getDataFromRequest(req);
 
   var typeTransactionPart = transactionPart.typeTransactionPart;
-  const transactions = await transactionService.getListTransaction({
+  const serviceResult = await transactionService.getListTransaction({
     userId,
     typeTransaction,
     date,
     endDate,
     typeTransactionPart,
   });
-  return res.send({status: 1, result: {transactions}});
+
+  const code = serviceResult.apiError.code;
+  const transactions = serviceResult.data.transactions;
+  const message = serviceResult.apiError.message;
+  return res.send({status: code, message: message,result: {transactions}});
 };
 
 const getAllTransaction = async (req, res) => {
@@ -79,13 +89,16 @@ const getAllTransaction = async (req, res) => {
     endDate,
   } = req.body;
 
-  const transactions = await transactionService.getAllTransaction({
+  const serviceResult = await transactionService.getAllTransaction({
     userId,
     date,
     endDate,
   });
 
-  return res.send({status: 1, result: {transactions}});
+  const code = serviceResult.apiError.code;
+  const transactions = serviceResult.data.transactions;
+  const message = serviceResult.apiError.message;
+  return res.send({status: code, message: message, result: {transactions}});
 }
 module.exports = {
   createTransaction,

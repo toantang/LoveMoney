@@ -6,9 +6,13 @@ const createUser = authController.register;
 
 const getInformation = async (req, res) => {
   const {email} = dataOfRequest.getDataFromRequest(req);
-  const user = await userService.findUserByEmail({email});
+  const serviceResult = await userService.findUserByEmail({email});
+  const code = serviceResult.apiError.code;
+  const message = serviceResult.apiError.message;
+  const user = serviceResult.data.user;
   res.send({
-    status: 1,
+    status: code,
+    message: message, 
     result: {
       user,
     }
@@ -23,14 +27,18 @@ const updateInfo = async (req, res) => {
     bio,
     gender,
   } = req.body;
-  const user = await userService.updateInfo({
+  const serviceResult = await userService.updateInfo({
     email,
     password,
     name,
     bio,
     gender,
   });
-  res.send({status: 1, result: {user}});
+
+  const code = serviceResult.apiError.code;
+  const message = serviceResult.apiError.message;
+  const user = serviceResult.data.user;
+  res.send({status: code, message: message, result: {user}});
 };
 
 module.exports = {

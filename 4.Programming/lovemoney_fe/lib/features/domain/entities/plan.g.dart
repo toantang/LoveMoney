@@ -7,7 +7,7 @@ part of 'plan.dart';
 // **************************************************************************
 
 Plan _$PlanFromJson(Map<String, dynamic> json) => Plan(
-      id: json['id'] as String?,
+      id: json['_id'] as String?,
       name: json['name'] as String?,
       sumCost: (json['sumCost'] as num?)?.toDouble(),
       sumCurrentMoney: (json['sumCurrentMoney'] as num?)?.toDouble(),

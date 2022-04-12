@@ -13,6 +13,7 @@ class TransactionMapper implements Mapper<Transaction, TransactionDto> {
     );
 
     return _transactionDto.copyWith(
+      id: _transaction.id,
       userId: _transaction.user?.id,
       name: _transaction.name,
       note: _transaction.note,

@@ -41,7 +41,13 @@ class AuthRepositoryImpl implements AuthRepository {
     final LoginDto _loginDto = _loginMapper.toDTO(user);
     try {
       var response = await _restClient.postMethod(ApiConfig.login, data: _loginDto.toJson());
-      _authenticationStorage.updateToken(response.data['result']['accessToken']);
+      String? accessToken = response.data['result']['accessToken'];
+      if (accessToken != null) {
+        _authenticationStorage.updateToken(accessToken);
+      }
+      else {
+        return ApiResponse.withError('accessToken is null');
+      }
 
       return ApiResponse.withResult(
         response: response.data,

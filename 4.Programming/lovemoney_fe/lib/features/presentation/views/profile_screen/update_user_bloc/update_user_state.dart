@@ -8,6 +8,11 @@ class UpdatePasswordState {
   UpdatePasswordState({required this.newPassword,});
 }
 
+class UpdateConfirmPasswordState {
+  final String confirmPassword;
+  UpdateConfirmPasswordState({required this.confirmPassword});
+}
+
 class UpdateBioState {
   final String? bio;
   UpdateBioState({this.bio});

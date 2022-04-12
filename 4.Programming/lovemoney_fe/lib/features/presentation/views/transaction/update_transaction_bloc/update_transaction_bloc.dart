@@ -1,5 +1,7 @@
 import 'dart:async';
 
+import 'package:lovemoney_fe/core/constant/error_const.dart';
+import 'package:lovemoney_fe/core/error/custom_error.dart';
 import 'package:lovemoney_fe/core/helper/bloc_provider.dart';
 import 'package:lovemoney_fe/core/helper/remote_event.dart';
 import 'package:lovemoney_fe/features/data/rest_api/datasources/models/api_response.dart';
@@ -30,9 +32,8 @@ class UpdateTransactionBloc {
     updateNoteBloc = UpdateNoteBloc(getNote());
   }
 
-  void updateTransaction() async {
-    Transaction _transaction = transaction.copyWith();
-    Transaction newTransaction = _transaction.copyWith(
+  Future<CustomError> updateTransaction() async {
+    Transaction newTransaction = transaction.copyWith(
       cost: updateCostBloc.updateCostState.newCost,
       date: updateDateBloc.updateDateState.newDate,
       note: updateNoteBloc.updateNoteState.newNote,
@@ -40,8 +41,11 @@ class UpdateTransactionBloc {
 
     ApiResponse<Transaction>? apiResponse = await transactionRepositoryImpl
         .updateTransaction(transaction: newTransaction);
-    Transaction? t = apiResponse?.result?.data;
-    print(t.toString());
+    Transaction? resTransaction = apiResponse?.result?.data;
+    if (resTransaction == null) {
+      return CustomError(code: ErrorCode.FAILED, name: ErrorConst.UPDATE_TRANSACTION_FAILED);
+    }
+    return CustomError(code: ErrorCode.FAILED, name: ErrorConst.UPDATE_TRANSACTION_SUCCESS);
   }
 }
 
