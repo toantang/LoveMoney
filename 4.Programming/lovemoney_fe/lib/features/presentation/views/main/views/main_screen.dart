@@ -10,6 +10,7 @@ import 'package:lovemoney_fe/features/presentation/views/user/user_bloc/user_blo
 import '../../../../../core/constant/error_const.dart';
 import '../../../../../core/helper/bloc_provider.dart';
 import '../../../../../core/helper/navigation_screen.dart';
+import '../../home/home_bloc/home_bloc.dart';
 import '../../transaction/views/add_transaction.dart';
 import '../../user/user_bloc/user_state.dart';
 import '../main_bloc/main_bloc.dart';
@@ -20,7 +21,8 @@ class MainScreen extends StatelessWidget {
   final UserBloc userBloc;
   MainScreen({Key? key, required this.userBloc}) : super(key: key);
 
-  final MainBloc homeBloc = MainBloc();
+  final MainBloc mainBloc = MainBloc();
+  final HomeBloc homeBloc = HomeBloc();
 
   final List<Widget> listChild = [
     HomeScreen(),
@@ -118,7 +120,7 @@ class MainScreen extends StatelessWidget {
         backgroundColor: ColorConst.secondaryColorConst.redShade400,
         type: BottomNavigationBarType.fixed,
         onTap: (index) {
-          homeBloc.remoteHomeEvent.sink.add(ChangeIndexViewEvent(index));
+          mainBloc.remoteHomeEvent.sink.add(ChangeIndexViewEvent(index));
           _pageController.animateToPage(index,
               duration: const Duration(milliseconds: 100), curve: Curves.ease);
         },
@@ -128,13 +130,12 @@ class MainScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final UserBloc userBloc = BlocProvider.of(context)!;
-
     return BlocProvider(
-      bloc: homeBloc,
-      child: StreamBuilder<ChangeIndexViewState>(
-        initialData: homeBloc.changeIndexViewState,
-        stream: homeBloc.remoteHomeState.stream,
+      bloc: mainBloc,
+      child: BlocProvider
+        (bloc: homeBloc, child: StreamBuilder<ChangeIndexViewState>(
+        initialData: mainBloc.changeIndexViewState,
+        stream: mainBloc.remoteHomeState.stream,
         builder: (context, AsyncSnapshot<ChangeIndexViewState> snapshot) {
           if (snapshot.hasData) {
             return Scaffold(
@@ -147,7 +148,7 @@ class MainScreen extends StatelessWidget {
                   // if you don't want to rebuild child in PageView, use this line
                   controller: _pageController,
                   onPageChanged: (index) {
-                    homeBloc.remoteHomeEvent.sink
+                    mainBloc.remoteHomeEvent.sink
                         .add(ChangeIndexViewEvent(index));
                     _pageController.animateToPage(index,
                         duration: const Duration(milliseconds: 100),
@@ -161,7 +162,7 @@ class MainScreen extends StatelessWidget {
             return const Text(ErrorConst.NULL_STREAM);
           }
         },
-      ),
+      ),),
     );
   }
 }

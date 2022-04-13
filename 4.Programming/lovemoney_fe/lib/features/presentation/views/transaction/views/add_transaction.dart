@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:lovemoney_fe/core/constant/color_const.dart';
+import 'package:lovemoney_fe/core/constant/error_const.dart';
 import 'package:lovemoney_fe/core/constant/size_const.dart';
 import 'package:lovemoney_fe/core/enum/enum_const.dart';
 import 'package:lovemoney_fe/core/helper/bloc_provider.dart';
+import 'package:lovemoney_fe/features/presentation/views/home/home_bloc/home_bloc.dart';
 import '../../../../../core/util/formatDate.dart';
 import 'package:lovemoney_fe/features/presentation/common_widget/button_lv.dart';
 import 'package:lovemoney_fe/features/presentation/common_widget/date_time_picker_lv.dart';
@@ -16,6 +18,7 @@ import 'package:lovemoney_fe/features/presentation/views/transaction/add_transac
 import 'package:lovemoney_fe/core/helper/navigation_screen.dart';
 import '../../../../../core/util/extensions/tree_view.dart';
 import '../../../common_widget/base_screen.dart';
+import '../../home/home_bloc/home_event.dart';
 import '../select_name_transaction/select_name_transaction.dart';
 
 import '../../../../../core/util/format_text_to_number.dart';
@@ -28,52 +31,51 @@ class AddTransaction extends StatelessWidget {
   final TextEditingController ecNote = TextEditingController();
 
   final AddTransactionBloc addTransactionBloc = AddTransactionBloc();
+  late HomeBloc homeBloc;
 
   AddTransaction({Key? key}) : super(key: key);
 
   Widget _inputNameTransaction(BuildContext context) {
-    return SizedBox(
-      height: 48,
-      child: Card(
-        color: ColorConst.primaryColorConst.greenShade400,
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(20),
-        ),
-        child: BlocProvider(
-          bloc: addTransactionBloc.selectNameBloc,
-          child: StreamBuilder<SelectNameState>(
-              initialData: addTransactionBloc.selectNameBloc.selectNameState,
-              stream: addTransactionBloc
-                  .selectNameBloc.remoteSelectNameState.stream,
-              builder: (context, AsyncSnapshot<SelectNameState> snapshot) {
-                return ListTileLv(
-                  onTap: () async {
-                    final baseData = await Nav.pushTo(
-                        context, const SelectNameTransaction());
-                    if (baseData is BaseData) {
-                      addTransactionBloc
-                          .selectNameBloc.remoteSelectNameEvent.sink
-                          .add(SelectNameEvent(baseData.name));
-                      addTransactionBloc
-                          .typePeriodTimeBloc.remoteTypePeriodTimeEvent.sink
-                          .add(TextFieldPeriodTimeEvent(baseData.id));
-                      addTransactionBloc.baseDataId = baseData.id;
-                    }
-                  },
-                  title: Center(
-                    child: Text(
-                      snapshot.data!.name,
-                      style:
-                          const TextStyle(fontSize: SizeConst.sizeTextButton),
-                    ),
+    return Card(
+      color: ColorConst.primaryColorConst.greenShade400,
+      elevation: 5,
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(20),
+      ),
+      child: BlocProvider(
+        bloc: addTransactionBloc.selectNameBloc,
+        child: StreamBuilder<SelectNameState>(
+            initialData: addTransactionBloc.selectNameBloc.selectNameState,
+            stream: addTransactionBloc
+                .selectNameBloc.remoteSelectNameState.stream,
+            builder: (context, AsyncSnapshot<SelectNameState> snapshot) {
+              return ListTileLv(
+                onTap: () async {
+                  final baseData = await Nav.pushTo(
+                      context, const SelectNameTransaction());
+                  if (baseData is BaseData) {
+                    addTransactionBloc
+                        .selectNameBloc.remoteSelectNameEvent.sink
+                        .add(SelectNameEvent(baseData.name));
+                    addTransactionBloc
+                        .typePeriodTimeBloc.remoteTypePeriodTimeEvent.sink
+                        .add(TextFieldPeriodTimeEvent(baseData.id));
+                    addTransactionBloc.baseDataId = baseData.id;
+                  }
+                },
+                title: Center(
+                  child: Text(
+                    snapshot.data!.name,
+                    style:
+                        const TextStyle(fontSize: SizeConst.sizeTextButton - 10),
                   ),
-                  trailing: const Icon(
-                    Icons.arrow_forward,
-                    size: SizeConst.sizeIconButton,
-                  ),
-                );
-              }),
-        ),
+                ),
+                trailing: const Icon(
+                  Icons.arrow_forward,
+                  size: SizeConst.sizeIconButton,
+                ),
+              );
+            }),
       ),
     );
   }
@@ -87,17 +89,24 @@ class AddTransaction extends StatelessWidget {
         stream: addTransactionBloc
             .typePeriodTimeBloc.remoteTextFieldPeriodTimeState.stream,
         builder: (context, snapshot) {
-          return TextFieldLv(
-            keyUsedWord: KeyUsedWord.PERIOD_TIME,
-            textEditingController: ecPeriodTime,
-            maxLength: 2,
-            enabled: snapshot.data?.enabled,
-            textInputType: const TextInputType.numberWithOptions(
-              signed: true,
-              decimal: false,
-            ),
-            countText: '',
-          );
+          if (snapshot.hasData) {
+            bool enabled = snapshot.data!.enabled;
+            if (!enabled) {
+              ecPeriodTime.clear();
+            }
+            return TextFieldLv(
+              keyUsedWord: KeyUsedWord.PERIOD_TIME,
+              textEditingController: ecPeriodTime,
+              maxLength: 2,
+              enabled: enabled,
+              textInputType: const TextInputType.numberWithOptions(
+                signed: true,
+                decimal: false,
+              ),
+              countText: '',
+            );
+          }
+          return const Text(ErrorConst.NULL_STREAM);
         },
       ),
     );
@@ -154,6 +163,8 @@ class AddTransaction extends StatelessWidget {
   }
 
   void _addTransactionButton(BuildContext context) async {
+    homeBloc = BlocProvider.of(context)!;
+
     String textCost = ecCost.text.isEmpty ? '0' : ecCost.text;
     addTransactionBloc.typeCostBloc.typeCostState =
         TypeCostState(FormatTextToNumber.formatTextToDouble(
@@ -168,6 +179,14 @@ class AddTransaction extends StatelessWidget {
                 ? 0
                 : double.parse(textPeriodTime));
     CustomError customError = await addTransactionBloc.createTransaction();
+    if (CustomError.validateCodeError(customError)) {
+      homeBloc.buildListTransactionBloc.remoteBuildTransactionEvent.sink.add(
+        BuildListTransactionEvent(
+          homeBloc.getTransaction(),
+          homeBloc.selectEndDateBloc.selectEndDateState.endDate,
+        ),
+      );
+    }
     NavSnackBar.displayError(context, customError: customError);
   }
 

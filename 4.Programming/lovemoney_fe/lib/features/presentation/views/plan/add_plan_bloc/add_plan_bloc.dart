@@ -33,7 +33,7 @@ class AddPlanBloc {
   Future<CustomError> createPlan() async {
     if (!checkPlan()) {
       print('can not create plan');
-      CustomError(code: ErrorCode.FAILED, name: ErrorConst.CREATE_PLAN_FAILED);
+      return CustomError(code: ErrorCode.FAILED, name: ErrorConst.INVALID_PLAN);
     }
     Status _status = Status(
       code: CodeStatus.UNFI,

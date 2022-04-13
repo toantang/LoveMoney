@@ -41,11 +41,13 @@ class AddTransactionBloc {
   }
 
   bool checkFixedTransaction(String typeTransactionPart) {
-    if (typeTransactionPart == TypeTransactionPartConst.FIXED_TRANSACTION &&
-        typePeriodTimeBloc.typePeriodTimeState.validatePeriodTime()) {
-      return true;
+    if (typeTransactionPart == TypeTransactionPartConst.FIXED_TRANSACTION) {
+      if (typePeriodTimeBloc.typePeriodTimeState.validatePeriodTime()) {
+        return true;
+      }
+      return false;
     }
-    return false;
+    return true;
   }
 
   bool checkTransaction() {
@@ -62,7 +64,7 @@ class AddTransactionBloc {
     if (!checkTransaction()) {
       print('can not create transaction');
       return CustomError(
-          code: ErrorCode.FAILED, name: ErrorConst.CREATE_TRANSACTION_FAILED,);
+          code: ErrorCode.FAILED, name: ErrorConst.INVALID_TRANSACTION,);
     }
     TransactionPart? _transactionPart = TransactionPart();
     String typeTransactionPart =
@@ -226,8 +228,8 @@ class TypePeriodTimeBloc extends BlocBase {
 
   @override
   void dispose() {
-    remoteTypePeriodTimeState.close();
-    remoteTypePeriodTimeEvent.close();
+    //remoteTypePeriodTimeState.close();
+    //remoteTypePeriodTimeEvent.close();
   }
 }
 

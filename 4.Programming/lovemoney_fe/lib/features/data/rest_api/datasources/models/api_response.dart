@@ -3,6 +3,7 @@ import 'package:lovemoney_fe/features/data/rest_api/datasources/models/api_resul
 
 class ApiResponse<T> {
   String? _status;
+  String? _message;
   ApiResult<T>? _result;
   ApiError? _error;
 
@@ -13,6 +14,8 @@ class ApiResponse<T> {
   bool get isSucceeded => _status != null && _status![1] == '1';
 
   bool get isFailed => _status == null || _status![0] == '0';
+
+  bool get hasMessage => _message != null;
 
   ApiResponse();
 
@@ -42,7 +45,7 @@ class ApiResponse<T> {
 
   factory ApiResponse.catchError({Map<String, dynamic>? response}) {
     return ApiResponse()
-        .._status = response!['status']
+        .._status = response!['status'].toString()
         .._error = ApiError.fromJson(response);
   }
 

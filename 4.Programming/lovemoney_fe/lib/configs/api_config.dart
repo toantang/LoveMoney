@@ -19,7 +19,7 @@ class ApiConfig {
   static const createTransaction = '/transaction';
   static const updateTransactionById = '/transaction/update/';
   static const getListTransaction = '/transaction/getListTransaction';
-  static const deleteTransaction = '/transaction/deleteTransaction';
+  static const deleteTransaction = '/transaction/deleteTransaction/';
 
   //User config
   static const getInformation = '/user/information';

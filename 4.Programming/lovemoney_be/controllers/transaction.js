@@ -102,7 +102,7 @@ const getAllTransaction = async (req, res) => {
 };
 
 const deleteTransactionById = async (req, res) => {
-  const {id} = req.body;
+  const {id} = req.params;
   const serviceResult = await transactionService.deleteTransactionById(id);
   const code = serviceResult.apiError.code;
   const message = serviceResult.apiError.message;

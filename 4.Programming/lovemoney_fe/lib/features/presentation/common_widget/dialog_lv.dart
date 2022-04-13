@@ -47,7 +47,6 @@ class AlertDialogLvUpdate extends StatelessWidget {
   final Widget? title;
   final KeyUsedWord keyUsedWord;
   final TextEditingController textEditingController = TextEditingController();
-  final VoidCallback? update;
   final String? contentTextField;
 
   AlertDialogLvUpdate({
@@ -55,7 +54,6 @@ class AlertDialogLvUpdate extends StatelessWidget {
     this.title,
     required this.keyUsedWord,
     this.contentTextField,
-    this.update,
   }) : super(key: key);
 
   @override
@@ -81,6 +79,30 @@ class AlertDialogLvUpdate extends StatelessWidget {
           onPressed: () {
             Nav.back(context, textEditingController.text);
           },
+          keyUsedWord: KeyUsedWord.OK,
+        ),
+      ],
+    );
+  }
+}
+
+class OptionsAlertDialogLv extends StatelessWidget {
+  final VoidCallback? onPressYes;
+  const OptionsAlertDialogLv({Key? key, this.onPressYes}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return AlertDialogLv(
+      title: const Text('Are u sure, bro? '),
+      actions: [
+        ButtonLv(
+          onPressed: () {
+            Nav.back(context);
+          },
+          keyUsedWord: KeyUsedWord.CANCEL,
+        ),
+        ButtonLv(
+          onPressed: onPressYes,
           keyUsedWord: KeyUsedWord.OK,
         ),
       ],

@@ -51,6 +51,13 @@ class TransactionMapper implements Mapper<Transaction, TransactionDto> {
       transactionPart: _transaction.transactionPart,
     );
   }
+
+  TransactionDto dtoForDeleteTransaction(Transaction _transaction) {
+    return TransactionDto(
+      typeTransaction: _transaction.typeTransaction,
+      id: _transaction.id,
+    );
+  }
 }
 
 

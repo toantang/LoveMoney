@@ -13,17 +13,15 @@ import 'package:lovemoney_fe/features/presentation/views/home/home_bloc/home_sta
 import '../../../../../core/util/remote_event.dart';
 import '../../../../domain/entities/transaction/transaction.dart';
 
-class HomeBloc {
+class HomeBloc extends BlocBase {
   final SelectTransactionTypeBloc selectTransactionTypeBloc =
       SelectTransactionTypeBloc();
   final SelectStartDateBloc selectStartDateBloc = SelectStartDateBloc();
   final SelectEndDateBloc selectEndDateBloc = SelectEndDateBloc();
-  final BuildListTransactionBloc buildListTransactionBloc =
-      BuildListTransactionBloc();
+  final BuildListTransactionBloc buildListTransactionBloc = BuildListTransactionBloc();
 
   Transaction getTransaction() {
-    String type = selectTransactionTypeBloc
-        .selectedTransactionTypeState.selectedTransactionType;
+    String type = selectTransactionTypeBloc.selectedTransactionTypeState.selectedTransactionType;
     Transaction transaction = Transaction(
       typeTransaction: TransactionConst.getTransactionType(type),
       transactionPart: TransactionPart.getDefaultTransactionPart(
@@ -33,6 +31,11 @@ class HomeBloc {
       user: AuthBloc.getInstance().user,
     );
     return transaction;
+  }
+
+  @override
+  void dispose() {
+
   }
 }
 

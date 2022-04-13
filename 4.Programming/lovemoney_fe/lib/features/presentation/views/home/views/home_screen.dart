@@ -22,7 +22,8 @@ import '../../../common_widget/text_lv.dart';
 import '../../transaction/views/information_transaction.dart';
 
 class HomeScreen extends StatelessWidget {
-  final HomeBloc homeBloc = HomeBloc();
+  late HomeBloc homeBloc;
+
   final TransactionBloc transactionBloc = TransactionBloc();
 
   HomeScreen({Key? key}) : super(key: key);
@@ -31,7 +32,6 @@ class HomeScreen extends StatelessWidget {
     return ButtonLv(
       keyUsedWord: KeyUsedWord.OK,
       onPressed: () {
-        print(homeBloc.getTransaction().toString());
         homeBloc.buildListTransactionBloc.remoteBuildTransactionEvent.sink.add(
           BuildListTransactionEvent(
             homeBloc.getTransaction(),
@@ -155,6 +155,19 @@ class HomeScreen extends StatelessWidget {
     );
   }
 
+  void _deleteTransactionButton(BuildContext context, {required Transaction transaction}) async {
+    CustomError customError = await transactionBloc.deleteTransaction(
+        transaction: transaction);
+    if (CustomError.validateCodeError(customError)) {
+      homeBloc.buildListTransactionBloc.remoteBuildTransactionEvent.sink
+          .add(BuildListTransactionEvent(
+        homeBloc.getTransaction(),
+        homeBloc.selectEndDateBloc.selectEndDateState.endDate,
+      ));
+    }
+    Nav.back(context);
+    NavSnackBar.displayError(context, customError: customError);
+  }
   Widget _buildOneItemTransaction(
       BuildContext context, Transaction transaction) {
     return Card(
@@ -175,16 +188,11 @@ class HomeScreen extends StatelessWidget {
         trailing: IconButton(
           icon: const Icon(Icons.delete),
           onPressed: () async {
-            CustomError customError = await transactionBloc.deleteTransaction(
-                transaction: transaction);
-            if (CustomError.validateCodeError(customError)) {
-              homeBloc.buildListTransactionBloc.remoteBuildTransactionEvent.sink
-                  .add(BuildListTransactionEvent(
-                homeBloc.getTransaction(),
-                homeBloc.selectEndDateBloc.selectEndDateState.endDate,
-              ));
-            }
-            NavSnackBar.displayError(context, customError: customError);
+            NavDialog.show(context, OptionsAlertDialogLv(
+              onPressYes: () {
+                _deleteTransactionButton(context, transaction: transaction);
+              },
+            ),);
           },
         ),
       ),
@@ -220,6 +228,8 @@ class HomeScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    homeBloc = BlocProvider.of(context)!;
+
     return BaseScreen(
       body: SafeArea(
         child: Column(

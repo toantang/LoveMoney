@@ -29,7 +29,6 @@ class RestClient {
 
 
     final String? accessToken = await _authenticationStorage.getToken();
-    print('accessToken:' + accessToken.toString());
     if (accessToken != null) {
       _dio.options.headers["authorization"] = accessToken;
     }

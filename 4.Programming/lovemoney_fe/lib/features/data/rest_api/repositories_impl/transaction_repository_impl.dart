@@ -21,12 +21,10 @@ class TransactionRepositoryImpl implements TransactionRepository {
       {required Transaction transaction}) async {
     final TransactionDto transactionDto = _transactionMapper.toDTO(transaction);
     try {
-      print('request: ' + transactionDto.toJson().toString());
       var response = await _restClient.postMethod(
         ApiConfig.createTransaction,
         data: transactionDto.toJson(),
       );
-      //print('response: ' + response.data);
       return ApiResponse.withResult(
           response: response.data,
           resultConverter: (json) => ApiResultSingle<Transaction>(
@@ -82,7 +80,6 @@ class TransactionRepositoryImpl implements TransactionRepository {
                     _transactionMapper.toEntity(TransactionDto.fromJson(json)),
               ));
     } catch (error) {
-      print(error.toString());
       return ApiResponse.withError(error);
     }
   }
@@ -90,13 +87,16 @@ class TransactionRepositoryImpl implements TransactionRepository {
   @override
   Future<ApiResponse<ApiError>>? deleteTransaction(
       {required Transaction transaction}) async {
-    final TransactionDto transactionDto = _transactionMapper.toDTO(transaction);
+    final TransactionDto transactionDto =
+        _transactionMapper.dtoForDeleteTransaction(transaction);
     try {
       var response = await _restClient.deleteMethod(
         ApiConfig.deleteTransaction + transactionDto.id.toString(),
         params: transactionDto.toJson(),
       );
-      return ApiResponse.catchError(response: response as Map<String, dynamic>);
+      return ApiResponse.catchError(
+        response: response.data,
+      );
     } catch (error) {
       return ApiResponse.withError(error);
     }

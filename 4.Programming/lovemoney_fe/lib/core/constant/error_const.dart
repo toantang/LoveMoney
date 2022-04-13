@@ -26,8 +26,10 @@ class ErrorConst {
   static const String CREATE_TRANSACTION_FAILED = 'Create a transaction is failed';
   static const String UPDATE_TRANSACTION_FAILED = 'Update transaction is failed';
   static const String UPDATE_TRANSACTION_SUCCESS = 'Update transaction is successful';
+  static const String INVALID_TRANSACTION = 'this transactions is not correct';
 
   //Plan
   static const String CREATE_PLAN_SUCCESS = 'Create a plan is successful';
   static const String CREATE_PLAN_FAILED = 'Create a plan is failed';
+  static const String INVALID_PLAN = 'this plan is invalid';
 }

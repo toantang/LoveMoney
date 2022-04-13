@@ -63,12 +63,12 @@ class AuthBloc {
   }
 
   Future<bool> autoLogin() async {
-    LoginInfo? loginInfor = await _authenticationStorage.getLoginInfo();
-    print(loginInfor.toString());
-    if (loginInfor != null) {
+    LoginInfo? loginInfo = await _authenticationStorage.getLoginInfo();
+    print(loginInfo.toString());
+    if (loginInfo != null) {
       ApiResponse<User>? apiResponse = await _authRepositoryImpl.autoLogin(
           user: User(
-              email: loginInfor.loginEmail,
+              email: loginInfo.loginEmail,
               ),);
       User? user = apiResponse?.result?.data;
       if (user != null) {
