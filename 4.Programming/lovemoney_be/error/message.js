@@ -63,6 +63,10 @@ const getErrorMessage = code => {
       return 'get list transaction is failed';
     case errorCode.GET_LIST_TRANSACTION_SUCCESS:
       return 'get list transaction is successful';
+      case errorCode.DELETE_TRANSACTIOn_FAILED: 
+      return 'delete a transaction is failed';
+      case errorCode.DELETE_TRANSACTIOn_SUCCESS:
+        return 'delete a transaction is successful'; 
     default:
       return 'unspecified error';
   };

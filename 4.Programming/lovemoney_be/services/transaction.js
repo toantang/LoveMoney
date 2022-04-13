@@ -71,7 +71,7 @@ const updateTransactionById = async (id, {
   if (!transaction) {
     return new ServiceResult({
       apiError: apiError.createApiError(errorCode.UPDATE_TRANSACTION_FAILED),
-      data: { transaction },
+      data: {transaction},
     });
   };
   return new ServiceResult({
@@ -133,9 +133,31 @@ const getListTransaction = async ({
     data: {transactions},
   });
 };
+
+const deleteTransactionById = async (id) => {
+  const transactionDb = await transactionDao.findTransactionById(id);
+  if (!transactionDb) {
+    return new ServiceResult({
+      apiError: apiError.createApiError(errorCode.NOT_FOUND_TRANSACTION),
+      data: {transactionDb}
+    });
+  }
+  const transaction = await transactionDao.deleteTransactionById(id);
+  if (!transaction) {
+    return new ServiceResult({
+      apiError: apiError.createApiError(errorCode.DELETE_TRANSACTIOn_FAILED),
+      data: {transactionDb}
+    });
+  }
+  return new ServiceResult({
+    apiError: apiError.createApiError(errorCode.DELETE_TRANSACTIOn_SUCCESS),
+    data: {transactionDb}
+  });
+};
 module.exports = {
   createTransaction,
   updateTransactionById,
   getAllTransaction,
   getListTransaction,
+  deleteTransactionById,
 }

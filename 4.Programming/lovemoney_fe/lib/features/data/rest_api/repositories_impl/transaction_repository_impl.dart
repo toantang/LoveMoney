@@ -1,6 +1,8 @@
 import 'dart:developer';
 
 import 'package:lovemoney_fe/configs/api_config.dart';
+import 'package:lovemoney_fe/core/error/custom_error.dart';
+import 'package:lovemoney_fe/features/data/rest_api/datasources/models/api_error.dart';
 import 'package:lovemoney_fe/features/data/rest_api/datasources/models/api_response.dart';
 import 'package:lovemoney_fe/features/data/rest_api/datasources/models/api_result.dart';
 import 'package:lovemoney_fe/features/data/rest_api/datasources/rest_client.dart';
@@ -20,8 +22,10 @@ class TransactionRepositoryImpl implements TransactionRepository {
     final TransactionDto transactionDto = _transactionMapper.toDTO(transaction);
     try {
       print('request: ' + transactionDto.toJson().toString());
-      var response = await _restClient.postMethod(ApiConfig.createTransaction,
-          data: transactionDto.toJson(),);
+      var response = await _restClient.postMethod(
+        ApiConfig.createTransaction,
+        data: transactionDto.toJson(),
+      );
       //print('response: ' + response.data);
       return ApiResponse.withResult(
           response: response.data,
@@ -79,6 +83,21 @@ class TransactionRepositoryImpl implements TransactionRepository {
               ));
     } catch (error) {
       print(error.toString());
+      return ApiResponse.withError(error);
+    }
+  }
+
+  @override
+  Future<ApiResponse<ApiError>>? deleteTransaction(
+      {required Transaction transaction}) async {
+    final TransactionDto transactionDto = _transactionMapper.toDTO(transaction);
+    try {
+      var response = await _restClient.deleteMethod(
+        ApiConfig.deleteTransaction + transactionDto.id.toString(),
+        params: transactionDto.toJson(),
+      );
+      return ApiResponse.catchError(response: response as Map<String, dynamic>);
+    } catch (error) {
       return ApiResponse.withError(error);
     }
   }

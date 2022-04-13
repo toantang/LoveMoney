@@ -40,6 +40,12 @@ class ApiResponse<T> {
       .._error = ApiError(error: error);
   }
 
+  factory ApiResponse.catchError({Map<String, dynamic>? response}) {
+    return ApiResponse()
+        .._status = response!['status']
+        .._error = ApiError.fromJson(response);
+  }
+
   ApiResult<T>? get result => _result;
 
   ApiError? get error => _error;

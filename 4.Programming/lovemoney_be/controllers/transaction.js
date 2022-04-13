@@ -39,7 +39,7 @@ const updateTransactionById =
     cost,
     date,
     typeTransaction,
-    transactionPart, 
+    transactionPart,
     note,
   } = req.body;
 
@@ -49,7 +49,7 @@ const updateTransactionById =
     cost,
     date,
     typeTransaction,
-    transactionPart, 
+    transactionPart,
     note,
   });
   const code = serviceResult.apiError.code;
@@ -79,7 +79,7 @@ const getListTransaction = async (req, res) => {
   const code = serviceResult.apiError.code;
   const transactions = serviceResult.data.transactions;
   const message = serviceResult.apiError.message;
-  return res.send({status: code, message: message,result: {transactions}});
+  return res.send({status: code, message: message, result: {transactions}});
 };
 
 const getAllTransaction = async (req, res) => {
@@ -99,10 +99,24 @@ const getAllTransaction = async (req, res) => {
   const transactions = serviceResult.data.transactions;
   const message = serviceResult.apiError.message;
   return res.send({status: code, message: message, result: {transactions}});
-}
+};
+
+const deleteTransactionById = async (req, res) => {
+  const {id} = req.body;
+  const serviceResult = await transactionService.deleteTransactionById(id);
+  const code = serviceResult.apiError.code;
+  const message = serviceResult.apiError.message;
+  const transaction = serviceResult.data.transaction;
+  return res.send({
+    status: code,
+    message: message,
+    result: {transaction},
+  });
+};
 module.exports = {
   createTransaction,
   updateTransactionById,
   getListTransaction,
   getAllTransaction,
+  deleteTransactionById,
 }

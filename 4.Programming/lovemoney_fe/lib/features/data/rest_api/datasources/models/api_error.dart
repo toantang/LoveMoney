@@ -41,4 +41,8 @@ class ApiError {
       _message = "error is unknown";
     }
   }
+
+  String? get code => _code;
+
+  String? get message => _message;
 }

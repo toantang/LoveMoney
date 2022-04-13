@@ -2,6 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:lovemoney_fe/core/constant/error_const.dart';
 import 'package:lovemoney_fe/core/constant/string_const.dart';
 import 'package:lovemoney_fe/core/helper/bloc_provider.dart';
+import 'package:lovemoney_fe/features/presentation/common_widget/error_lv.dart';
+import 'package:lovemoney_fe/features/presentation/views/transaction/transaction_bloc/transaction_bloc.dart';
+import '../../../../../core/error/custom_error.dart';
 import '../../../../../core/util/formatDate.dart';
 import 'package:lovemoney_fe/features/domain/entities/transaction/transaction.dart';
 import 'package:lovemoney_fe/features/presentation/common_widget/button_lv.dart';
@@ -20,6 +23,7 @@ import '../../transaction/views/information_transaction.dart';
 
 class HomeScreen extends StatelessWidget {
   final HomeBloc homeBloc = HomeBloc();
+  final TransactionBloc transactionBloc = TransactionBloc();
 
   HomeScreen({Key? key}) : super(key: key);
 
@@ -107,7 +111,8 @@ class HomeScreen extends StatelessWidget {
               final date = await Nav.pushTo(
                 context,
                 NavDateTimePicker(
-                  limitedDateTime: homeBloc.selectEndDateBloc.selectEndDateState.endDate,
+                  limitedDateTime:
+                      homeBloc.selectEndDateBloc.selectEndDateState.endDate,
                 ),
               );
               String value = FormatDate.dateToString(date as DateTime);
@@ -135,7 +140,8 @@ class HomeScreen extends StatelessWidget {
               final date = await Nav.pushTo(
                 context,
                 NavDateTimePicker(
-                  lowerDateTime: homeBloc.selectStartDateBloc.selectStartDateState.date,
+                  lowerDateTime:
+                      homeBloc.selectStartDateBloc.selectStartDateState.date,
                 ),
               );
               String value = FormatDate.dateToString(date as DateTime);
@@ -168,7 +174,18 @@ class HomeScreen extends StatelessWidget {
         ),
         trailing: IconButton(
           icon: const Icon(Icons.delete),
-          onPressed: () {},
+          onPressed: () async {
+            CustomError customError = await transactionBloc.deleteTransaction(
+                transaction: transaction);
+            if (CustomError.validateCodeError(customError)) {
+              homeBloc.buildListTransactionBloc.remoteBuildTransactionEvent.sink
+                  .add(BuildListTransactionEvent(
+                homeBloc.getTransaction(),
+                homeBloc.selectEndDateBloc.selectEndDateState.endDate,
+              ));
+            }
+            NavSnackBar.displayError(context, customError: customError);
+          },
         ),
       ),
     );

@@ -69,10 +69,18 @@ const getListTransaction = async ({
   });
   return data;
 };
+
+const deleteTransactionById = async (id) => {
+  const transaction = await Transaction.deleteOne({
+    _id: id, 
+  });
+  return transaction;
+}
 module.exports = {
   createTransaction,
   findTransactionById,
   updateTransactionById,
   getAllTransaction,
   getListTransaction,
+  deleteTransactionById, 
 }
