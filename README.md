@@ -13,7 +13,7 @@
 + MongoDb
 
 #UI/UX:
-+Figma
++ Figma
 
 #To run frontend:
 
