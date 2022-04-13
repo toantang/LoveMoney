@@ -20,3 +20,12 @@ MongoDb
 
 Figma
 
+#To run frontend: 
+
++ if you use emulator, change enviroment to local: Enviroment.LOCAL
++ if you use real device, change enviroment to real device: Enviroment.REAL_DEVICE (your real device and your computer ip address is same)
+
+#To run backend: 
++ npm i
++ npm run dev
+
