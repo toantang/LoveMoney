@@ -14,7 +14,6 @@ const isAuth = async (req, res, next) => {
     const verified = await tokenUtil.verifyToken(accessTokenFromHeader, accessTokenSecret);
     if (!verified || verified == null) {
         const nullObject = null;
-        console.log('chay vao ham nay');
 		return res.send({status: '0002', message: 'jwt expired', result: { nullObject }});
 	}
     const email = verified.payload.email;

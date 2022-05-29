@@ -168,6 +168,7 @@ class HomeScreen extends StatelessWidget {
     Nav.back(context);
     NavSnackBar.displayError(context, customError: customError);
   }
+
   Widget _buildOneItemTransaction(
       BuildContext context, Transaction transaction) {
     return Card(

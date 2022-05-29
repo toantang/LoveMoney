@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "158045702243",
+    "project_id": "test-87fcf",
+    "storage_bucket": "test-87fcf.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:158045702243:android:e9a10e51d4f90391a6d056",
+        "android_client_info": {
+          "package_name": "com.example.lovemoney_fe"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "158045702243-csuh4r530ct1rgjkbn684qou16mu4amc.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBeDVjfZMBpQthP3KmBXEe-GICxO2ACgjI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "158045702243-csuh4r530ct1rgjkbn684qou16mu4amc.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

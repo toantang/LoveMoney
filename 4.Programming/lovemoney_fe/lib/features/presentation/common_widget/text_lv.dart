@@ -71,7 +71,7 @@ class TextService extends StatelessWidget {
       stream: userLanguageBloc?.stateController.stream,
       builder: (context, AsyncSnapshot<RemoteState> snapshot) {
         if (snapshot.hasData) {
-          return Text(_getText(snapshot.data!.usedLanguage), style: textStyle,);
+          return Text(_getText(snapshot.data!.usedLanguage), style: textStyle, );
         } else {
           return const Text(ErrorConst.NULL_STREAM);
         }

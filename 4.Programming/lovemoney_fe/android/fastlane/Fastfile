@@ -1,0 +1,69 @@
+# This file contains the fastlane.tools configuration
+# You can find the documentation at https://docs.fastlane.tools
+#
+# For a list of all available actions, check out
+#
+#     https://docs.fastlane.tools/actions
+#
+# For a list of all available plugins, check out
+#
+#     https://docs.fastlane.tools/plugins/available-plugins
+#
+
+# Uncomment the line if you want fastlane to automatically update itself
+# update_fastlane
+
+default_platform(:android)
+
+platform :android do
+  desc "Build and upload aab to firebase distribution"
+  lane :production do
+    build(firebase: true, type: "production")
+  end
+
+  desc "Runs all the tests"
+  lane :test do
+    gradle(task: "test")
+  end
+
+  desc "Submit a new Beta Build to Crashlytics Beta"
+  lane :beta do
+    gradle(task: "clean assembleRelease")
+    crashlytics
+  
+    # sh "your_script.sh"
+    # You can also use other beta testing services here
+  end
+
+  desc "Deploy a new version to the Google Play"
+  lane :deploy do
+    gradle(task: "clean assembleRelease")
+    upload_to_play_store
+  end
+end
+
+private_lane :build do |options|
+    if options[:firebase]
+        DESTINATION = "Firebase"
+        BUILD_DESTINATION_PATH = ""
+        ANDROID_ARTIFACT_TYPE = ""
+
+        if options[:type] == "production"
+            sh("flutter build apk --target=lib/main.dart")
+            BUILD_DESTINATION_PATH = "../build/app/outputs/flutter-apk/app-release.apk"
+            ANDROID_ARTIFACT_TYPE = "APK"
+        else
+            sh("flutter build appbundle --target=lib/main.dart")
+            BUILD_DESTINATION_PATH = "../build/app/outputs/bundle/flutter-apk/app-noPro.apk"
+            ANDROID_ARTIFACT_TYPE = "APK"
+        end
+
+        firebase_app_distribution(
+            app: "1:158045702243:android:e9a10e51d4f90391a6d056",
+            android_artifact_type: ANDROID_ARTIFACT_TYPE,
+            android_artifact_path: BUILD_DESTINATION_PATH,
+            firebase_cli_token: "1//0gzM24WyDPjC2CgYIARAAGBASNwF-L9IrEVV7hLEVA7VQ3gK4zuVz8E69bEFDKjc2eI5MIXD5BUo5iiLxu0ocyDi-RTQq9CkSHTA"
+        )
+        end
+
+    end
